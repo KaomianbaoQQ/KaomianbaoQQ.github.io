@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -14,7 +14,6 @@
           ghBg: "#0d1117",
           ghCard: "#161b22",
           ghBorder: "#30363d",
-          ghGreen: "#238636",
           ghText: "#c9d1d9",
           ghMuted: "#8b949e",
           ghBlue: "#58a6ff"
@@ -24,37 +23,21 @@
   };
 </script>
 <style>
-  .contribution-cell {
-    width: 10px;
-    height: 10px;
-    border-radius: 2px;
-  }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+.pinned-item {
+  width: 100%;
+}
 </style>
 </head>
-<body class="bg-ghBg text-ghText min-h-screen">
-
-<header class="border-b border-ghBorder px-4 py-3 flex items-center justify-between text-sm">
-  <div class="flex items-center gap-4">
-    <i class="fa fa-github text-2xl"></i>
-    <span>Overview</span>
-    <span>Repositories <span id="repo-count" class="bg-ghBorder px-1 rounded text-xs ml-1">0</span></span>
-    <span>Projects</span>
-    <span>Packages</span>
-    <span>Stars <span id="star-count" class="bg-ghBorder px-1 rounded text-xs ml-1">0</span></span>
-  </div>
-  <div class="flex items-center gap-3">
-    <input type="text" placeholder="Type / to search" class="bg-ghCard border border-ghBorder rounded px-2 py-1 text-sm w-48" />
-    <i class="fa fa-user-circle-o text-xl"></i>
-  </div>
-</header>
-
-<main class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-12 gap-6">
-
+<body class="bg-ghBg text-ghText">
+<div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-12 gap-6">
+  <!-- 左侧侧边栏 -->
   <aside class="col-span-3">
     <div class="mb-4">
       <img id="avatar" src="https://github.com/KaomianbaoQQ.png" alt="avatar" class="w-full rounded-full border border-ghBorder" />
     </div>
-
     <h1 id="user-name" class="text-2xl font-bold">KaomianbaoQQ</h1>
     <p id="user-login" class="text-ghMuted text-lg mb-4">KaomianbaoQQ</p>
 
@@ -62,143 +45,114 @@
       Follow
     </button>
 
-    <div class="text-sm text-ghMuted mb-4">
+    <div class="text-sm text-ghMuted mb-3">
       <p><i class="fa fa-users mr-1"></i>
         <span id="followers">0</span> followers ·
         <span id="following">0</span> following
       </p>
     </div>
-
-    <div class="text-sm space-y-2 mb-6">
-      <p><i class="fa fa-map-marker mr-1"></i> <span id="location">Japan Hokkaido</span></p>
+    <div class="text-sm text-ghMuted mb-6">
+      <p><i class="fa fa-map-marker mr-1"></i> Japan Hokkaido</p>
     </div>
 
     <div>
       <p class="font-semibold mb-2">Achievements</p>
-      <!-- trophy徽章，locale=ja，region=Hokkaido -->
       <img src="https://github-profile-trophy.vercel.app/?username=KaomianbaoQQ&locale=ja&region=Hokkaido&theme=dark" alt="trophy" class="w-full">
     </div>
   </aside>
 
+  <!-- 右侧主内容 -->
   <section class="col-span-9">
     <h2 class="text-lg font-semibold mb-4">Pinned</h2>
-
-    <div id="pinned-container" class="grid grid-cols-2 gap-4 mb-6">
-      <!-- 动态生成 -->
+    <div id="pinned-container" class="flex flex-col gap-4 mb-6">
+      <!-- 仓库自适应单行 -->
     </div>
 
-    <div class="mb-6">
-      <p class="mb-2" id="contribution-title">0 contributions in the last year</p>
-      <div class="bg-ghCard border border-ghBorder rounded p-4">
-        <img id="contribution-graph"
-             src="https://github-readme-stats.vercel.app/api/grids?username=KaomianbaoQQ&theme=github_dark"
-             alt="contribution graph"
-             class="w-full" />
+    <p class="mb-2" id="contribution-title">0 contributions in the last year</p>
+    <div class="bg-ghCard border border-ghBorder rounded p-4 mb-6">
+      <img id="contribution-graph"
+           src="https://github-readme-stats.vercel.app/api/grids?username=KaomianbaoQQ&theme=github_dark"
+           alt="contribution grid"
+           class="w-full" />
+    </div>
+
+    <div class="bg-ghCard border border-ghBorder rounded p-4 text-sm">
+      <p class="mb-2 text-ghMuted"><i class="fa fa-user mr-1"></i> @KaomianbaoQQ</p>
+      <p class="mb-3 text-ghMuted">Activity overview</p>
+      <div id="activity-list" class="space-y-1 text-xs font-mono">
       </div>
     </div>
-
-    <div class="bg-ghCard border border-ghBorder rounded p-3 text-sm text-ghMuted">
-      <i class="fa fa-user mr-1"></i> @KaomianbaoQQ
-      <p class="mt-2">Activity overview</p>
-      <div id="activity-list" class="mt-3 space-y-2 text-xs"></div>
-    </div>
   </section>
-</main>
+</div>
 
 <script>
 const USERNAME = "KaomianbaoQQ";
-
-// 置顶仓库顺序
 const PINNED_REPOS = [
   "merchant-customer-platform",
-  "Product_Order_Page",
   "aerialsim-aircraft-f117"
 ];
-
-// 语言颜色映射
 const LANG_COLORS = {
+  Python: "#3572A5",
+  HLSL: "#a88060",
   Java: "#b07219",
   HTML: "#e34c26",
-  C: "#555555",
   "C++": "#f34b7d"
 };
 
-// 1. 拉取用户基础信息
+// 用户基础信息
 fetch(`https://api.github.com/users/${USERNAME}`)
-  .then(res => res.json())
-  .then(user => {
-    document.getElementById("user-name").textContent = user.name || user.login;
-    document.getElementById("user-login").textContent = user.login;
-    document.getElementById("avatar").src = user.avatar_url;
-    document.getElementById("followers").textContent = user.followers;
-    document.getElementById("following").textContent = user.following;
-    // 固定地址 Japan Hokkaido
-    document.getElementById("location").textContent = "Japan Hokkaido";
-    document.getElementById("repo-count").textContent = user.public_repos;
-  });
+.then(res=>res.json())
+.then(user=>{
+  document.getElementById("avatar").src = user.avatar_url;
+  document.getElementById("followers").textContent = user.followers;
+  document.getElementById("following").textContent = user.following;
+});
 
-// 2. 拉取仓库信息，并生成置顶卡片
+// 渲染Pinned仓库，单行布局
 fetch(`https://api.github.com/users/${USERNAME}/repos?per_page=100`)
-  .then(res => res.json())
-  .then(repos => {
-    const container = document.getElementById("pinned-container");
-    container.innerHTML = "";
-
-    PINNED_REPOS.forEach((name, index) => {
-      const repo = repos.find(r => r.name === name);
-      if (!repo) return;
-
-      const isPrivate = repo.private;
-      const lang = repo.language || "Unknown";
-      const langColor = LANG_COLORS[lang] || "#8b949e";
-      const isLast = index === PINNED_REPOS.length - 1;
-
-      const card = document.createElement("div");
-      card.className = `bg-ghCard border border-ghBorder rounded p-4 ${isLast ? "col-span-2" : ""}`;
-      card.innerHTML = `
-        <div class="flex items-center gap-2 mb-2">
-          <i class="fa ${isPrivate ? "fa-lock" : "fa-book"} text-ghMuted"></i>
-          <a href="${repo.html_url}" target="_blank" class="text-ghBlue font-medium break-all">${repo.name}</a>
-          <span class="text-xs bg-ghBorder px-1 rounded ml-auto">${isPrivate ? "Private" : "Public"}</span>
+.then(res=>res.json())
+.then(repos=>{
+  const container = document.getElementById("pinned-container");
+  container.innerHTML = "";
+  PINNED_REPOS.forEach(name=>{
+    const repo = repos.find(r=>r.name===name);
+    if(!repo) return;
+    const lang = repo.language || "";
+    const color = LANG_COLORS[lang] || "#8b949e";
+    const card = document.createElement("div");
+    card.className = "pinned-item bg-ghCard border border-ghBorder rounded p-4";
+    card.innerHTML = `
+      <div class="flex justify-between items-start mb-2">
+        <div class="flex items-center gap-2">
+          <i class="fa fa-book text-ghMuted"></i>
+          <a href="${repo.html_url}" target="_blank" class="text-ghBlue font-medium">${repo.name}</a>
         </div>
-        <p class="text-sm text-ghMuted mb-3">${repo.description || "暂无描述"}</p>
-        <div class="flex items-center gap-4 text-xs text-ghMuted">
-          <span class="flex items-center gap-1">
-            <span class="w-3 h-3 rounded-full" style="background:${langColor}"></span>
-            ${lang}
-          </span>
-          <span><i class="fa fa-star"></i> ${repo.stargazers_count}</span>
-          <span><i class="fa fa-code-fork"></i> ${repo.forks_count}</span>
-        </div>
-      `;
-      container.appendChild(card);
-    });
-  });
+        <span class="text-xs bg-ghBorder px-1 rounded">${repo.private ? "Private":"Public"}</span>
+      </div>
+      <p class="text-sm text-ghMuted mb-3">${repo.description || ""}</p>
+      <div class="flex items-center gap-4 text-xs text-ghMuted">
+        ${lang ? `<span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full" style="background:${color}"></span>${lang}</span>` : ""}
+        <span><i class="fa fa-star"></i> ${repo.stargazers_count}</span>
+        <span><i class="fa fa-code-fork"></i> ${repo.forks_count}</span>
+      </div>
+    `;
+    container.appendChild(card);
+  })
+})
 
-// 3. 拉取最近活动
+// 活动列表，复刻截图时间+PushEvent样式
 fetch(`https://api.github.com/users/${USERNAME}/events/public?per_page=30`)
-  .then(res => res.json())
-  .then(events => {
-    const list = document.getElementById("activity-list");
-    list.innerHTML = "";
-
-    if (!events.length) {
-      list.innerHTML = "<p>暂无公开活动</p>";
-      return;
-    }
-
-    events.slice(0, 8).forEach(e => {
-      const item = document.createElement("div");
-      item.className = "text-ghText";
-      item.innerHTML = `
-        <span class="text-ghMuted">${new Date(e.created_at).toLocaleString()}</span>
-        <span class="ml-2">${e.type}</span>
-        <span class="text-ghBlue ml-2">${e.repo.name}</span>
-      `;
-      list.appendChild(item);
-    });
-  });
+.then(res=>res.json())
+.then(events=>{
+  const list = document.getElementById("activity-list");
+  list.innerHTML = "";
+  events.slice(0,10).forEach(e=>{
+    const time = new Date(e.created_at).toLocaleString();
+    const div = document.createElement("div");
+    div.innerHTML = `<span class="text-ghMuted">${time}</span> <span class="text-ghText">${e.type}</span> <a href="https://github.com/${e.repo.name}" target="_blank" class="text-ghBlue">${e.repo.name}</a>`;
+    list.appendChild(div);
+  })
+})
 </script>
-
 </body>
 </html>
