@@ -1,11 +1,200 @@
 <!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>我的个人网站</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Profile - Linus Style</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ghBg: '#0d1117',
+                        ghCard: '#161b22',
+                        ghBorder: '#30363d',
+                        ghGreen: '#238636',
+                        ghText: '#c9d1d9',
+                        ghMuted: '#8b949e',
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .contribution-cell {
+                width: 12px;
+                height: 12px;
+                border-radius: 2px;
+            }
+        }
+    </style>
 </head>
-<body>
-<h1>你好，世界！</h1>
-<p>欢迎来到我的 GitHub Pages 个人主页。</p>
+<body class="bg-ghBg text-ghText min-h-screen">
+    <!-- Top Navbar -->
+    <header class="border-b border-ghBorder px-4 py-3 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <i class="fa fa-github text-2xl"></i>
+            <span class="text-sm">Overview</span>
+            <span class="text-sm">Repositories <span class="bg-ghBorder px-1 rounded text-xs">12</span></span>
+            <span class="text-sm">Projects</span>
+            <span class="text-sm">Packages</span>
+            <span class="text-sm">Stars <span class="bg-ghBorder px-1 rounded text-xs">2</span></span>
+        </div>
+        <div class="flex items-center gap-3">
+            <input type="text" placeholder="Type / to search" class="bg-ghCard border border-ghBorder rounded px-2 py-1 text-sm w-48">
+            <i class="fa fa-user-circle-o text-xl"></i>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-12 gap-6">
+        <!-- Left Sidebar -->
+        <aside class="col-span-3">
+            <div class="mb-6">
+                <img src="https://avatars.githubusercontent.com/u/1024025?v=4" alt="Avatar" class="w-full rounded-full border border-ghBorder">
+            </div>
+            <h1 class="text-[clamp(1.5rem,3vw,2rem)] font-bold">Linus Torvalds</h1>
+            <p class="text-ghMuted text-lg mb-4">torvalds</p>
+            <button class="w-full bg-ghCard border border-ghBorder rounded py-1.5 text-sm mb-4 hover:bg-ghBorder">Follow</button>
+            <div class="text-sm text-ghMuted mb-4">
+                <p><i class="fa fa-users mr-1"></i> 332k followers · 0 following</p>
+            </div>
+            <div class="text-sm space-y-2 mb-6">
+                <p><i class="fa fa-building mr-1"></i> Linux Foundation</p>
+                <p><i class="fa fa-map-marker mr-1"></i> Portland, OR</p>
+            </div>
+            <div>
+                <p class="font-semibold mb-2">Achievements</p>
+                <div class="flex flex-wrap gap-2">
+                    <div class="w-10 h-10 rounded-full bg-ghCard border border-ghBorder flex items-center justify-center">🏅</div>
+                    <div class="w-10 h-10 rounded-full bg-ghCard border border-ghBorder flex items-center justify-center">🚁</div>
+                    <div class="w-10 h-10 rounded-full bg-ghCard border border-ghBorder flex items-center justify-center">🌊</div>
+                    <div class="w-10 h-10 rounded-full bg-ghCard border border-ghBorder flex items-center justify-center">🐙</div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Right Main Content -->
+        <section class="col-span-9">
+            <h2 class="text-lg font-semibold mb-4">Pinned</h2>
+            <!-- Pinned Grid 2 columns -->
+            <div class="grid grid-cols-2 gap-4 mb-6">
+                <!-- Card 1 -->
+                <div class="bg-ghCard border border-ghBorder rounded p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa fa-book"></i>
+                        <a href="#" class="text-blue-400 font-medium">linux</a>
+                        <span class="text-xs bg-ghBorder px-1 rounded">Public</span>
+                    </div>
+                    <p class="text-sm text-ghMuted mb-3">Linux kernel source tree</p>
+                    <div class="flex items-center gap-4 text-xs text-ghMuted">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-600"></span>C</span>
+                        <span><i class="fa fa-star"></i> 256k</span>
+                        <span><i class="fa fa-code-fork"></i> 67.5k</span>
+                    </div>
+                </div>
+                <!-- Card 2 -->
+                <div class="bg-ghCard border border-ghBorder rounded p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa fa-book"></i>
+                        <a href="#" class="text-blue-400 font-medium">GuitarPedal</a>
+                        <span class="text-xs bg-ghBorder px-1 rounded">Public</span>
+                    </div>
+                    <p class="text-sm text-ghMuted mb-3">Linus learns analog circuits</p>
+                    <div class="flex items-center gap-4 text-xs text-ghMuted">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-600"></span>C</span>
+                        <span><i class="fa fa-star"></i> 2.5k</span>
+                        <span><i class="fa fa-code-fork"></i> 135</span>
+                    </div>
+                </div>
+                <!-- Card 3 -->
+                <div class="bg-ghCard border border-ghBorder rounded p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa fa-book"></i>
+                        <a href="#" class="text-blue-400 font-medium">uemacs</a>
+                        <span class="text-xs bg-ghBorder px-1 rounded">Public</span>
+                    </div>
+                    <p class="text-sm text-ghMuted mb-3">Random version of microemacs with my private modificatons</p>
+                    <div class="flex items-center gap-4 text-xs text-ghMuted">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-600"></span>C</span>
+                        <span><i class="fa fa-star"></i> 2.2k</span>
+                        <span><i class="fa fa-code-fork"></i> 326</span>
+                    </div>
+                </div>
+                <!-- Card 4 -->
+                <div class="bg-ghCard border border-ghBorder rounded p-4">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa fa-book"></i>
+                        <a href="#" class="text-blue-400 font-medium">AudioNoise</a>
+                        <span class="text-xs bg-ghBorder px-1 rounded">Public</span>
+                    </div>
+                    <p class="text-sm text-ghMuted mb-3">Random digital audio effects</p>
+                    <div class="flex items-center gap-4 text-xs text-ghMuted">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-600"></span>C</span>
+                        <span><i class="fa fa-star"></i> 4.5k</span>
+                        <span><i class="fa fa-code-fork"></i> 228</span>
+                    </div>
+                </div>
+                <!-- Card 5 (single) -->
+                <div class="bg-ghCard border border-ghBorder rounded p-4 col-span-2">
+                    <div class="flex items-center gap-2 mb-2">
+                        <i class="fa fa-book"></i>
+                        <a href="#" class="text-blue-400 font-medium">HunspellColorize</a>
+                        <span class="text-xs bg-ghBorder px-1 rounded">Public</span>
+                    </div>
+                    <p class="text-sm text-ghMuted mb-3">Wrapper around 'less' to colorize spelling mistakes using Hunspell</p>
+                    <div class="flex items-center gap-4 text-xs text-ghMuted">
+                        <span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-yellow-600"></span>C</span>
+                        <span><i class="fa fa-star"></i> 401</span>
+                        <span><i class="fa fa-code-fork"></i> 21</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contribution Graph -->
+            <div class="mb-6">
+                <p class="mb-2">4,028 contributions in the last year</p>
+                <div class="bg-ghCard border border-ghBorder rounded p-4">
+                    <div class="flex justify-between text-xs text-ghMuted mb-2">
+                        <span>Nov Dec Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov</span>
+                        <span class="bg-blue-600 px-2 rounded">2026</span>
+                    </div>
+                    <div class="flex gap-1">
+                        <!-- 模拟贡献格子，你可以写JS生成随机热力 -->
+                        <div class="grid grid-rows-7 gap-1">
+                            <div class="contribution-cell bg-green-900"></div>
+                            <div class="contribution-cell bg-green-700"></div>
+                            <div class="contribution-cell bg-green-600"></div>
+                            <div class="contribution-cell bg-green-800"></div>
+                            <div class="contribution-cell bg-green-700"></div>
+                            <div class="contribution-cell bg-green-900"></div>
+                            <div class="contribution-cell bg-green-800"></div>
+                        </div>
+                        <div class="grid grid-rows-7 gap-1">
+                            <div class="contribution-cell bg-green-700"></div>
+                            <div class="contribution-cell bg-green-600"></div>
+                            <div class="contribution-cell bg-green-800"></div>
+                            <div class="contribution-cell bg-green-900"></div>
+                            <div class="contribution-cell bg-green-700"></div>
+                            <div class="contribution-cell bg-green-600"></div>
+                            <div class="contribution-cell bg-green-800"></div>
+                        </div>
+                        <!-- 这里省略大量格子，实际可以JS循环生成 -->
+                        <span class="text-xs text-ghMuted self-end ml-4">Mon<br>Wed<br>Fri</span>
+                    </div>
+                    <div class="text-xs text-ghMuted mt-3 flex justify-between">
+                        <span>Learn how we count contributions</span>
+                        <span>Less <span class="inline-block w-3 h-3 bg-green-900"></span> <span class="inline-block w-3 h-3 bg-green-700"></span> <span class="inline-block w-3 h-3 bg-green-600"></span> <span class="inline-block w-3 h-3 bg-green-500"></span> More</span>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-ghCard border border-ghBorder rounded p-3 text-sm">
+                <i class="fa fa-user"></i> @subsurface
+                <p class="mt-2">Activity overview</p>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
