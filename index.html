@@ -3,156 +3,242 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>KaomianbaoQQ - GitHub Profile</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          ghBg: "#0d1117",
-          ghCard: "#161b22",
-          ghBorder: "#30363d",
-          ghText: "#c9d1d9",
-          ghMuted: "#8b949e",
-          ghBlue: "#58a6ff"
-        }
-      }
-    }
-  };
-</script>
+<title>KaomianbaoQQ · GitHub</title>
 <style>
-body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-}
-.pinned-item {
-  width: 100%;
-}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{background:#0d1117;color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+a{color:#58a6ff;text-decoration:none}
+a:hover{text-decoration:underline}
+.page{max-width:1280px;margin:0 auto;padding:24px 32px 80px}
+.layout{display:grid;grid-template-columns:296px minmax(0,1fr);gap:32px;align-items:start}
+.avatar{width:100%;aspect-ratio:1/1;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22}
+.name{font-size:24px;font-weight:600;color:#f0f6fc;margin:16px 0 0;line-height:1.25}
+.login{font-size:20px;color:#8b949e;margin:0 0 16px}
+.follow-btn{width:100%;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:7px 16px;color:#c9d1d9;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.follow-btn:hover{background:#30363d}
+.stats{margin:16px 0;color:#c9d1d9;font-size:14px}
+.stats a{font-weight:600}
+.bio{margin:16px 0;color:#c9d1d9}
+.info-line{display:flex;align-items:center;gap:8px;margin:8px 0;color:#c9d1d9;min-height:20px}
+.info-line svg{fill:#8b949e;flex:none;width:16px;height:16px}
+.sep{border:0;border-top:1px solid #21262d;margin:16px 0}
+.section-title{font-size:16px;font-weight:600;color:#f0f6fc;margin:0 0 12px}
+.badges{display:flex;gap:12px;align-items:center}
+.no-org{color:#8b949e;font-size:13px}
+.main{min-width:0}
+.tabs{display:flex;gap:24px;border-bottom:1px solid #21262d;margin-bottom:24px}
+.tab{padding:0 0 12px;color:#c9d1d9;font-size:14px;border-bottom:2px solid transparent;display:flex;align-items:center;gap:8px}
+.tab.active{font-weight:600;border-bottom-color:#f78166;color:#f0f6fc}
+.tab .count{background:#30363d;border-radius:20px;padding:0 7px;font-size:12px;line-height:20px}
+.repo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.repo-card{border:1px solid #30363d;border-radius:6px;padding:16px;min-height:118px;display:flex;flex-direction:column}
+.repo-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.repo-name{font-size:16px;font-weight:600;color:#58a6ff;word-break:break-word}
+.repo-desc{color:#8b949e;font-size:13px;margin:8px 0 16px;flex:1}
+.repo-meta{display:flex;align-items:center;gap:16px;font-size:12px;color:#8b949e;margin-top:auto}
+.repo-meta .metric{display:inline-flex;align-items:center;gap:4px}
+.oct{width:14px;height:14px;fill:#8b949e;vertical-align:-2px}
+.dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:-1px}
+.contrib-title{font-size:16px;margin:32px 0 12px;font-weight:400}
+.contrib-card{border:1px solid #30363d;border-radius:6px;padding:16px;background:#0d1117;overflow:hidden}
+.contrib-card svg{display:block;max-width:100%;height:auto}
+.contrib-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:#8b949e;gap:16px}
+.contrib-foot a{color:#58a6ff}
+.legend{display:flex;align-items:center;gap:4px;white-space:nowrap}
+.legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.src-note{margin-top:28px;font-size:12px;color:#6e7681;border-top:1px solid #21262d;padding-top:12px}
+.src-note .live{color:#3fb950}
+.src-note .err{color:#f85149}
+.skeleton{color:#6e7681;font-size:13px}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.repo-grid{grid-template-columns:1fr}.page{padding:16px}}
 </style>
 </head>
-<body class="bg-ghBg text-ghText">
-<div class="max-w-6xl mx-auto px-6 py-8 grid grid-cols-12 gap-6">
-  <!-- 左侧侧边栏 -->
-  <aside class="col-span-3">
-    <div class="mb-4">
-      <img id="avatar" src="https://github.com/KaomianbaoQQ.png" alt="avatar" class="w-full rounded-full border border-ghBorder" />
-    </div>
-    <h1 id="user-name" class="text-2xl font-bold">KaomianbaoQQ</h1>
-    <p id="user-login" class="text-ghMuted text-lg mb-4">KaomianbaoQQ</p>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<symbol id="i-star" viewBox="0 0 16 16"><path d="M8 .25l2.2 4.45 4.91.72-3.55 3.46.84 4.89L8 11.18l-4.4 2.31.84-4.89L.89 5.42l4.91-.72L8 .25z"/></symbol>
+<symbol id="i-fork" viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm0 1.872a2.25 2.25 0 1 0-1.5 0v.878c0 .966.784 1.75 1.75 1.75h4.5c.966 0 1.75-.784 1.75-1.75v-.878a2.25 2.25 0 1 0-1.5 0v.878a.25.25 0 0 1-.25.25h-4.5a.25.25 0 0 1-.25-.25v-.878zm6.75-1.872a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0z"/></symbol>
+<symbol id="i-people" viewBox="0 0 16 16"><path d="M5.5 3.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM2 7.5c0-1.1.9-2 2-2s2 .9 2 2v1.5H2V7.5zm7-4a2 2 0 1 1 4 0 2 2 0 0 1-4 0zM9 7.5c0-1.1.9-2 2-2s2 .9 2 2v1.5H9V7.5zM1 11h6v3H1v-3zm8 0h6v3H9v-3z"/></symbol>
+<symbol id="i-pin" viewBox="0 0 16 16"><path d="M8 0a4.5 4.5 0 0 0-4.5 4.5C3.5 7.65 8 16 8 16s4.5-8.35 4.5-11.5A4.5 4.5 0 0 0 8 0zm0 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></symbol>
+</svg>
+<div class="page">
+<div class="layout">
 
-    <button class="w-full bg-ghCard border border-ghBorder rounded py-1.5 text-sm mb-4 hover:bg-ghBorder">
-      Follow
-    </button>
+<aside>
+<img class="avatar" id="avatar" alt="avatar" />
+<h1 class="name" id="name">KaomianbaoQQ</h1>
+<p class="login" id="login">KaomianbaoQQ</p>
+<button class="follow-btn" type="button">Follow</button>
+<div class="stats">
+<svg class="oct" style="width:16px;height:16px"><use href="#i-people"/></svg>
+<a href="#"><span id="followers">–</span></a> followers · <a href="#"><span id="following">–</span></a> following ·
+<svg class="oct" style="width:14px;height:14px"><use href="#i-star"/></svg> 0
+</div>
+<p class="bio" id="bio"></p>
+<div class="info-line" id="location-line"><svg><use href="#i-pin"/></svg><span id="location"></span></div>
+<hr class="sep" />
+<h2 class="section-title">Achievements</h2>
+<div class="badges">
+<svg width="44" height="60" viewBox="0 0 44 60" role="img" aria-label="Achievement badge">
+<defs><linearGradient id="ag1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#c06ab8"/><stop offset="1" stop-color="#5a2a82"/></linearGradient></defs>
+<path d="M22 1 42 10v22c0 12-20 27-20 27S2 44 2 32V10L22 1z" fill="url(#ag1)" stroke="#0d1117" stroke-width="2"/>
+<path d="M13 25c4-7 14-7 18 0-4 2-7 6-7 11h-4c0-5-3-9-7-11z" fill="#fff" opacity=".92"/>
+</svg>
+<svg width="44" height="60" viewBox="0 0 44 60" role="img" aria-label="Achievement badge">
+<defs><linearGradient id="ag2" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6fc7df"/><stop offset="1" stop-color="#2b6cb0"/></linearGradient></defs>
+<path d="M22 1 42 10v22c0 12-20 27-20 27S2 44 2 32V10L22 1z" fill="url(#ag2)" stroke="#0d1117" stroke-width="2"/>
+<path d="m22 20 2.6 5.4 5.9.9-4.3 4.2 1 5.9L22 33.9l-5.2 2.5 1-5.9-4.3-4.2 5.9-.9L22 20z" fill="#fff" opacity=".95"/>
+</svg>
+</div>
+<hr class="sep" />
+<h2 class="section-title">Organizations</h2>
+<div class="no-org">No public organizations</div>
+</aside>
 
-    <div class="text-sm text-ghMuted mb-3">
-      <p><i class="fa fa-users mr-1"></i>
-        <span id="followers">0</span> followers ·
-        <span id="following">0</span> following
-      </p>
-    </div>
-    <div class="text-sm text-ghMuted mb-6">
-      <p><i class="fa fa-map-marker mr-1"></i> Japan Hokkaido</p>
-    </div>
+<main class="main">
+<nav class="tabs">
+<span class="tab active">Overview</span>
+<span class="tab">Repositories <span class="count" id="repo-count">–</span></span>
+<span class="tab">Projects</span>
+<span class="tab">Packages</span>
+</nav>
 
-    <div>
-      <p class="font-semibold mb-2">Achievements</p>
-      <img src="https://github-profile-trophy.vercel.app/?username=KaomianbaoQQ&locale=ja&region=Hokkaido&theme=dark" alt="trophy" class="w-full">
-    </div>
-  </aside>
+<h2 class="section-title">Popular repositories</h2>
+<div class="repo-grid" id="repos"><span class="skeleton">Loading repositories from GitHub…</span></div>
 
-  <!-- 右侧主内容 -->
-  <section class="col-span-9">
-    <h2 class="text-lg font-semibold mb-4">Pinned</h2>
-    <div id="pinned-container" class="flex flex-col gap-4 mb-6">
-      <!-- 仓库自适应单行 -->
-    </div>
+<p class="contrib-title" id="contrib-title">Loading contributions from GitHub…</p>
+<div class="contrib-card">
+<div id="contrib-graph"><span class="skeleton">Loading contribution calendar…</span></div>
+<div class="contrib-foot">
+<span>Learn how we count contributions</span>
+<span class="legend">Less
+<i style="background:#161b22;border:1px solid #30363d"></i>
+<i style="background:#0e4429"></i><i style="background:#006d32"></i><i style="background:#26a641"></i><i style="background:#39d353"></i>
+More</span>
+</div>
+</div>
 
-    <p class="mb-2" id="contribution-title">0 contributions in the last year</p>
-    <div class="bg-ghCard border border-ghBorder rounded p-4 mb-6">
-      <img id="contribution-graph"
-           src="https://github-readme-stats.vercel.app/api/grids?username=KaomianbaoQQ&theme=github_dark"
-           alt="contribution grid"
-           class="w-full" />
-    </div>
+<p class="src-note" id="src-note">数据来源：GitHub 实时获取中…</p>
+</main>
 
-    <div class="bg-ghCard border border-ghBorder rounded p-4 text-sm">
-      <p class="mb-2 text-ghMuted"><i class="fa fa-user mr-1"></i> @KaomianbaoQQ</p>
-      <p class="mb-3 text-ghMuted">Activity overview</p>
-      <div id="activity-list" class="space-y-1 text-xs font-mono">
-      </div>
-    </div>
-  </section>
+</div>
 </div>
 
 <script>
-const USERNAME = "KaomianbaoQQ";
-const PINNED_REPOS = [
-  "merchant-customer-platform",
-  "aerialsim-aircraft-f117"
-];
-const LANG_COLORS = {
-  Python: "#3572A5",
-  HLSL: "#a88060",
-  Java: "#b07219",
-  HTML: "#e34c26",
-  "C++": "#f34b7d"
-};
+const USERNAME = 'KaomianbaoQQ';
+const API_USER = `https://api.github.com/users/${USERNAME}`;
+const API_REPOS = `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
+const API_CONTRIB = `https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`;
+const LANG_COLORS = {Python:'#3572A5',HLSL:'#a88060',Java:'#b07219',HTML:'#e34c26','C++':'#f34b7d',JavaScript:'#f1e05a',TypeScript:'#3178c6',Go:'#00ADD8',Rust:'#dea584',Shell:'#89e051'};
+const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const LEVEL_COLORS = ['#161b22','#0e4429','#006d32','#26a641','#39d353'];
 
-// 用户基础信息
-fetch(`https://api.github.com/users/${USERNAME}`)
-.then(res=>res.json())
-.then(user=>{
-  document.getElementById("avatar").src = user.avatar_url;
-  document.getElementById("followers").textContent = user.followers;
-  document.getElementById("following").textContent = user.following;
-});
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+async function getJSON(url){const r=await fetch(url);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
-// 渲染Pinned仓库，单行布局
-fetch(`https://api.github.com/users/${USERNAME}/repos?per_page=100`)
-.then(res=>res.json())
-.then(repos=>{
-  const container = document.getElementById("pinned-container");
-  container.innerHTML = "";
-  PINNED_REPOS.forEach(name=>{
-    const repo = repos.find(r=>r.name===name);
-    if(!repo) return;
-    const lang = repo.language || "";
-    const color = LANG_COLORS[lang] || "#8b949e";
-    const card = document.createElement("div");
-    card.className = "pinned-item bg-ghCard border border-ghBorder rounded p-4";
-    card.innerHTML = `
-      <div class="flex justify-between items-start mb-2">
-        <div class="flex items-center gap-2">
-          <i class="fa fa-book text-ghMuted"></i>
-          <a href="${repo.html_url}" target="_blank" class="text-ghBlue font-medium">${repo.name}</a>
-        </div>
-        <span class="text-xs bg-ghBorder px-1 rounded">${repo.private ? "Private":"Public"}</span>
+function renderProfile(p){
+  document.getElementById('avatar').src = p.avatar_url;
+  document.getElementById('name').textContent = p.name;
+  document.getElementById('login').textContent = p.login;
+  document.getElementById('followers').textContent = p.followers;
+  document.getElementById('following').textContent = p.following;
+  document.getElementById('repo-count').textContent = p.public_repos;
+  const bio = document.getElementById('bio');
+  bio.textContent = p.bio || '';
+  bio.style.display = p.bio ? '' : 'none';
+  const loc = document.getElementById('location');
+  loc.textContent = p.location || '';
+  document.getElementById('location-line').style.display = p.location ? '' : 'none';
+  document.title = p.login + ' · GitHub';
+}
+
+function renderRepos(repos){
+  const box = document.getElementById('repos');
+  if(!repos || !repos.length){box.innerHTML='<span class="skeleton">No public repositories</span>';return;}
+  box.innerHTML = repos.map(r=>`
+    <div class="repo-card">
+      <div class="repo-head"><a class="repo-name" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.name)}</a></div>
+      ${r.description?`<p class="repo-desc">${esc(r.description)}</p>`:''}
+      <div class="repo-meta">
+        ${r.language?`<span><i class="dot" style="background:${LANG_COLORS[r.language]||'#8b949e'}"></i>${esc(r.language)}</span>`:''}
+        <span class="metric"><svg class="oct"><use href="#i-star"/></svg> ${r.stars}</span>
+        <span class="metric"><svg class="oct"><use href="#i-fork"/></svg> ${r.forks}</span>
       </div>
-      <p class="text-sm text-ghMuted mb-3">${repo.description || ""}</p>
-      <div class="flex items-center gap-4 text-xs text-ghMuted">
-        ${lang ? `<span class="flex items-center gap-1"><span class="w-3 h-3 rounded-full" style="background:${color}"></span>${lang}</span>` : ""}
-        <span><i class="fa fa-star"></i> ${repo.stargazers_count}</span>
-        <span><i class="fa fa-code-fork"></i> ${repo.forks_count}</span>
-      </div>
-    `;
-    container.appendChild(card);
-  })
-})
+    </div>`).join('');
+}
 
-// 活动列表，复刻截图时间+PushEvent样式
-fetch(`https://api.github.com/users/${USERNAME}/events/public?per_page=30`)
-.then(res=>res.json())
-.then(events=>{
-  const list = document.getElementById("activity-list");
-  list.innerHTML = "";
-  events.slice(0,10).forEach(e=>{
-    const time = new Date(e.created_at).toLocaleString();
-    const div = document.createElement("div");
-    div.innerHTML = `<span class="text-ghMuted">${time}</span> <span class="text-ghText">${e.type}</span> <a href="https://github.com/${e.repo.name}" target="_blank" class="text-ghBlue">${e.repo.name}</a>`;
-    list.appendChild(div);
-  })
-})
+function renderContributions(c){
+  document.getElementById('contrib-title').textContent =
+    `${c.total} contributions in the last year`;
+  const days = c.days || [];
+  if(!days.length){document.getElementById('contrib-graph').textContent='No contribution data';return;}
+  // days 按日期升序；GitHub 网格第一行为周日，每列为一周
+  const cell=11, gap=3, pitch=14, ox=40, oy=26;
+  const weeks=[]; let cur=[];
+  days.forEach(d=>{
+    const dow=new Date(d.date+'T00:00:00Z').getUTCDay();
+    if(dow===0 && cur.length){weeks.push(cur);cur=[];}
+    cur.push(d);
+  });
+  if(cur.length) weeks.push(cur);
+  const W=ox+weeks.length*pitch+10, H=oy+7*pitch+10;
+  let svg=`<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="Contribution activity grid">`;
+  let lastMonth=-1;
+  weeks.forEach((week,i)=>{
+    const d=new Date(week[0].date+'T00:00:00Z');
+    const mo=d.getUTCMonth();
+    if(mo!==lastMonth){lastMonth=mo;svg+=`<text x="${ox+i*pitch}" y="18" fill="#8b949e" font-size="10" font-family="Arial, sans-serif">${MONTHS[mo]}</text>`;}
+  });
+  [['Mon',1],['Wed',3],['Fri',5]].forEach(([lab,row])=>{
+    svg+=`<text x="0" y="${oy+row*pitch+9}" fill="#8b949e" font-size="10" font-family="Arial, sans-serif">${lab}</text>`;
+  });
+  weeks.forEach((week,i)=>week.forEach((d,r)=>{
+    const label=d.count?`${d.count} contribution${d.count>1?'s':''} on ${d.date}`:`No contributions on ${d.date}`;
+    svg+=`<rect x="${ox+i*pitch}" y="${oy+r*pitch}" width="${cell}" height="${cell}" rx="2" fill="${LEVEL_COLORS[d.level]}"><title>${label}</title></rect>`;
+  }));
+  svg+='</svg>';
+  document.getElementById('contrib-graph').innerHTML=svg;
+}
+
+async function main(){
+  const note=document.getElementById('src-note');
+  try{
+    const [user, reposRaw, contrib]=await Promise.all([
+      getJSON(API_USER),
+      getJSON(API_REPOS),
+      getJSON(API_CONTRIB)
+    ]);
+    const repos=(Array.isArray(reposRaw)?reposRaw:[])
+      .filter(r=>!r.fork)
+      .slice(0,6)
+      .map(r=>({
+        name:r.name, description:r.description||'', language:r.language||'',
+        stars:r.stargazers_count, forks:r.forks_count, url:r.html_url, private:r.private
+      }));
+    const profile={
+      login:user.login,
+      name:user.name||user.login,
+      avatar_url:user.avatar_url,
+      followers:user.followers,
+      following:user.following,
+      location:user.location||'Japan, Hokkaido',
+      bio:user.bio||'',
+      public_repos:user.public_repos,
+      repos
+    };
+    const contribution={
+      total:(contrib.total&&contrib.total.lastYear)||0,
+      days:(contrib.contributions||[]).map(x=>({date:x.date,count:x.count,level:x.level}))
+    };
+    renderProfile(profile);
+    renderRepos(repos);
+    renderContributions(contribution);
+    note.innerHTML=`<span class="live">● 实时数据</span> · 用户资料与仓库来自 GitHub REST API，贡献日历来自公开贡献 API · 纯前端直连，无需服务端 · 加载时间 ${new Date().toLocaleString()}`;
+  }catch(e){
+    note.innerHTML=`<span class="err">● 获取失败：${esc(e.message)}</span> · 请检查网络连接或稍后重试`;
+  }
+}
+main();
 </script>
 </body>
 </html>
