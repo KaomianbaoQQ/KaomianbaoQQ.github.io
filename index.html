@@ -19,7 +19,7 @@ a:hover{text-decoration:underline}
 .avatar{width:100%;aspect-ratio:1/1;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22}
 .name{font-size:24px;font-weight:600;color:#f0f6fc;margin:16px 0 0;line-height:1.25}
 .login{font-size:20px;color:#8b949e;margin:0 0 16px}
-.follow-btn{width:100%;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:7px 16px;color:#c9d1d9;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit}
+.follow-btn{display:block;width:100%;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:7px 16px;color:#c9d1d9;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
 .follow-btn:hover{background:#30363d}
 .bio{margin:16px 0;color:#c9d1d9}
 .info-line{display:flex;align-items:center;gap:8px;margin:8px 0;color:#c9d1d9;min-height:20px}
@@ -77,7 +77,7 @@ a:hover{text-decoration:underline}
 <img class="avatar" id="avatar" src="https://avatars.githubusercontent.com/u/275017180?v=4" alt="avatar" />
 <h1 class="name" id="name">KaomianbaoQQ</h1>
 <p class="login" id="login">KaomianbaoQQ</p>
-<button class="follow-btn" type="button" data-i18n="follow">Follow</button>
+<a class="follow-btn" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener" data-i18n="follow">Follow</a>
 <p class="bio" id="bio"></p>
 <div class="info-line" id="location-line"><svg><use href="#i-pin"/></svg><span id="location"></span></div>
 <hr class="sep" />
