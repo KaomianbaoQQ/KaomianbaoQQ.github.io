@@ -10,6 +10,10 @@ html,body{margin:0;padding:0}
 body{background:#0d1117;color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
 a{color:#58a6ff;text-decoration:none}
 a:hover{text-decoration:underline}
+.lang-switch{position:fixed;top:16px;right:16px;z-index:10;display:flex;background:#161b22;border:1px solid #30363d;border-radius:6px;overflow:hidden}
+.lang-switch button{background:transparent;border:0;color:#8b949e;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;line-height:1.2}
+.lang-switch button:hover{color:#c9d1d9}
+.lang-switch button.active{background:#21262d;color:#f0f6fc}
 .page{max-width:1280px;margin:0 auto;padding:24px 32px 80px}
 .layout{display:grid;grid-template-columns:296px minmax(0,1fr);gap:32px;align-items:start}
 .avatar{width:100%;aspect-ratio:1/1;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22}
@@ -60,6 +64,12 @@ a:hover{text-decoration:underline}
 <symbol id="i-fork" viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm0 1.872a2.25 2.25 0 1 0-1.5 0v.878c0 .966.784 1.75 1.75 1.75h4.5c.966 0 1.75-.784 1.75-1.75v-.878a2.25 2.25 0 1 0-1.5 0v.878a.25.25 0 0 1-.25.25h-4.5a.25.25 0 0 1-.25-.25v-.878zm6.75-1.872a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0z"/></symbol>
 <symbol id="i-pin" viewBox="0 0 16 16"><path d="M8 0a4.5 4.5 0 0 0-4.5 4.5C3.5 7.65 8 16 8 16s4.5-8.35 4.5-11.5A4.5 4.5 0 0 0 8 0zm0 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></symbol>
 </svg>
+
+<div class="lang-switch" role="group" aria-label="Language / 语言">
+<button type="button" data-lang="en" class="active">EN</button>
+<button type="button" data-lang="zh">中文</button>
+</div>
+
 <div class="page">
 <div class="layout">
 
@@ -67,43 +77,43 @@ a:hover{text-decoration:underline}
 <img class="avatar" id="avatar" src="https://avatars.githubusercontent.com/u/275017180?v=4" alt="avatar" />
 <h1 class="name" id="name">KaomianbaoQQ</h1>
 <p class="login" id="login">KaomianbaoQQ</p>
-<button class="follow-btn" type="button">Follow</button>
+<button class="follow-btn" type="button" data-i18n="follow">Follow</button>
 <p class="bio" id="bio"></p>
 <div class="info-line" id="location-line"><svg><use href="#i-pin"/></svg><span id="location"></span></div>
 <hr class="sep" />
-<h2 class="section-title">Achievements</h2>
+<h2 class="section-title" data-i18n="achievements">Achievements</h2>
 <div class="badges">
 <img id="trophy" src="achievements-clean.svg" alt="GitHub achievements" />
 </div>
 <hr class="sep" />
-<h2 class="section-title">Organizations</h2>
-<div class="no-org">No public organizations</div>
+<h2 class="section-title" data-i18n="organizations">Organizations</h2>
+<div class="no-org" data-i18n="noOrgs">No public organizations</div>
 </aside>
 
 <main class="main">
 <nav class="tabs">
-<a class="tab active" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener">Overview</a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=repositories" target="_blank" rel="noopener">Repositories <span class="count" id="repo-count">–</span></a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=projects" target="_blank" rel="noopener">Projects</a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=packages" target="_blank" rel="noopener">Packages</a>
+<a class="tab active" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener" data-i18n="overview">Overview</a>
+<a class="tab" href="https://github.com/KaomianbaoQQ?tab=repositories" target="_blank" rel="noopener"><span data-i18n="repositories">Repositories</span> <span class="count" id="repo-count">–</span></a>
+<a class="tab" href="https://github.com/KaomianbaoQQ?tab=projects" target="_blank" rel="noopener" data-i18n="projects">Projects</a>
+<a class="tab" href="https://github.com/KaomianbaoQQ?tab=packages" target="_blank" rel="noopener" data-i18n="packages">Packages</a>
 </nav>
 
-<h2 class="section-title">Popular repositories</h2>
-<div class="repo-grid" id="repos"><span class="skeleton">Loading repositories from GitHub…</span></div>
+<h2 class="section-title" data-i18n="popularRepos">Popular repositories</h2>
+<div class="repo-grid" id="repos"><span class="skeleton" data-i18n="loadingRepos">Loading repositories from GitHub…</span></div>
 
-<p class="contrib-title" id="contrib-title">Loading contributions from GitHub…</p>
+<p class="contrib-title" id="contrib-title" data-i18n="loadingContrib">Loading contributions from GitHub…</p>
 <div class="contrib-card">
-<div id="contrib-graph"><span class="skeleton">Loading contribution calendar…</span></div>
+<div id="contrib-graph"><span class="skeleton" data-i18n="loadingCalendar">Loading contribution calendar…</span></div>
 <div class="contrib-foot">
-<span>Learn how we count contributions</span>
-<span class="legend">Less
+<span data-i18n="learnCount">Learn how we count contributions</span>
+<span class="legend"><span data-i18n="less">Less</span>
 <i style="background:#161b22;border:1px solid #30363d"></i>
 <i style="background:#0e4429"></i><i style="background:#006d32"></i><i style="background:#26a641"></i><i style="background:#39d353"></i>
-More</span>
+<span data-i18n="more">More</span></span>
 </div>
 </div>
 
-<p class="src-note" id="src-note">数据来源：GitHub 实时获取中…</p>
+<p class="src-note" id="src-note" data-i18n="loadingNote">数据来源：GitHub 实时获取中…</p>
 </main>
 
 </div>
@@ -115,9 +125,58 @@ const API_USER = `https://api.github.com/users/${USERNAME}`;
 const API_REPOS = `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
 const API_CONTRIB = `https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`;
 const LANG_COLORS = {Python:'#3572A5',HLSL:'#a88060',Java:'#b07219',HTML:'#e34c26','C++':'#f34b7d',JavaScript:'#f1e05a',TypeScript:'#3178c6',Go:'#00ADD8',Rust:'#dea584',Shell:'#89e051'};
-const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 const LEVEL_COLORS = ['#161b22','#0e4429','#006d32','#26a641','#39d353'];
 
+const I18N = {
+  en:{
+    follow:'Follow', achievements:'Achievements', organizations:'Organizations',
+    noOrgs:'No public organizations', overview:'Overview', repositories:'Repositories',
+    projects:'Projects', packages:'Packages', popularRepos:'Popular repositories',
+    loadingRepos:'Loading repositories from GitHub…', loadingContrib:'Loading contributions from GitHub…',
+    loadingCalendar:'Loading contribution calendar…', loadingNote:'Loading data from GitHub…',
+    learnCount:'Learn how we count contributions', less:'Less', more:'More',
+    noRepos:'No public repositories',
+    contribTitle:n=>`${n} contributions in the last year`,
+    noContrib:'No contribution data',
+    contribOn:(n,d)=>`${n} contribution${n>1?'s':''} on ${d}`,
+    noContribOn:d=>`No contributions on ${d}`,
+    months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+    weekdays:['Mon','Wed','Fri'],
+    gridAria:'Contribution activity grid',
+    noteLiveTag:'● Live data',
+    noteLive:' Profile, repositories and contributions are fetched from GitHub on every visit and change with account activity',
+    noteOfflineTag:'● Offline snapshot',
+    noteOffline:' GitHub API is temporarily unavailable; showing the most recent real data snapshot',
+    notePartialTag:'● Partially live',
+    notePartial:' Some data comes from the last real snapshot (automatic fallback when GitHub API is rate-limited)'
+  },
+  zh:{
+    follow:'关注', achievements:'成就', organizations:'组织',
+    noOrgs:'暂无公开组织', overview:'概览', repositories:'仓库',
+    projects:'项目', packages:'软件包', popularRepos:'热门仓库',
+    loadingRepos:'正在从 GitHub 加载仓库…', loadingContrib:'正在从 GitHub 加载贡献记录…',
+    loadingCalendar:'正在加载贡献日历…', loadingNote:'正在从 GitHub 获取数据…',
+    learnCount:'了解贡献如何统计', less:'少', more:'多',
+    noRepos:'暂无公开仓库',
+    contribTitle:n=>`过去一年 ${n} 次贡献`,
+    noContrib:'暂无贡献数据',
+    contribOn:(n,d)=>`${d} 有 ${n} 次贡献`,
+    noContribOn:d=>`${d} 无贡献`,
+    months:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+    weekdays:['周一','周三','周五'],
+    gridAria:'贡献活动日历',
+    noteLiveTag:'● 实时数据',
+    noteLive:'每次打开页面自动从 GitHub 拉取最新资料、仓库与贡献记录，数据会随账号活动变化',
+    noteOfflineTag:'● 离线快照',
+    noteOffline:'GitHub API 暂时不可用，正展示最近一次的真实数据快照',
+    notePartialTag:'● 部分实时',
+    notePartial:'部分数据来自最近一次真实快照（GitHub API 限流时自动回退，避免空白）'
+  }
+};
+
+let LANG = (localStorage.getItem('gh_profile_lang') === 'zh') ? 'zh' : 'en';
+const APP_STATE = {profile:null, repos:null, contribution:null, liveCount:0, fallbackCount:0};
+function t(k,...args){const v=I18N[LANG][k];return typeof v==='function'?v(...args):v;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 async function getJSON(url){const r=await fetch(url);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
@@ -137,7 +196,7 @@ function renderProfile(p){
 
 function renderRepos(repos){
   const box = document.getElementById('repos');
-  if(!repos || !repos.length){box.innerHTML='<span class="skeleton">No public repositories</span>';return;}
+  if(!repos || !repos.length){box.innerHTML=`<span class="skeleton">${esc(t('noRepos'))}</span>`;return;}
   box.innerHTML = repos.map(r=>`
     <div class="repo-card">
       <div class="repo-head"><a class="repo-name" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.name)}</a></div>
@@ -151,11 +210,9 @@ function renderRepos(repos){
 }
 
 function renderContributions(c){
-  document.getElementById('contrib-title').textContent =
-    `${c.total} contributions in the last year`;
+  document.getElementById('contrib-title').textContent = t('contribTitle', c.total);
   const days = c.days || [];
-  if(!days.length){document.getElementById('contrib-graph').textContent='No contribution data';return;}
-  // days 按日期升序；GitHub 网格第一行为周日，每列为一周
+  if(!days.length){document.getElementById('contrib-graph').textContent=t('noContrib');return;}
   const cell=11, gap=3, pitch=14, ox=40, oy=26;
   const weeks=[]; let cur=[];
   days.forEach(d=>{
@@ -165,23 +222,54 @@ function renderContributions(c){
   });
   if(cur.length) weeks.push(cur);
   const W=ox+weeks.length*pitch+10, H=oy+7*pitch+10;
-  let svg=`<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="Contribution activity grid">`;
+  const months=t('months'), weekdays=t('weekdays');
+  let svg=`<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="${esc(t('gridAria'))}">`;
   let lastMonth=-1;
   weeks.forEach((week,i)=>{
     const d=new Date(week[0].date+'T00:00:00Z');
     const mo=d.getUTCMonth();
-    if(mo!==lastMonth){lastMonth=mo;svg+=`<text x="${ox+i*pitch}" y="18" fill="#8b949e" font-size="10" font-family="Arial, sans-serif">${MONTHS[mo]}</text>`;}
+    if(mo!==lastMonth){lastMonth=mo;svg+=`<text x="${ox+i*pitch}" y="18" fill="#8b949e" font-size="10" font-family="Arial, sans-serif">${esc(months[mo])}</text>`;}
   });
-  [['Mon',1],['Wed',3],['Fri',5]].forEach(([lab,row])=>{
-    svg+=`<text x="0" y="${oy+row*pitch+9}" fill="#8b949e" font-size="10" font-family="Arial, sans-serif">${lab}</text>`;
+  [[weekdays[0],1],[weekdays[1],3],[weekdays[2],5]].forEach(([lab,row])=>{
+    svg+=`<text x="0" y="${oy+row*pitch+9}" fill="#8b949e" font-size="10" font-family="Arial, sans-serif">${esc(lab)}</text>`;
   });
   weeks.forEach((week,i)=>week.forEach((d,r)=>{
-    const label=d.count?`${d.count} contribution${d.count>1?'s':''} on ${d.date}`:`No contributions on ${d.date}`;
+    const label=d.count?esc(t('contribOn',d.count,d.date)):esc(t('noContribOn',d.date));
     svg+=`<rect x="${ox+i*pitch}" y="${oy+r*pitch}" width="${cell}" height="${cell}" rx="2" fill="${LEVEL_COLORS[d.level]}"><title>${label}</title></rect>`;
   }));
   svg+='</svg>';
   document.getElementById('contrib-graph').innerHTML=svg;
 }
+
+function updateNote(){
+  const note=document.getElementById('src-note');
+  const {liveCount,fallbackCount}=APP_STATE;
+  if(fallbackCount===0){
+    note.innerHTML=`<span class="live">${esc(t('noteLiveTag'))}</span> · ${esc(t('noteLive'))}`;
+  }else if(liveCount===0){
+    note.innerHTML=`<span class="err">${esc(t('noteOfflineTag'))}</span> · ${esc(t('noteOffline'))}`;
+  }else{
+    note.innerHTML=`<span class="live">${esc(t('notePartialTag'))}</span> · ${esc(t('notePartial'))}`;
+  }
+}
+
+function applyLang(){
+  document.documentElement.lang = LANG==='zh' ? 'zh-CN' : 'en';
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
+  if(APP_STATE.contribution) renderContributions(APP_STATE.contribution);
+  if(APP_STATE.repos) renderRepos(APP_STATE.repos);
+  updateNote();
+  if(APP_STATE.profile) document.title = APP_STATE.profile.login + ' · GitHub';
+}
+
+document.querySelectorAll('.lang-switch button').forEach(b=>{
+  b.addEventListener('click',()=>{
+    LANG=b.dataset.lang;
+    localStorage.setItem('gh_profile_lang',LANG);
+    applyLang();
+  });
+});
 
 // 构建时抓取的真实数据快照，用于 API 限流/失败时回退，避免页面空白
 const FALLBACK = {
@@ -197,7 +285,6 @@ const FALLBACK = {
   ]
 };
 
-// 贡献图回退快照：真实 29 次 / 368 天（level 由 count 换算）
 const FALLBACK_CONTRIB = {
   total: 29,
   notable: [
@@ -209,7 +296,6 @@ const FALLBACK_CONTRIB = {
     {date:'2026-11-18',count:7,level:4}
   ]
 };
-// 由有贡献日期展开为完整日历（2025-11-16 为周日，共 368 天）
 function expandCalendar(c){
   const map={};
   c.notable.forEach(d=>map[d.date]=d);
@@ -224,10 +310,8 @@ function expandCalendar(c){
 }
 
 async function main(){
-  const note=document.getElementById('src-note');
   let liveCount=0, fallbackCount=0;
 
-  // 1) 用户资料：实时拉取失败则回退快照
   let profile=FALLBACK;
   try{
     const user=await getJSON(API_USER);
@@ -240,7 +324,6 @@ async function main(){
     liveCount++;
   }catch(e){fallbackCount++;}
 
-  // 2) 仓库列表：实时拉取失败则回退快照
   let repos=FALLBACK.repos;
   try{
     const raw=await getJSON(API_REPOS);
@@ -252,7 +335,6 @@ async function main(){
   }catch(e){fallbackCount++;}
   profile.repos=repos;
 
-  // 3) 贡献图：实时拉取失败则回退真实快照
   let contribution=expandCalendar(FALLBACK_CONTRIB);
   try{
     const c=await getJSON(API_CONTRIB);
@@ -261,17 +343,14 @@ async function main(){
   }catch(e){fallbackCount++;}
 
   renderProfile(profile);
-  renderRepos(repos);
-  renderContributions(contribution);
-
-  if(fallbackCount===0){
-    note.innerHTML=`<span class="live">● 实时数据</span> · 每次打开页面自动从 GitHub 拉取最新资料、仓库与贡献记录，数据会随账号活动变化`;
-  }else if(liveCount===0){
-    note.innerHTML=`<span class="err">● 离线快照</span> · GitHub API 暂时不可用，正展示最近一次的真实数据快照`;
-  }else{
-    note.innerHTML=`<span class="live">● 部分实时</span> · 部分数据来自最近一次真实快照（GitHub API 限流时自动回退，避免空白）`;
-  }
+  APP_STATE.profile=profile;
+  APP_STATE.repos=repos;
+  APP_STATE.contribution=contribution;
+  APP_STATE.liveCount=liveCount;
+  APP_STATE.fallbackCount=fallbackCount;
+  applyLang();
 }
+applyLang();
 main();
 </script>
 </body>
