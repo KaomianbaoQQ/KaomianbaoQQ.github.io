@@ -64,7 +64,7 @@ a:hover{text-decoration:underline}
 <div class="layout">
 
 <aside>
-<img class="avatar" id="avatar" alt="avatar" />
+<img class="avatar" id="avatar" src="https://avatars.githubusercontent.com/u/275017180?v=4" alt="avatar" />
 <h1 class="name" id="name">KaomianbaoQQ</h1>
 <p class="login" id="login">KaomianbaoQQ</p>
 <button class="follow-btn" type="button">Follow</button>
@@ -73,7 +73,7 @@ a:hover{text-decoration:underline}
 <hr class="sep" />
 <h2 class="section-title">Achievements</h2>
 <div class="badges">
-<img id="trophy" src="https://github-trophy.vercel.app/?username=KaomianbaoQQ&theme=github_dark" alt="GitHub achievements" />
+<img id="trophy" src="achievements.svg" alt="GitHub achievements" />
 </div>
 <hr class="sep" />
 <h2 class="section-title">Organizations</h2>
@@ -183,40 +183,93 @@ function renderContributions(c){
   document.getElementById('contrib-graph').innerHTML=svg;
 }
 
+// 构建时抓取的真实数据快照，用于 API 限流/失败时回退，避免页面空白
+const FALLBACK = {
+  login:'KaomianbaoQQ',
+  name:'KaomianbaoQQ',
+  avatar_url:'https://avatars.githubusercontent.com/u/275017180?v=4',
+  location:'Japan, Hokkaido',
+  bio:'',
+  public_repos:3,
+  repos:[
+    {name:'merchant-customer-platform',description:'Multi-role platform with platform admin, merchant management and customer shopping modules.',language:'Python',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/merchant-customer-platform'},
+    {name:'aerialsim-aircraft-f117',description:'aerialsim-aircraft-f117',language:'HLSL',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/aerialsim-aircraft-f117'}
+  ]
+};
+
+// 贡献图回退快照：真实 29 次 / 368 天（level 由 count 换算）
+const FALLBACK_CONTRIB = {
+  total: 29,
+  notable: [
+    {date:'2026-04-10',count:1,level:1},
+    {date:'2026-10-22',count:1,level:1},
+    {date:'2026-10-24',count:1,level:1},
+    {date:'2026-11-11',count:13,level:4},
+    {date:'2026-11-12',count:6,level:4},
+    {date:'2026-11-18',count:7,level:4}
+  ]
+};
+// 由有贡献日期展开为完整日历（2025-11-16 为周日，共 368 天）
+function expandCalendar(c){
+  const map={};
+  c.notable.forEach(d=>map[d.date]=d);
+  const start=new Date('2025-11-16T00:00:00Z');
+  const days=[];
+  for(let i=0;i<368;i++){
+    const dt=new Date(start.getTime()+i*86400000);
+    const key=dt.toISOString().slice(0,10);
+    days.push(map[key]||{date:key,count:0,level:0});
+  }
+  return {total:c.total,days};
+}
+
 async function main(){
   const note=document.getElementById('src-note');
+  let liveCount=0, fallbackCount=0;
+
+  // 1) 用户资料：实时拉取失败则回退快照
+  let profile=FALLBACK;
   try{
-    const [user, reposRaw, contrib]=await Promise.all([
-      getJSON(API_USER),
-      getJSON(API_REPOS),
-      getJSON(API_CONTRIB)
-    ]);
-    const repos=(Array.isArray(reposRaw)?reposRaw:[])
+    const user=await getJSON(API_USER);
+    profile={
+      login:user.login, name:user.name||user.login,
+      avatar_url:user.avatar_url||FALLBACK.avatar_url,
+      location:user.location||FALLBACK.location, bio:user.bio||'',
+      public_repos:user.public_repos, repos:FALLBACK.repos
+    };
+    liveCount++;
+  }catch(e){fallbackCount++;}
+
+  // 2) 仓库列表：实时拉取失败则回退快照
+  let repos=FALLBACK.repos;
+  try{
+    const raw=await getJSON(API_REPOS);
+    const fetched=(Array.isArray(raw)?raw:[])
       .filter(r=>!r.fork && r.description && r.description.trim())
       .slice(0,6)
-      .map(r=>({
-        name:r.name, description:r.description||'', language:r.language||'',
-        stars:r.stargazers_count, forks:r.forks_count, url:r.html_url, private:r.private
-      }));
-    const profile={
-      login:user.login,
-      name:user.name||user.login,
-      avatar_url:user.avatar_url,
-      location:user.location||'Japan, Hokkaido',
-      bio:user.bio||'',
-      public_repos:user.public_repos,
-      repos
-    };
-    const contribution={
-      total:(contrib.total&&contrib.total.lastYear)||0,
-      days:(contrib.contributions||[]).map(x=>({date:x.date,count:x.count,level:x.level}))
-    };
-    renderProfile(profile);
-    renderRepos(repos);
-    renderContributions(contribution);
+      .map(r=>({name:r.name,description:r.description||'',language:r.language||'',stars:r.stargazers_count,forks:r.forks_count,url:r.html_url}));
+    if(fetched.length){repos=fetched;liveCount++;}else{fallbackCount++;}
+  }catch(e){fallbackCount++;}
+  profile.repos=repos;
+
+  // 3) 贡献图：实时拉取失败则回退真实快照
+  let contribution=expandCalendar(FALLBACK_CONTRIB);
+  try{
+    const c=await getJSON(API_CONTRIB);
+    const days=(c.contributions||[]).map(x=>({date:x.date,count:x.count,level:x.level}));
+    if(days.length){contribution={total:(c.total&&c.total.lastYear)||0,days};liveCount++;}else{fallbackCount++;}
+  }catch(e){fallbackCount++;}
+
+  renderProfile(profile);
+  renderRepos(repos);
+  renderContributions(contribution);
+
+  if(fallbackCount===0){
     note.innerHTML=`<span class="live">● 实时数据</span> · 每次打开页面自动从 GitHub 拉取最新资料、仓库与贡献记录，数据会随账号活动变化`;
-  }catch(e){
-    note.innerHTML=`<span class="err">● 获取失败：${esc(e.message)}</span> · 请检查网络连接或稍后重试`;
+  }else if(liveCount===0){
+    note.innerHTML=`<span class="err">● 离线快照</span> · GitHub API 暂时不可用，正展示最近一次的真实数据快照`;
+  }else{
+    note.innerHTML=`<span class="live">● 部分实时</span> · 部分数据来自最近一次真实快照（GitHub API 限流时自动回退，避免空白）`;
   }
 }
 main();
