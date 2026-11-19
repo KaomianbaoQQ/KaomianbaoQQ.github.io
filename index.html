@@ -77,9 +77,9 @@ a:hover{text-decoration:underline}
 .show-more{width:100%;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:10px;color:#58a6ff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
 .show-more:hover{background:#30363d}
 .year-nav{display:flex;flex-direction:column;gap:2px}
-.year-nav a{color:#8b949e;font-size:13px;padding:7px 12px;border-radius:6px;text-align:center;cursor:pointer}
-.year-nav a:hover{background:#21262d;text-decoration:none;color:#c9d1d9}
-.year-nav a.active{background:#1f6feb;color:#fff;font-weight:600}
+.year-nav button{background:none;border:0;color:#8b949e;font-size:13px;padding:7px 12px;border-radius:6px;text-align:center;cursor:pointer;font-family:inherit;line-height:1.2}
+.year-nav button:hover{background:#21262d;color:#c9d1d9}
+.year-nav button.active{background:#1f6feb;color:#fff;font-weight:600}
 /* Pinned */
 .pinned-title{font-size:16px;margin:0 0 12px;font-weight:400}
 .pin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
@@ -256,6 +256,7 @@ const API_EVENTS=`https://api.github.com/users/${USERNAME}/events/public?per_pag
 const API_STARRED=`https://api.github.com/users/${USERNAME}/starred?per_page=100&sort=created`;
 const API_CONTRIB='contributions.json';
 const CURRENT_YEAR=new Date().getFullYear();
+let CONTRIB_YEAR=CURRENT_YEAR;
 const LEVEL_COLORS=['#161b22','#0e4429','#006d32','#26a641','#39d353'];
 const LANG_COLORS={Python:'#3572A5',HLSL:'#a88060',HTML:'#e34c26','C++':'#f34b7d',Java:'#b07219',JavaScript:'#f1e05a',TypeScript:'#3178c6',Go:'#00ADD8',Rust:'#dea584',Shell:'#89e051','C':'#555555'};
 
@@ -275,7 +276,7 @@ const I18N={
   noProjects:"There aren't any projects yet", noPackages:"There aren't any packages yet",
   noRepos:'No repositories found', noStars:'No starred repositories yet',
   updated:(d)=>`Updated ${d}`, license:(l)=>l,
-  contribTitle:n=>`${n.toLocaleString()} contributions in ${CURRENT_YEAR}`,
+  contribTitle:(n,y)=>`${n.toLocaleString()} contributions in ${y}`,
   noContrib:'No contribution data',
   contribOn:(n,d)=>`${n} contribution${n>1?'s':''} on ${d}`,
   noContribOn:d=>`No contributions on ${d}`,
@@ -310,7 +311,7 @@ const I18N={
   noProjects:'暂无任何项目', noPackages:'暂无任何包',
   noRepos:'未找到仓库', noStars:'暂无星标仓库',
   updated:(d)=>`更新于 ${d}`, license:(l)=>l,
-  contribTitle:n=>`${CURRENT_YEAR} 年 ${n.toLocaleString()} 次贡献`,
+  contribTitle:(n,y)=>`${y} 年 ${n.toLocaleString()} 次贡献`,
   noContrib:'暂无贡献数据',
   contribOn:(n,d)=>`${d} 有 ${n} 次贡献`,
   noContribOn:d=>`${d} 无贡献`,
@@ -402,12 +403,12 @@ function renderHeatmap(c){
   // 整年视图：按当前年份 1 月 1 日 - 12 月 31 日铺格子（与 GitHub 年份视图一致）
   const map={};all.forEach(d=>map[d.date]=d);
   const yearDays=[];
-  for(let t=Date.UTC(CURRENT_YEAR,0,1);t<=Date.UTC(CURRENT_YEAR,11,31);t+=86400000){
+  for(let t=Date.UTC(CONTRIB_YEAR,0,1);t<=Date.UTC(CONTRIB_YEAR,11,31);t+=86400000){
     const k=new Date(t).toISOString().slice(0,10);
     yearDays.push(map[k]||{date:k,count:0,level:0});
   }
   const total=yearDays.reduce((s,d)=>s+(d.count||0),0);
-  document.getElementById('contrib-title').textContent=t('contribTitle',total);
+  document.getElementById('contrib-title').textContent=t('contribTitle',total,CONTRIB_YEAR);
   if(!all.length){document.getElementById('contrib-graph').textContent=t('noContrib');return;}
   const cell=11,pitch=14,ox=40,oy=26;
   const firstDow=new Date(yearDays[0].date+'T00:00:00Z').getUTCDay();
@@ -474,7 +475,7 @@ function renderOverview(c,repos){
   const box=document.getElementById('contrib-repos');
   const names=(repos||[]).slice(0,5).map(r=>r.name);
   box.innerHTML=names.length?names.map(n=>`<a href="${esc('https://github.com/'+USERNAME+'/'+n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('<br>'):`<span class="skeleton">${esc(t('noActivity'))}</span>`;
-  const cx=160,cy=80,arm=110;
+  const cx=160,cy=105,arm=70;
   const lab=I18N[LANG].quadLabels;
   const ty=STATE.types;
   const pct={commit:ty?Math.round(ty.commit/ty.sum*100):100,issue:ty?Math.round(ty.issue/ty.sum*100):0,pr:ty?Math.round(ty.pr/ty.sum*100):0,review:ty?Math.round(ty.review/ty.sum*100):0};
@@ -485,15 +486,18 @@ function renderOverview(c,repos){
   if(pct.issue>0)dots+=dot(cx+arm*pct.issue/100,cy);
   if(pct.review>0)dots+=dot(cx,cy-arm*pct.review/100);
   if(pct.pr>0)dots+=dot(cx,cy+arm*pct.pr/100);
-  const svg=`<svg class="quad-svg" viewBox="0 0 320 175" width="320" role="img" aria-label="${esc(t('quadAria',pct.commit))}">
+  const svg=`<svg class="quad-svg" viewBox="0 0 320 215" width="320" role="img" aria-label="${esc(t('quadAria',pct.commit))}">
     <line class="axis" x1="${cx-arm}" y1="${cy}" x2="${cx+arm}" y2="${cy}"/>
-    <line class="axis" x1="${cx}" y1="${cy-arm+10}" x2="${cx}" y2="${cy+arm-10}"/>
+    <line class="axis" x1="${cx}" y1="${cy-arm}" x2="${cx}" y2="${cy+arm}"/>
     ${dots}
-    <text class="quad-label" x="${cx-arm-12}" y="${cy-8}" text-anchor="end">${pct.commit}%</text>
-    <text class="quad-label" x="${cx-arm-12}" y="${cy+12}" text-anchor="end">${esc(lab.left)}</text>
-    <text class="quad-label" x="${cx}" y="${cy-arm-2}" text-anchor="middle">${esc(lab.top)}</text>
-    <text class="quad-label" x="${cx+arm+8}" y="${cy+4}" text-anchor="start">${esc(lab.right)}</text>
-    <text class="quad-label" x="${cx}" y="${cy+arm+4}" text-anchor="middle">${esc(lab.bottom)}</text>
+    <text class="quad-label" x="${cx-arm-8}" y="${cy-6}" text-anchor="end">${pct.commit}%</text>
+    <text class="quad-label" x="${cx-arm-8}" y="${cy+10}" text-anchor="end">${esc(lab.left)}</text>
+    <text class="quad-label" x="${cx}" y="${cy-arm-18}" text-anchor="middle">${pct.review}%</text>
+    <text class="quad-label" x="${cx}" y="${cy-arm-4}" text-anchor="middle">${esc(lab.top)}</text>
+    <text class="quad-label" x="${cx+arm+8}" y="${cy-6}" text-anchor="start">${pct.issue}%</text>
+    <text class="quad-label" x="${cx+arm+8}" y="${cy+10}" text-anchor="start">${esc(lab.right)}</text>
+    <text class="quad-label" x="${cx}" y="${cy+arm+16}" text-anchor="middle">${esc(lab.bottom)}</text>
+    <text class="quad-label" x="${cx}" y="${cy+arm+30}" text-anchor="middle">${pct.pr}%</text>
   </svg>`;
   document.getElementById('quad-wrap').innerHTML=svg+`<div class="quad-tip">${esc(tip)}</div>`;
 }
@@ -501,10 +505,19 @@ function renderOverview(c,repos){
 function renderYears(c){
   const nav=document.getElementById('year-nav');
   const days=c.days||[];
-  const years=[...new Set(days.filter(d=>d.count>0).map(d=>d.date.slice(0,4)))].sort().reverse();
-  const list=years.length?years:[String(new Date().getUTCFullYear())];
-  nav.innerHTML=list.map((y,i)=>`<a class="${i===0?'active':''}" href="${esc('https://github.com/'+USERNAME+'?year='+y)}" target="_blank" rel="noopener">${y}</a>`).join('');
+  // 只列出有贡献的年份（加上当前年份兜底）；新数据出现新年份时按钮会自动增加
+  const years=[...new Set(days.filter(d=>d.count>0).map(d=>d.date.slice(0,4)))];
+  if(!years.includes(String(CURRENT_YEAR)))years.push(String(CURRENT_YEAR));
+  years.sort().reverse();
+  if(!years.includes(String(CONTRIB_YEAR)))CONTRIB_YEAR=Number(years[0]);
+  nav.innerHTML=years.map(y=>`<button type="button" class="year-btn${Number(y)===CONTRIB_YEAR?' active':''}" data-year="${esc(y)}">${esc(y)}</button>`).join('');
 }
+document.getElementById('year-nav').addEventListener('click',e=>{
+  const btn=e.target.closest('.year-btn');
+  if(!btn)return;
+  CONTRIB_YEAR=parseInt(btn.dataset.year,10);
+  if(STATE.contrib){renderHeatmap(STATE.contrib);renderYears(STATE.contrib);}
+});
 
 function updateNote(){
   const note=document.getElementById('src-note');
