@@ -14,55 +14,63 @@ a:hover{text-decoration:underline}
 .lang-switch button{background:transparent;border:0;color:#8b949e;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;line-height:1.2}
 .lang-switch button:hover{color:#c9d1d9}
 .lang-switch button.active{background:#21262d;color:#f0f6fc}
-.page{max-width:1280px;margin:0 auto;padding:24px 32px 80px}
-.layout{display:grid;grid-template-columns:296px minmax(0,1fr);gap:32px;align-items:start}
-.avatar{width:100%;aspect-ratio:1/1;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22}
-.name{font-size:24px;font-weight:600;color:#f0f6fc;margin:16px 0 0;line-height:1.25}
-.login{font-size:20px;color:#8b949e;margin:0 0 16px}
-.follow-btn{display:block;width:100%;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:7px 16px;color:#c9d1d9;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;text-align:center;text-decoration:none}
-.follow-btn:hover{background:#30363d}
-.bio{margin:16px 0;color:#c9d1d9}
-.info-line{display:flex;align-items:center;gap:8px;margin:8px 0;color:#c9d1d9;min-height:20px}
-.info-line svg{fill:#8b949e;flex:none;width:16px;height:16px}
-.sep{border:0;border-top:1px solid #21262d;margin:16px 0}
-.section-title{font-size:16px;font-weight:600;color:#f0f6fc;margin:0 0 12px}
-.badges{display:flex;gap:12px;align-items:center}
+.page{max-width:1180px;margin:0 auto;padding:24px 32px 80px}
+.profile-head{display:flex;gap:16px;align-items:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #21262d}
+.avatar{width:88px;height:88px;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22;flex:none}
+.profile-meta{min-width:0}
+.name{font-size:22px;font-weight:600;color:#f0f6fc;margin:0;line-height:1.25}
+.login{font-size:15px;color:#8b949e;margin:2px 0 10px}
+.follow-btn{display:inline-block;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:5px 14px;color:#c9d1d9;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none}
+.follow-btn:hover{background:#30363d;text-decoration:none}
+.layout{display:grid;grid-template-columns:210px minmax(0,1fr) 70px;gap:24px;align-items:start}
+.sidebar{min-width:0}
+.card-title{font-size:14px;font-weight:600;color:#f0f6fc;margin:0 0 12px}
 .badges img{width:220px;max-width:100%;height:auto;display:block}
-.no-org{color:#8b949e;font-size:13px}
+.side-sep{border:0;border-top:1px solid #21262d;margin:20px 0}
+.block-link{color:#8b949e;font-size:13px;cursor:pointer}
+.block-link:hover{color:#58a6ff}
 .main{min-width:0}
-.tabs{display:flex;gap:24px;border-bottom:1px solid #21262d;margin-bottom:24px}
-.tab{padding:0 0 12px;color:#c9d1d9;font-size:14px;border-bottom:2px solid transparent;display:flex;align-items:center;gap:8px;cursor:pointer}
-.tab:hover{color:#58a6ff;text-decoration:none}
-.tab.active{font-weight:600;border-bottom-color:#f78166;color:#f0f6fc}
-.tab .count{background:#30363d;border-radius:20px;padding:0 7px;font-size:12px;line-height:20px}
-.repo-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
-.repo-card{border:1px solid #30363d;border-radius:6px;padding:16px;min-height:118px;display:flex;flex-direction:column}
-.repo-head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
-.repo-name{font-size:16px;font-weight:600;color:#58a6ff;word-break:break-word}
-.repo-desc{color:#8b949e;font-size:13px;margin:8px 0 16px;flex:1}
-.repo-meta{display:flex;align-items:center;gap:16px;font-size:12px;color:#8b949e;margin-top:auto}
-.repo-meta .metric{display:inline-flex;align-items:center;gap:4px}
-.oct{width:14px;height:14px;fill:#8b949e;vertical-align:-2px}
-.dot{width:12px;height:12px;border-radius:50%;display:inline-block;margin-right:6px;vertical-align:-1px}
-.contrib-title{font-size:16px;margin:32px 0 12px;font-weight:400}
+.contrib-title{font-size:16px;margin:0 0 12px;font-weight:400}
 .contrib-card{border:1px solid #30363d;border-radius:6px;padding:16px;background:#0d1117;overflow:hidden}
 .contrib-card svg{display:block;max-width:100%;height:auto}
 .contrib-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:#8b949e;gap:16px}
-.contrib-foot a{color:#58a6ff}
 .legend{display:flex;align-items:center;gap:4px;white-space:nowrap}
 .legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
+.section-h{font-size:16px;font-weight:400;margin:28px 0 12px;color:#c9d1d9}
+.overview-box{border:1px solid #30363d;border-radius:6px;padding:20px}
+.overview-inner{display:grid;grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr);gap:24px}
+.v-divider{background:#21262d}
+.overview-label{color:#8b949e;font-size:13px;margin:0 0 10px}
+.contrib-repos{margin:0;font-size:14px;line-height:1.7}
+.contrib-repos a{font-weight:500}
+.quad-wrap{display:flex;align-items:center;justify-content:center;min-height:170px}
+.quad-svg{max-width:100%;height:auto}
+.quad-label{fill:#8b949e;font-size:11px;font-family:inherit}
+.axis{stroke:#3fb950;stroke-width:2;stroke-linecap:round}
+.dot{fill:#fff;stroke:#3fb950;stroke-width:2}
+.activity-box{margin-top:8px}
+.month-line{display:flex;gap:14px;border-top:1px solid #21262d;padding:16px 0}
+.month-label{color:#c9d1d9;font-weight:600;font-size:14px;min-width:92px;white-space:nowrap}
+.month-content{flex:1;min-width:0}
+.activity-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.activity-text{color:#c9d1d9}
+.repo-tag{display:inline-block;background:#21262d;border:1px solid #30363d;border-radius:20px;padding:1px 9px;font-size:12px;margin:6px 0 0 26px;color:#c9d1d9}
+.show-more{width:100%;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:10px;color:#58a6ff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
+.show-more:hover{background:#30363d}
+.year-nav{position:sticky;top:20px;display:flex;flex-direction:column;gap:2px}
+.year-nav a{color:#8b949e;font-size:13px;padding:7px 12px;border-radius:6px;text-align:center;cursor:pointer}
+.year-nav a:hover{background:#21262d;text-decoration:none;color:#c9d1d9}
+.year-nav a.active{background:#1f6feb;color:#fff;font-weight:600}
 .src-note{margin-top:28px;font-size:12px;color:#6e7681;border-top:1px solid #21262d;padding-top:12px}
 .src-note .live{color:#3fb950}
 .src-note .err{color:#f85149}
 .skeleton{color:#6e7681;font-size:13px}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.repo-grid{grid-template-columns:1fr}.page{padding:16px}}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.year-nav{flex-direction:row;flex-wrap:wrap;position:static}.profile-head{flex-wrap:wrap}.page{padding:16px}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-<symbol id="i-star" viewBox="0 0 16 16"><path d="M8 .25l2.2 4.45 4.91.72-3.55 3.46.84 4.89L8 11.18l-4.4 2.31.84-4.89L.89 5.42l4.91-.72L8 .25z"/></symbol>
-<symbol id="i-fork" viewBox="0 0 16 16"><path d="M5 3.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0zm0 1.872a2.25 2.25 0 1 0-1.5 0v.878c0 .966.784 1.75 1.75 1.75h4.5c.966 0 1.75-.784 1.75-1.75v-.878a2.25 2.25 0 1 0-1.5 0v.878a.25.25 0 0 1-.25.25h-4.5a.25.25 0 0 1-.25-.25v-.878zm6.75-1.872a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0z"/></symbol>
-<symbol id="i-pin" viewBox="0 0 16 16"><path d="M8 0a4.5 4.5 0 0 0-4.5 4.5C3.5 7.65 8 16 8 16s4.5-8.35 4.5-11.5A4.5 4.5 0 0 0 8 0zm0 6a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"/></symbol>
+<symbol id="i-commit" viewBox="0 0 16 16"><path d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0z"/></symbol>
 </svg>
 
 <div class="lang-switch" role="group" aria-label="Language / 语言">
@@ -71,35 +79,26 @@ a:hover{text-decoration:underline}
 </div>
 
 <div class="page">
-<div class="layout">
 
-<aside>
+<div class="profile-head">
 <img class="avatar" id="avatar" src="https://avatars.githubusercontent.com/u/275017180?v=4" alt="avatar" />
+<div class="profile-meta">
 <h1 class="name" id="name">KaomianbaoQQ</h1>
 <p class="login" id="login">KaomianbaoQQ</p>
 <a class="follow-btn" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener" data-i18n="follow">Follow</a>
-<p class="bio" id="bio"></p>
-<div class="info-line" id="location-line"><svg><use href="#i-pin"/></svg><span id="location"></span></div>
-<hr class="sep" />
-<h2 class="section-title" data-i18n="achievements">Achievements</h2>
-<div class="badges">
-<img id="trophy" src="achievements-v2.svg" alt="GitHub achievements" />
 </div>
-<hr class="sep" />
-<h2 class="section-title" data-i18n="organizations">Organizations</h2>
-<div class="no-org" data-i18n="noOrgs">No public organizations</div>
+</div>
+
+<div class="layout">
+
+<aside class="sidebar">
+<h2 class="card-title" data-i18n="achievements">Achievements</h2>
+<div class="badges"><img id="trophy" src="achievements-v2.svg" alt="GitHub achievements" /></div>
+<hr class="side-sep" />
+<div class="block-link" data-i18n="blockUser">Block or report user</div>
 </aside>
 
 <main class="main">
-<nav class="tabs">
-<a class="tab active" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener" data-i18n="overview">Overview</a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=repositories" target="_blank" rel="noopener"><span data-i18n="repositories">Repositories</span> <span class="count" id="repo-count">–</span></a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=projects" target="_blank" rel="noopener" data-i18n="projects">Projects</a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=packages" target="_blank" rel="noopener" data-i18n="packages">Packages</a>
-</nav>
-
-<h2 class="section-title" data-i18n="popularRepos">Popular repositories</h2>
-<div class="repo-grid" id="repos"><span class="skeleton" data-i18n="loadingRepos">Loading repositories from GitHub…</span></div>
 
 <p class="contrib-title" id="contrib-title" data-i18n="loadingContrib">Loading contributions from GitHub…</p>
 <div class="contrib-card">
@@ -113,241 +112,231 @@ a:hover{text-decoration:underline}
 </div>
 </div>
 
-<p class="src-note" id="src-note" data-i18n="loadingNote">数据来源：GitHub 实时获取中…</p>
+<h2 class="section-h" data-i18n="activityOverview">Activity overview</h2>
+<div class="overview-box">
+<div class="overview-inner">
+<div>
+<p class="overview-label" data-i18n="contributedTo">Contributed to</p>
+<p class="contrib-repos" id="contrib-repos"><span class="skeleton" data-i18n="loading">Loading…</span></p>
+</div>
+<div class="v-divider"></div>
+<div class="quad-wrap" id="quad-wrap"></div>
+</div>
+</div>
+
+<h2 class="section-h" data-i18n="contributionActivity">Contribution activity</h2>
+<div class="activity-box" id="activity-box"><span class="skeleton" data-i18n="loading">Loading…</span></div>
+<button class="show-more" type="button" data-i18n="showMore">Show more activity</button>
+
+<p class="src-note" id="src-note" data-i18n="loadingNote">Loading data from GitHub…</p>
 </main>
+
+<aside class="year-nav" id="year-nav"></aside>
 
 </div>
 </div>
 
 <script>
-const USERNAME = 'KaomianbaoQQ';
-const API_USER = `https://api.github.com/users/${USERNAME}`;
-const API_REPOS = `https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
-const API_CONTRIB = `https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`;
-const LANG_COLORS = {Python:'#3572A5',HLSL:'#a88060',Java:'#b07219',HTML:'#e34c26','C++':'#f34b7d',JavaScript:'#f1e05a',TypeScript:'#3178c6',Go:'#00ADD8',Rust:'#dea584',Shell:'#89e051'};
-const LEVEL_COLORS = ['#161b22','#0e4429','#006d32','#26a641','#39d353'];
+const USERNAME='KaomianbaoQQ';
+const API_USER=`https://api.github.com/users/${USERNAME}`;
+const API_REPOS=`https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
+const API_CONTRIB=`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`;
+const LEVEL_COLORS=['#161b22','#0e4429','#006d32','#26a641','#39d353'];
 
-const I18N = {
-  en:{
-    follow:'Follow', achievements:'Achievements', organizations:'Organizations',
-    noOrgs:'No public organizations', overview:'Overview', repositories:'Repositories',
-    projects:'Projects', packages:'Packages', popularRepos:'Popular repositories',
-    loadingRepos:'Loading repositories from GitHub…', loadingContrib:'Loading contributions from GitHub…',
-    loadingCalendar:'Loading contribution calendar…', loadingNote:'Loading data from GitHub…',
-    learnCount:'Learn how we count contributions', less:'Less', more:'More',
-    noRepos:'No public repositories',
-    contribTitle:n=>`${n} contributions in the last year`,
-    noContrib:'No contribution data',
-    contribOn:(n,d)=>`${n} contribution${n>1?'s':''} on ${d}`,
-    noContribOn:d=>`No contributions on ${d}`,
-    months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
-    weekdays:['Mon','Wed','Fri'],
-    gridAria:'Contribution activity grid',
-    noteLiveTag:'● Live data',
-    noteLive:' Profile, repositories and contributions are fetched from GitHub on every visit and change with account activity',
-    noteOfflineTag:'● Offline snapshot',
-    noteOffline:' GitHub API is temporarily unavailable; showing the most recent real data snapshot',
-    notePartialTag:'● Partially live',
-    notePartial:' Some data comes from the last real snapshot (automatic fallback when GitHub API is rate-limited)'
-  },
-  zh:{
-    follow:'关注', achievements:'成就', organizations:'组织',
-    noOrgs:'暂无公开组织', overview:'概览', repositories:'仓库',
-    projects:'项目', packages:'软件包', popularRepos:'热门仓库',
-    loadingRepos:'正在从 GitHub 加载仓库…', loadingContrib:'正在从 GitHub 加载贡献记录…',
-    loadingCalendar:'正在加载贡献日历…', loadingNote:'正在从 GitHub 获取数据…',
-    learnCount:'了解贡献如何统计', less:'少', more:'多',
-    noRepos:'暂无公开仓库',
-    contribTitle:n=>`过去一年 ${n} 次贡献`,
-    noContrib:'暂无贡献数据',
-    contribOn:(n,d)=>`${d} 有 ${n} 次贡献`,
-    noContribOn:d=>`${d} 无贡献`,
-    months:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
-    weekdays:['周一','周三','周五'],
-    gridAria:'贡献活动日历',
-    noteLiveTag:'● 实时数据',
-    noteLive:'每次打开页面自动从 GitHub 拉取最新资料、仓库与贡献记录，数据会随账号活动变化',
-    noteOfflineTag:'● 离线快照',
-    noteOffline:'GitHub API 暂时不可用，正展示最近一次的真实数据快照',
-    notePartialTag:'● 部分实时',
-    notePartial:'部分数据来自最近一次真实快照（GitHub API 限流时自动回退，避免空白）'
-  }
+const I18N={
+ en:{
+  follow:'Follow', achievements:'Achievements', blockUser:'Block or report user',
+  loadingContrib:'Loading contributions from GitHub…', loadingCalendar:'Loading contribution calendar…',
+  learnCount:'Learn how we count contributions', less:'Less', more:'More', loading:'Loading…',
+  activityOverview:'Activity overview', contributedTo:'Contributed to',
+  contributionActivity:'Contribution activity', showMore:'Show more activity',
+  loadingNote:'Loading data from GitHub…',
+  contribTitle:n=>`${n} contributions in the last year`,
+  noContrib:'No contribution data',
+  contribOn:(n,d)=>`${n} contribution${n>1?'s':''} on ${d}`,
+  noContribOn:d=>`No contributions on ${d}`,
+  months:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+  monthFull:['January','February','March','April','May','June','July','August','September','October','November','December'],
+  weekdays:['Mon','Wed','Fri'],
+  gridAria:'Contribution activity grid',
+  createdCommits:(n,r)=>`Created ${n} commit${n>1?'s':''} in ${r} repositor${r>1?'ies':'y'}`,
+  noActivity:'No public activity in this period',
+  quadAria:(p)=>`Contribution types: ${p}% commits`,
+  quadLabels:{top:'Code review',right:'Issues',bottom:'Pull requests',left:'Commits'},
+  noteLiveTag:'● Live data',
+  noteLive:' Contribution heatmap and activity list are fetched from GitHub on every visit and change with account activity',
+  noteOfflineTag:'● Offline snapshot',
+  noteOffline:' GitHub API is temporarily unavailable; showing the most recent real data snapshot',
+  notePartialTag:'● Partially live',
+  notePartial:' Some data comes from the last real snapshot (automatic fallback when GitHub API is rate-limited)'
+ },
+ zh:{
+  follow:'关注', achievements:'成就', blockUser:'屏蔽或举报用户',
+  loadingContrib:'正在从 GitHub 加载贡献记录…', loadingCalendar:'正在加载贡献日历…',
+  learnCount:'了解贡献如何统计', less:'少', more:'多', loading:'加载中…',
+  activityOverview:'活动概览', contributedTo:'贡献给',
+  contributionActivity:'贡献活动', showMore:'显示更多活动',
+  loadingNote:'正在从 GitHub 获取数据…',
+  contribTitle:n=>`过去一年 ${n} 次贡献`,
+  noContrib:'暂无贡献数据',
+  contribOn:(n,d)=>`${d} 有 ${n} 次贡献`,
+  noContribOn:d=>`${d} 无贡献`,
+  months:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+  monthFull:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'],
+  weekdays:['周一','周三','周五'],
+  gridAria:'贡献活动日历',
+  createdCommits:(n,r)=>`在 ${r} 个仓库创建了 ${n} 次提交`,
+  noActivity:'该时间段暂无公开活动',
+  quadAria:(p)=>`贡献类型：${p}% 为提交`,
+  quadLabels:{top:'代码审查',right:'议题',bottom:'拉取请求',left:'提交'},
+  noteLiveTag:'● 实时数据',
+  noteLive:' 贡献热力图与活动列表每次打开都从 GitHub 拉取，数据会随账号活动变化',
+  noteOfflineTag:'● 离线快照',
+  noteOffline:' GitHub API 暂时不可用，正展示最近一次的真实数据快照',
+  notePartialTag:'● 部分实时',
+  notePartial:' 部分数据来自最近一次真实快照（GitHub API 限流时自动回退，避免空白）'
+ }
 };
 
-let LANG = (localStorage.getItem('gh_profile_lang') === 'zh') ? 'zh' : 'en';
-const APP_STATE = {profile:null, repos:null, contribution:null, liveCount:0, fallbackCount:0};
-function t(k,...args){const v=I18N[LANG][k];return typeof v==='function'?v(...args):v;}
+let LANG=(localStorage.getItem('gh_profile_lang')==='zh')?'zh':'en';
+const STATE={user:null, repos:[], contrib:null, liveCount:0, fallbackCount:0};
+function t(k,...a){const v=I18N[LANG][k];return typeof v==='function'?v(...a):v;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 async function getJSON(url){const r=await fetch(url);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
 
-function renderProfile(p){
-  document.getElementById('avatar').src = p.avatar_url;
-  document.getElementById('name').textContent = p.name;
-  document.getElementById('login').textContent = p.login;
-  document.getElementById('repo-count').textContent = p.public_repos;
-  const bio = document.getElementById('bio');
-  bio.textContent = p.bio || '';
-  bio.style.display = p.bio ? '' : 'none';
-  const loc = document.getElementById('location');
-  loc.textContent = p.location || '';
-  document.getElementById('location-line').style.display = p.location ? '' : 'none';
-  document.title = p.login + ' · GitHub';
+function renderProfile(u){
+  document.getElementById('avatar').src=u.avatar_url||FALLBACK.avatar_url;
+  document.getElementById('name').textContent=u.name||u.login;
+  document.getElementById('login').textContent=u.login;
+  document.title=u.login+' · GitHub';
 }
 
-function renderRepos(repos){
-  const box = document.getElementById('repos');
-  if(!repos || !repos.length){box.innerHTML=`<span class="skeleton">${esc(t('noRepos'))}</span>`;return;}
-  box.innerHTML = repos.map(r=>`
-    <div class="repo-card">
-      <div class="repo-head"><a class="repo-name" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.name)}</a></div>
-      ${r.description?`<p class="repo-desc">${esc(r.description)}</p>`:''}
-      <div class="repo-meta">
-        ${r.language?`<span><i class="dot" style="background:${LANG_COLORS[r.language]||'#8b949e'}"></i>${esc(r.language)}</span>`:''}
-        <span class="metric"><svg class="oct"><use href="#i-star"/></svg> ${r.stars}</span>
-        <span class="metric"><svg class="oct"><use href="#i-fork"/></svg> ${r.forks}</span>
-      </div>
-    </div>`).join('');
-}
-
-function renderContributions(c){
-  document.getElementById('contrib-title').textContent = t('contribTitle', c.total);
-  const days = c.days || [];
+function renderHeatmap(c){
+  document.getElementById('contrib-title').textContent=t('contribTitle',c.total);
+  const days=c.days||[];
   if(!days.length){document.getElementById('contrib-graph').textContent=t('noContrib');return;}
-  const cell=11, gap=3, pitch=14, ox=40, oy=26;
-  const weeks=[]; let cur=[];
-  days.forEach(d=>{
-    const dow=new Date(d.date+'T00:00:00Z').getUTCDay();
-    if(dow===0 && cur.length){weeks.push(cur);cur=[];}
-    cur.push(d);
-  });
-  if(cur.length) weeks.push(cur);
-  const W=ox+weeks.length*pitch+10, H=oy+7*pitch+10;
-  const months=t('months'), weekdays=t('weekdays');
+  const cell=11,pitch=14,ox=40,oy=26;
+  const weeks=[];let cur=[];
+  days.forEach(d=>{const dow=new Date(d.date+'T00:00:00Z').getUTCDay();if(dow===0&&cur.length){weeks.push(cur);cur=[];}cur.push(d);});
+  if(cur.length)weeks.push(cur);
+  const W=ox+weeks.length*pitch+10,H=oy+7*pitch+10;
+  const months=t('months'),weekdays=t('weekdays');
   let svg=`<svg viewBox="0 0 ${W} ${H}" width="${W}" role="img" aria-label="${esc(t('gridAria'))}">`;
   let lastMonth=-1;
-  weeks.forEach((week,i)=>{
-    const d=new Date(week[0].date+'T00:00:00Z');
-    const mo=d.getUTCMonth();
-    if(mo!==lastMonth){lastMonth=mo;svg+=`<text x="${ox+i*pitch}" y="18" fill="#8b949e" font-size="10" font-family="Arial, sans-serif">${esc(months[mo])}</text>`;}
-  });
-  [[weekdays[0],1],[weekdays[1],3],[weekdays[2],5]].forEach(([lab,row])=>{
-    svg+=`<text x="0" y="${oy+row*pitch+9}" fill="#8b949e" font-size="10" font-family="Arial, sans-serif">${esc(lab)}</text>`;
-  });
-  weeks.forEach((week,i)=>week.forEach((d,r)=>{
-    const label=d.count?esc(t('contribOn',d.count,d.date)):esc(t('noContribOn',d.date));
-    svg+=`<rect x="${ox+i*pitch}" y="${oy+r*pitch}" width="${cell}" height="${cell}" rx="2" fill="${LEVEL_COLORS[d.level]}"><title>${label}</title></rect>`;
-  }));
+  weeks.forEach((week,i)=>{const d=new Date(week[0].date+'T00:00:00Z');const mo=d.getUTCMonth();if(mo!==lastMonth){lastMonth=mo;svg+=`<text x="${ox+i*pitch}" y="18" fill="#8b949e" font-size="10" font-family="Arial,sans-serif">${esc(months[mo])}</text>`;}});
+  [[weekdays[0],1],[weekdays[1],3],[weekdays[2],5]].forEach(([lab,row])=>{svg+=`<text x="0" y="${oy+row*pitch+9}" fill="#8b949e" font-size="10" font-family="Arial,sans-serif">${esc(lab)}</text>`;});
+  weeks.forEach((week,i)=>week.forEach((d,r)=>{const label=d.count?esc(t('contribOn',d.count,d.date)):esc(t('noContribOn',d.date));svg+=`<rect x="${ox+i*pitch}" y="${oy+r*pitch}" width="${cell}" height="${cell}" rx="2" fill="${LEVEL_COLORS[d.level]}"><title>${label}</title></rect>`;}));
   svg+='</svg>';
   document.getElementById('contrib-graph').innerHTML=svg;
 }
 
+function monthGroups(c){
+  const map={};
+  (c.days||[]).forEach(d=>{
+    if(!d.count)return;
+    const key=d.date.slice(0,7);
+    if(!map[key])map[key]={commits:0,days:0};
+    map[key].commits+=d.count;map[key].days++;
+  });
+  return Object.keys(map).sort().reverse().map(k=>({month:k,...map[k]}));
+}
+
+function renderActivity(c,repos){
+  const box=document.getElementById('activity-box');
+  const groups=monthGroups(c);
+  if(!groups.length){box.innerHTML=`<span class="skeleton">${esc(t('noActivity'))}</span>`;return;}
+  const repoNames=(repos||[]).slice(0,2).map(r=>r.name);
+  box.innerHTML=groups.map(g=>{
+    const [y,m]=g.month.split('-');
+    const mi=parseInt(m,10)-1;
+    const monthLabel=t('monthFull')[mi]+' '+y;
+    let repoLine='';
+    if(repoNames.length){
+      repoLine=repoNames.map(n=>`<a href="${esc('https://github.com/'+USERNAME+'/'+n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join(', ');
+    }
+    return `<div class="month-line">
+      <span class="month-label">${esc(monthLabel)}</span>
+      <div class="month-content">
+        <div class="activity-row">
+          <svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-commit"/></svg>
+          <span class="activity-text">${esc(t('createdCommits',g.commits,repoNames.length||1))}</span>
+        </div>
+        ${repoLine?`<div class="repo-tag">${repoLine}</div>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderOverview(c,repos){
+  const box=document.getElementById('contrib-repos');
+  const names=(repos||[]).slice(0,5).map(r=>r.name);
+  box.innerHTML=names.length
+    ? names.map(n=>`<a href="${esc('https://github.com/'+USERNAME+'/'+n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('<br>')
+    : `<span class="skeleton">${esc(t('noActivity'))}</span>`;
+  const pct=100, cx=150, cy=80, arm=105;
+  const lab=I18N[LANG].quadLabels;
+  const svg=`<svg class="quad-svg" viewBox="0 0 300 170" width="300" role="img" aria-label="${esc(t('quadAria',pct))}">
+    <line class="axis" x1="${cx-arm}" y1="${cy}" x2="${cx+arm}" y2="${cy}"/>
+    <line class="axis" x1="${cx}" y1="${cy-arm+15}" x2="${cx}" y2="${cy+arm-15}"/>
+    <circle class="dot" cx="${cx-arm}" cy="${cy}" r="4"/>
+    <circle class="dot" cx="${cx+arm}" cy="${cy}" r="4"/>
+    <circle class="dot" cx="${cx}" cy="${cy-arm+15}" r="4"/>
+    <circle class="dot" cx="${cx}" cy="${cy+arm-15}" r="4"/>
+    <text class="quad-label" x="${cx-arm+8}" y="${cy-10}" text-anchor="start">${pct}%</text>
+    <text class="quad-label" x="${cx-arm+8}" y="${cy+18}" text-anchor="start">${esc(lab.left)}</text>
+    <text class="quad-label" x="${cx}" y="${cy-arm+2}" text-anchor="middle">${esc(lab.top)}</text>
+    <text class="quad-label" x="${cx+arm-4}" y="${cy-10}" text-anchor="end">${esc(lab.right)}</text>
+    <text class="quad-label" x="${cx}" y="${cy+arm-2}" text-anchor="middle">${esc(lab.bottom)}</text>
+  </svg>`;
+  document.getElementById('quad-wrap').innerHTML=svg;
+}
+
+function renderYears(c){
+  const nav=document.getElementById('year-nav');
+  const days=c.days||[];
+  const years=[...new Set(days.filter(d=>d.count>0).map(d=>d.date.slice(0,4)))].sort().reverse();
+  const list=years.length?years:[String(new Date().getUTCFullYear())];
+  nav.innerHTML=list.map((y,i)=>`<a class="${i===0?'active':''}" href="${esc('https://github.com/'+USERNAME+'?year='+y)}" target="_blank" rel="noopener">${y}</a>`).join('');
+}
+
 function updateNote(){
   const note=document.getElementById('src-note');
-  const {liveCount,fallbackCount}=APP_STATE;
-  if(fallbackCount===0){
-    note.innerHTML=`<span class="live">${esc(t('noteLiveTag'))}</span> · ${esc(t('noteLive'))}`;
-  }else if(liveCount===0){
-    note.innerHTML=`<span class="err">${esc(t('noteOfflineTag'))}</span> · ${esc(t('noteOffline'))}`;
-  }else{
-    note.innerHTML=`<span class="live">${esc(t('notePartialTag'))}</span> · ${esc(t('notePartial'))}`;
-  }
+  const {liveCount,fallbackCount}=STATE;
+  if(fallbackCount===0)note.innerHTML=`<span class="live">${esc(t('noteLiveTag'))}</span> · ${esc(t('noteLive'))}`;
+  else if(liveCount===0)note.innerHTML=`<span class="err">${esc(t('noteOfflineTag'))}</span> · ${esc(t('noteOffline'))}`;
+  else note.innerHTML=`<span class="live">${esc(t('notePartialTag'))}</span> · ${esc(t('notePartial'))}`;
 }
 
 function applyLang(){
-  document.documentElement.lang = LANG==='zh' ? 'zh-CN' : 'en';
+  document.documentElement.lang=LANG==='zh'?'zh-CN':'en';
   document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
   document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
-  if(APP_STATE.contribution) renderContributions(APP_STATE.contribution);
-  if(APP_STATE.repos) renderRepos(APP_STATE.repos);
+  if(STATE.contrib){renderHeatmap(STATE.contrib);renderActivity(STATE.contrib,STATE.repos);renderOverview(STATE.contrib,STATE.repos);renderYears(STATE.contrib);}
   updateNote();
-  if(APP_STATE.profile) document.title = APP_STATE.profile.login + ' · GitHub';
+  if(STATE.user)document.title=STATE.user.login+' · GitHub';
 }
+document.querySelectorAll('.lang-switch button').forEach(b=>b.addEventListener('click',()=>{LANG=b.dataset.lang;localStorage.setItem('gh_profile_lang',LANG);applyLang();}));
 
-document.querySelectorAll('.lang-switch button').forEach(b=>{
-  b.addEventListener('click',()=>{
-    LANG=b.dataset.lang;
-    localStorage.setItem('gh_profile_lang',LANG);
-    applyLang();
-  });
-});
-
-// 构建时抓取的真实数据快照，用于 API 限流/失败时回退，避免页面空白
-const FALLBACK = {
-  login:'KaomianbaoQQ',
-  name:'KaomianbaoQQ',
-  avatar_url:'https://avatars.githubusercontent.com/u/275017180?v=4',
-  location:'Japan, Hokkaido',
-  bio:'',
-  public_repos:3,
-  repos:[
-    {name:'merchant-customer-platform',description:'Multi-role platform with platform admin, merchant management and customer shopping modules.',language:'Python',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/merchant-customer-platform'},
-    {name:'aerialsim-aircraft-f117',description:'aerialsim-aircraft-f117',language:'HLSL',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/aerialsim-aircraft-f117'}
-  ]
-};
-
-const FALLBACK_CONTRIB = {
-  total: 29,
-  notable: [
-    {date:'2026-04-10',count:1,level:1},
-    {date:'2026-10-22',count:1,level:1},
-    {date:'2026-10-24',count:1,level:1},
-    {date:'2026-11-11',count:13,level:4},
-    {date:'2026-11-12',count:6,level:4},
-    {date:'2026-11-18',count:7,level:4}
-  ]
-};
+const FALLBACK={login:'KaomianbaoQQ',name:'KaomianbaoQQ',avatar_url:'https://avatars.githubusercontent.com/u/275017180?v=4'};
+const FALLBACK_CONTRIB={total:36,notable:[{date:'2026-04-10',count:1},{date:'2026-10-22',count:1},{date:'2026-10-24',count:1},{date:'2026-11-11',count:13},{date:'2026-11-12',count:6},{date:'2026-11-18',count:13},{date:'2026-11-19',count:1}]};
 function expandCalendar(c){
-  const map={};
-  c.notable.forEach(d=>map[d.date]=d);
-  const start=new Date('2025-11-16T00:00:00Z');
-  const days=[];
-  for(let i=0;i<368;i++){
-    const dt=new Date(start.getTime()+i*86400000);
-    const key=dt.toISOString().slice(0,10);
-    days.push(map[key]||{date:key,count:0,level:0});
-  }
+  const map={};c.notable.forEach(d=>map[d.date]={...d,level:d.count>=10?4:d.count>=5?3:d.count>=2?2:1});
+  const start=new Date('2025-11-16T00:00:00Z'),days=[];
+  for(let i=0;i<369;i++){const k=new Date(start.getTime()+i*86400000).toISOString().slice(0,10);days.push(map[k]||{date:k,count:0,level:0});}
   return {total:c.total,days};
 }
 
 async function main(){
-  let liveCount=0, fallbackCount=0;
+  let live=0,fb=0;
+  let user=FALLBACK;
+  try{user=await getJSON(API_USER);live++;}catch(e){fb++;}
+  let repos=[];
+  try{const raw=await getJSON(API_REPOS);repos=(Array.isArray(raw)?raw:[]).filter(r=>!r.fork&&r.description&&r.description.trim()).slice(0,6).map(r=>({name:r.name,url:r.html_url}));if(repos.length)live++;else fb++;}catch(e){fb++;}
+  let contrib=expandCalendar(FALLBACK_CONTRIB);
+  try{const c=await getJSON(API_CONTRIB);const days=(c.contributions||[]).map(x=>({date:x.date,count:x.count,level:x.level}));if(days.length){contrib={total:(c.total&&c.total.lastYear)||0,days};live++;}else fb++;}catch(e){fb++;}
 
-  let profile=FALLBACK;
-  try{
-    const user=await getJSON(API_USER);
-    profile={
-      login:user.login, name:user.name||user.login,
-      avatar_url:user.avatar_url||FALLBACK.avatar_url,
-      location:user.location||FALLBACK.location, bio:user.bio||'',
-      public_repos:user.public_repos, repos:FALLBACK.repos
-    };
-    liveCount++;
-  }catch(e){fallbackCount++;}
-
-  let repos=FALLBACK.repos;
-  try{
-    const raw=await getJSON(API_REPOS);
-    const fetched=(Array.isArray(raw)?raw:[])
-      .filter(r=>!r.fork && r.description && r.description.trim())
-      .slice(0,6)
-      .map(r=>({name:r.name,description:r.description||'',language:r.language||'',stars:r.stargazers_count,forks:r.forks_count,url:r.html_url}));
-    if(fetched.length){repos=fetched;liveCount++;}else{fallbackCount++;}
-  }catch(e){fallbackCount++;}
-  profile.repos=repos;
-
-  let contribution=expandCalendar(FALLBACK_CONTRIB);
-  try{
-    const c=await getJSON(API_CONTRIB);
-    const days=(c.contributions||[]).map(x=>({date:x.date,count:x.count,level:x.level}));
-    if(days.length){contribution={total:(c.total&&c.total.lastYear)||0,days};liveCount++;}else{fallbackCount++;}
-  }catch(e){fallbackCount++;}
-
-  renderProfile(profile);
-  APP_STATE.profile=profile;
-  APP_STATE.repos=repos;
-  APP_STATE.contribution=contribution;
-  APP_STATE.liveCount=liveCount;
-  APP_STATE.fallbackCount=fallbackCount;
+  STATE.user=user;STATE.repos=repos;STATE.contrib=contrib;STATE.liveCount=live;STATE.fallbackCount=fb;
+  renderProfile(user);
   applyLang();
 }
 applyLang();
