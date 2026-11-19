@@ -181,7 +181,10 @@ a:hover{text-decoration:underline}
 const USERNAME='KaomianbaoQQ';
 const API_USER=`https://api.github.com/users/${USERNAME}`;
 const API_REPOS=`https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
-const API_CONTRIB=`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=last`;
+const API_EVENTS=`https://api.github.com/users/${USERNAME}/events/public?per_page=100`;
+// Official contributions data, generated server-side by GitHub Actions
+// from github.com/users/<user>/contributions (no CORS on that endpoint).
+const API_CONTRIB='contributions.json';
 const LEVEL_COLORS=['#161b22','#0e4429','#006d32','#26a641','#39d353'];
 
 const I18N={
@@ -205,14 +208,14 @@ const I18N={
   createdCommits:(n,r)=>`Created ${n} commit${n>1?'s':''} in ${r} repositor${r>1?'ies':'y'}`,
   noActivity:'No public activity in this period',
   quadAria:(p)=>`Contribution types: ${p}% commits`,
-  quadTip:u=>`A graph representing ${u}'s contributions. The contributions are 100% commits, 0% issues, 0% code review, 0% pull requests.`,
+  quadTip:(u,c,i,rv,pr)=>`A graph representing ${u}'s public activity. ${c}% commits, ${i}% issues, ${rv}% code review, ${pr}% pull requests. Based on recent public events from GitHub.`,
   quadLabels:{top:'Code review',right:'Issues',bottom:'Pull requests',left:'Commits'},
-  noteLiveTag:'● Live data',
-  noteLive:' Contribution heatmap and activity list are fetched from GitHub on every visit and change with account activity',
+  noteLiveTag:'● All data from GitHub official API',
+  noteLive:' Profile / repos / Pinned and activity types come from api.github.com in real time; the contribution heatmap comes from the official github.com endpoint, refreshed by GitHub Actions every 6 hours.',
   noteOfflineTag:'● Offline snapshot',
-  noteOffline:' GitHub API is temporarily unavailable; showing the most recent real data snapshot',
+  noteOffline:' GitHub is temporarily unavailable; showing the most recent real data snapshot',
   notePartialTag:'● Partially live',
-  notePartial:' Some data comes from the last real snapshot (automatic fallback when GitHub API is rate-limited)'
+  notePartial:' Some data fell back to the last real snapshot (automatic fallback when the GitHub API is rate-limited)'
  },
  zh:{
   follow:'关注', achievements:'成就', blockUser:'屏蔽或举报用户',
@@ -234,14 +237,14 @@ const I18N={
   createdCommits:(n,r)=>`在 ${r} 个仓库创建了 ${n} 次提交`,
   noActivity:'该时间段暂无公开活动',
   quadAria:(p)=>`贡献类型：${p}% 为提交`,
-  quadTip:u=>`${u} 的贡献类型图：100% 为提交，0% 议题，0% 代码审查，0% 拉取请求。`,
+  quadTip:(u,c,i,rv,pr)=>`${u} 的公开活动类型：${c}% 提交、${i}% 议题、${rv}% 代码审查、${pr}% 拉取请求。基于 GitHub 近期公开事件统计。`,
   quadLabels:{top:'代码审查',right:'议题',bottom:'拉取请求',left:'提交'},
-  noteLiveTag:'● 实时数据',
-  noteLive:' 贡献热力图与活动列表每次打开都从 GitHub 拉取，数据会随账号活动变化',
+  noteLiveTag:'● 全部来自 GitHub 官方 API',
+  noteLive:' 资料/仓库/Pinned 与活动类型实时取自 api.github.com；贡献热力图取自 github.com 官方端点，由 GitHub Actions 每 6 小时刷新。',
   noteOfflineTag:'● 离线快照',
-  noteOffline:' GitHub API 暂时不可用，正展示最近一次的真实数据快照',
+  noteOffline:' GitHub 暂时不可用，正展示最近一次的真实数据快照',
   notePartialTag:'● 部分实时',
-  notePartial:' 部分数据来自最近一次真实快照（GitHub API 限流时自动回退，避免空白）'
+  notePartial:' 部分数据回退到最近一次真实快照（GitHub API 限流时自动回退，避免空白）'
  }
 };
 
@@ -344,15 +347,29 @@ function renderOverview(c,repos){
   box.innerHTML=names.length
     ? names.map(n=>`<a href="${esc('https://github.com/'+USERNAME+'/'+n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('<br>')
     : `<span class="skeleton">${esc(t('noActivity'))}</span>`;
-  const pct=100, cx=150, cy=80, arm=105;
+  const cx=160, cy=80, arm=110;
   const lab=I18N[LANG].quadLabels;
-  const tip=t('quadTip',USERNAME);
-  // GitHub 原版：仅 Commits 方向一个空心圆点，十字轴作参考，其余方向 0% 不画点
-  const svg=`<svg class="quad-svg" viewBox="0 0 320 175" width="320" role="img" aria-label="${esc(t('quadAria',pct))}">
+  // 真实占比：优先用官方 events 统计，无数据时回退到贡献全为 commit
+  const ty=STATE.types;
+  const pct={
+    commit: ty?Math.round(ty.commit/ty.sum*100):100,
+    issue:  ty?Math.round(ty.issue/ty.sum*100):0,
+    pr:     ty?Math.round(ty.pr/ty.sum*100):0,
+    review: ty?Math.round(ty.review/ty.sum*100):0
+  };
+  const tip=t('quadTip',USERNAME,pct.commit,pct.issue,pct.review,pct.pr);
+  // GitHub 原版：四个方向按比例在轴上定位圆点（占比>0 才画），轴作参考
+  const dot=(x,y)=>`<circle cx="${x}" cy="${y}" r="5" fill="#fff" stroke="#3fb950" stroke-width="2"/>`;
+  let dots='';
+  if(pct.commit>0)dots+=dot(cx-arm*pct.commit/100,cy);           // 左 = commits
+  if(pct.issue>0)dots+=dot(cx+arm*pct.issue/100,cy);             // 右 = issues
+  if(pct.review>0)dots+=dot(cx,cy-arm*pct.review/100);            // 上 = code review
+  if(pct.pr>0)dots+=dot(cx,cy+arm*pct.pr/100);                   // 下 = pull requests
+  const svg=`<svg class="quad-svg" viewBox="0 0 320 175" width="320" role="img" aria-label="${esc(t('quadAria',pct.commit))}">
     <line class="axis" x1="${cx-arm}" y1="${cy}" x2="${cx+arm}" y2="${cy}"/>
     <line class="axis" x1="${cx}" y1="${cy-arm+10}" x2="${cx}" y2="${cy+arm-10}"/>
-    <circle cx="${cx-arm}" cy="${cy}" r="5" fill="#fff" stroke="#3fb950" stroke-width="2"/>
-    <text class="quad-label" x="${cx-arm-12}" y="${cy-8}" text-anchor="end">${pct}%</text>
+    ${dots}
+    <text class="quad-label" x="${cx-arm-12}" y="${cy-8}" text-anchor="end">${pct.commit}%</text>
     <text class="quad-label" x="${cx-arm-12}" y="${cy+12}" text-anchor="end">${esc(lab.left)}</text>
     <text class="quad-label" x="${cx}" y="${cy-arm-2}" text-anchor="middle">${esc(lab.top)}</text>
     <text class="quad-label" x="${cx+arm+8}" y="${cy+4}" text-anchor="start">${esc(lab.right)}</text>
@@ -393,12 +410,30 @@ const FALLBACK_REPOS=[
   {name:'merchant-customer-platform',description:'Multi-role platform with platform admin, merchant management and customer shopping modules.',language:'Python',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/merchant-customer-platform'},
   {name:'aerialsim-aircraft-f117',description:'aerialsim-aircraft-f117',language:'HLSL',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/aerialsim-aircraft-f117'}
 ];
-const FALLBACK_CONTRIB={total:36,notable:[{date:'2026-04-10',count:1},{date:'2026-10-22',count:1},{date:'2026-10-24',count:1},{date:'2026-11-11',count:13},{date:'2026-11-12',count:6},{date:'2026-11-18',count:13},{date:'2026-11-19',count:1}]};
+const FALLBACK_CONTRIB={total:60,notable:[{date:'2026-04-10',count:1},{date:'2026-09-09',count:1},{date:'2026-09-10',count:12},{date:'2026-09-11',count:1},{date:'2026-09-13',count:3},{date:'2026-09-14',count:1},{date:'2026-09-15',count:1},{date:'2026-09-25',count:1},{date:'2026-09-30',count:1},{date:'2026-10-22',count:1},{date:'2026-10-24',count:1},{date:'2026-11-11',count:13},{date:'2026-11-12',count:6},{date:'2026-11-18',count:13},{date:'2026-11-19',count:4}]};
 function expandCalendar(c){
   const map={};c.notable.forEach(d=>map[d.date]={...d,level:d.count>=10?4:d.count>=5?3:d.count>=2?2:1});
   const start=new Date('2025-11-16T00:00:00Z'),days=[];
   for(let i=0;i<369;i++){const k=new Date(start.getTime()+i*86400000).toISOString().slice(0,10);days.push(map[k]||{date:k,count:0,level:0});}
   return {total:c.total,days};
+}
+
+// 用官方 REST events 统计真实贡献类型占比（commit / PR / issue / review）
+async function loadEventTypes(){
+  try{
+    const events=await getJSON(API_EVENTS);
+    if(!Array.isArray(events))return null;
+    let commit=0,pr=0,issue=0,review=0;
+    events.forEach(e=>{
+      const tp=e.type;
+      if(tp==='PushEvent')commit++;
+      else if(tp==='PullRequestEvent')pr++;
+      else if(tp==='IssuesEvent'||tp==='IssueCommentEvent')issue++;
+      else if(tp==='PullRequestReviewEvent')review++;
+    });
+    const sum=commit+pr+issue+review;
+    return sum?{commit,pr,issue,review,sum}:null;
+  }catch(e){return null;}
 }
 
 async function main(){
@@ -407,10 +442,17 @@ async function main(){
   try{user=await getJSON(API_USER);live++;}catch(e){fb++;}
   let repos=FALLBACK_REPOS;
   try{const raw=await getJSON(API_REPOS);const list=(Array.isArray(raw)?raw:[]).filter(r=>!r.fork&&r.description&&r.description.trim()).slice(0,6).map(r=>({name:r.name,description:r.description,language:r.language,stars:r.stargazers_count,forks:r.forks_count,url:r.html_url}));if(list.length){repos=list;live++;}else fb++;}catch(e){fb++;}
+  // 贡献图：GitHub Actions 抓取的官方端点数据（同源 contributions.json）
   let contrib=expandCalendar(FALLBACK_CONTRIB);
-  try{const c=await getJSON(API_CONTRIB);const days=(c.contributions||[]).map(x=>({date:x.date,count:x.count,level:x.level}));if(days.length){contrib={total:(c.total&&c.total.lastYear)||0,days};live++;}else fb++;}catch(e){fb++;}
+  try{
+    const c=await getJSON(API_CONTRIB);
+    const days=(c.days||[]).map(x=>({date:x.date,count:x.count,level:x.level}));
+    if(days.length){contrib={total:c.total||0,days,fetchedAt:c.fetchedAt};live++;}else fb++;
+  }catch(e){fb++;}
+  // 四象限：官方 events 实时统计贡献类型占比
+  const types=await loadEventTypes();
 
-  STATE.user=user;STATE.repos=repos;STATE.contrib=contrib;STATE.liveCount=live;STATE.fallbackCount=fb;
+  STATE.user=user;STATE.repos=repos;STATE.contrib=contrib;STATE.types=types;STATE.liveCount=live;STATE.fallbackCount=fb;
   renderProfile(user);
   applyLang();
 }
