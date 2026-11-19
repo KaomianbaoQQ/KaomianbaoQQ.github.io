@@ -348,7 +348,9 @@ function renderProfile(u){
   document.getElementById('login').textContent=u.login;
   document.getElementById('followers').textContent=u.followers!=null?u.followers:0;
   document.getElementById('following').textContent=u.following!=null?u.following:0;
-  document.getElementById('company').textContent=u.company||'';
+  const companyRow=document.getElementById('company-row');
+  if(u.company){companyRow.style.display='';document.getElementById('company').textContent=u.company;}
+  else{companyRow.style.display='none';}
   document.getElementById('location').textContent=u.location||'Japan, Hokkaido';
   document.title=u.login+' · GitHub';
 }
@@ -610,7 +612,8 @@ async function main(){
     const raw=await getJSON(API_REPOS);
     if(Array.isArray(raw)&&raw.length){
       allRepos=raw;
-      repos=raw.filter(r=>!r.fork).slice(0,6).map(r=>({name:r.name,description:r.description,language:r.language,stars:r.stargazers_count,forks:r.forks_count,url:r.html_url}));
+      // Pinned 里不展示 GitHub Pages 仓库本体（KaomianbaoQQ.github.io）
+      repos=raw.filter(r=>!r.fork&&r.name!==`${USERNAME}.github.io`).slice(0,6).map(r=>({name:r.name,description:r.description,language:r.language,stars:r.stargazers_count,forks:r.forks_count,url:r.html_url}));
       live++;
       document.getElementById('repo-count').textContent=raw.length;
     }else{fb++;}
