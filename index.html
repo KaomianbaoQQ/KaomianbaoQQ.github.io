@@ -22,6 +22,9 @@ a:hover{text-decoration:underline}
 .tab{display:flex;align-items:center;gap:6px;padding:8px 2px 12px;color:#c9d1d9;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;background:none;border-top:0;border-left:0;border-right:0;cursor:pointer;font-family:inherit}
 .tab:hover{color:#f0f6fc}
 .tab.active{border-bottom-color:#f78166;font-weight:600}
+.tab-ico{width:16px;height:16px;fill:#8b949e;flex:none;display:block}
+.tab:hover .tab-ico{fill:#c9d1d9}
+.tab.active .tab-ico{fill:#c9d1d9}
 .tab .cnt{background:rgba(110,118,129,.4);border-radius:20px;padding:0 6px;font-size:12px}
 /* 左侧栏：大头像在上，资料纵向排列（对齐 GitHub 官方 Profile 布局） */
 .avatar{width:260px;height:260px;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22;margin-bottom:16px}
@@ -120,6 +123,7 @@ a:hover{text-decoration:underline}
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
 <symbol id="i-commit" viewBox="0 0 16 16"><path d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0z"/></symbol>
+<symbol id="i-book" viewBox="0 0 16 16"><path d="M0 1.75A.75.75 0 0 1 .75 1h4.253c1.227 0 2.317.59 3 1.501A3.743 3.743 0 0 1 11.006 1h4.245a.75.75 0 0 1 .75.75v10.5a.75.75 0 0 1-.75.75h-4.507a2.25 2.25 0 0 0-1.591.659l-.622.621a.75.75 0 0 1-1.06 0l-.622-.621A2.25 2.25 0 0 0 5.258 13H.75a.75.75 0 0 1-.75-.75Zm7.251 10.324.004-5.073-.002-2.253A2.25 2.25 0 0 0 5.003 2.5H1.5v9h3.757a3.75 3.75 0 0 1 1.994.574ZM8.755 4.75l-.004 7.322a3.75 3.75 0 0 1 1.992-.572H14.5v-9h-3.495a2.25 2.25 0 0 0-2.25 2.25Z"/></symbol>
 <symbol id="i-people" viewBox="0 0 16 16"><path d="M5.5 3.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM2 7.5c0-1.1.9-2 2-2s2 .9 2 2v1.5H2V7.5zm7-4a2 2 0 1 1 4 0 2 2 0 0 1-4 0zM9 7.5c0-1.1.9-2 2-2s2 .9 2 2v1.5H9V7.5zM1 11h6v3H1v-3zm8 0h6v3H9v-3z"/></symbol>
 <symbol id="i-location" viewBox="0 0 16 16"><path d="M11.536 2.464a5 5 0 0 0-7.072 0L8 6l3.536-3.536zM8 14.5S2.5 9.5 2.5 6a5.5 5.5 0 1 1 11 0c0 3.5-5.5 8.5-5.5 8.5zM8 7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></symbol>
 <symbol id="i-repo" viewBox="0 0 16 16"><path d="M2 2.5C2 1.67 2.67 1 3.5 1h9c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-9c-.83 0-1.5-.67-1.5-1.5v-11zM3.5 2v11h9V2h-9zM5 4h6v1H5V4zm0 3h6v1H5V7zm0 3h6v1H5v-1z"/></symbol>
@@ -137,11 +141,11 @@ a:hover{text-decoration:underline}
 <div class="page">
 
 <nav class="tabs" id="tabs">
-<button class="tab active" type="button" data-view="overview"><span data-i18n="tabOverview">Overview</span></button>
-<button class="tab" type="button" data-view="repositories"><span data-i18n="tabRepositories">Repositories</span> <span class="cnt" id="repo-count">–</span></button>
-<button class="tab" type="button" data-view="projects"><span data-i18n="tabProjects">Projects</span></button>
-<button class="tab" type="button" data-view="packages"><span data-i18n="tabPackages">Packages</span></button>
-<button class="tab" type="button" data-view="stars"><span data-i18n="tabStars">Stars</span> <span class="cnt" id="star-count">–</span></button>
+<button class="tab active" type="button" data-view="overview"><svg class="tab-ico"><use href="#i-book"/></svg><span data-i18n="tabOverview">Overview</span></button>
+<button class="tab" type="button" data-view="repositories"><svg class="tab-ico"><use href="#i-repo"/></svg><span data-i18n="tabRepositories">Repositories</span> <span class="cnt" id="repo-count">–</span></button>
+<button class="tab" type="button" data-view="projects"><svg class="tab-ico"><use href="#i-project"/></svg><span data-i18n="tabProjects">Projects</span></button>
+<button class="tab" type="button" data-view="packages"><svg class="tab-ico"><use href="#i-package"/></svg><span data-i18n="tabPackages">Packages</span></button>
+<button class="tab" type="button" data-view="stars"><svg class="tab-ico"><use href="#i-star"/></svg><span data-i18n="tabStars">Stars</span> <span class="cnt" id="star-count">–</span></button>
 </nav>
 
 <div class="layout" id="layout">
