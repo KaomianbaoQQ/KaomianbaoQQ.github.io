@@ -45,8 +45,11 @@ a:hover{text-decoration:underline}
 .overview-label{color:#8b949e;font-size:13px;margin:0 0 10px}
 .contrib-repos{margin:0;font-size:14px;line-height:1.7}
 .contrib-repos a{font-weight:500}
-.quad-wrap{display:flex;align-items:center;justify-content:center;min-height:170px}
+.quad-wrap{position:relative;display:flex;align-items:center;justify-content:center;min-height:170px;cursor:help;outline:none}
 .quad-svg{max-width:100%;height:auto}
+/* 悬停即时显示的说明框（模仿 GitHub tooltip） */
+.quad-tip{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:270px;max-width:90%;background:#21262d;border:1px solid #444c56;border-radius:6px;padding:10px 12px;color:#c9d1d9;font-size:12px;line-height:1.5;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;z-index:5}
+.quad-wrap:hover .quad-tip,.quad-wrap:focus .quad-tip{opacity:1;visibility:visible}
 .quad-label{fill:#8b949e;font-size:11px;font-family:inherit}
 .axis{stroke:#3fb950;stroke-width:2;stroke-linecap:round}
 .dot{fill:#fff;stroke:#3fb950;stroke-width:2}
@@ -158,7 +161,7 @@ a:hover{text-decoration:underline}
 <p class="contrib-repos" id="contrib-repos"><span class="skeleton" data-i18n="loading">Loading…</span></p>
 </div>
 <div class="v-divider"></div>
-<div class="quad-wrap" id="quad-wrap"></div>
+<div class="quad-wrap" id="quad-wrap" tabindex="0"></div>
 </div>
 </div>
 
@@ -346,7 +349,6 @@ function renderOverview(c,repos){
   const tip=t('quadTip',USERNAME);
   // GitHub 原版：仅 Commits 方向一个空心圆点，十字轴作参考，其余方向 0% 不画点
   const svg=`<svg class="quad-svg" viewBox="0 0 320 175" width="320" role="img" aria-label="${esc(t('quadAria',pct))}">
-    <title>${esc(tip)}</title>
     <line class="axis" x1="${cx-arm}" y1="${cy}" x2="${cx+arm}" y2="${cy}"/>
     <line class="axis" x1="${cx}" y1="${cy-arm+10}" x2="${cx}" y2="${cy+arm-10}"/>
     <circle cx="${cx-arm}" cy="${cy}" r="5" fill="#fff" stroke="#3fb950" stroke-width="2"/>
@@ -356,7 +358,7 @@ function renderOverview(c,repos){
     <text class="quad-label" x="${cx+arm+8}" y="${cy+4}" text-anchor="start">${esc(lab.right)}</text>
     <text class="quad-label" x="${cx}" y="${cy+arm+4}" text-anchor="middle">${esc(lab.bottom)}</text>
   </svg>`;
-  document.getElementById('quad-wrap').innerHTML=svg;
+  document.getElementById('quad-wrap').innerHTML=svg+`<div class="quad-tip">${esc(tip)}</div>`;
 }
 
 function renderYears(c){
