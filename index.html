@@ -6,11 +6,13 @@
 <title>KaomianbaoQQ · GitHub</title>
 <style>
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{background:#0d1117;color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased}
+html,body{margin:0;padding:0;min-height:100%}
+body{color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;position:relative}
+/* 固定全屏背景：NASA Artemis II 月球飞越图 + 深色遮罩，滚动时保持不动 */
+body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(13,17,23,.80),rgba(13,17,23,.88)),url('artemis-bg.jpg') center center/cover no-repeat;-webkit-background-attachment:fixed;background-attachment:fixed}
 a{color:#58a6ff;text-decoration:none}
 a:hover{text-decoration:underline}
-.lang-switch{position:fixed;top:16px;right:16px;z-index:10;display:flex;background:#161b22;border:1px solid #30363d;border-radius:6px;overflow:hidden}
+.lang-switch{position:fixed;top:16px;right:16px;z-index:10;display:flex;background:rgba(22,27,34,.92);border:1px solid #30363d;border-radius:6px;overflow:hidden;backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 .lang-switch button{background:transparent;border:0;color:#8b949e;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;line-height:1.2}
 .lang-switch button:hover{color:#c9d1d9}
 .lang-switch button.active{background:#21262d;color:#f0f6fc}
@@ -31,13 +33,13 @@ a:hover{text-decoration:underline}
 .block-link:hover{color:#58a6ff}
 .main{min-width:0}
 .contrib-title{font-size:16px;margin:0 0 12px;font-weight:400}
-.contrib-card{border:1px solid #30363d;border-radius:6px;padding:16px;background:#0d1117;overflow:hidden}
+.contrib-card{border:1px solid #30363d;border-radius:6px;padding:16px;background:rgba(13,17,23,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);overflow:hidden}
 .contrib-card svg{display:block;max-width:100%;height:auto}
 .contrib-foot{display:flex;justify-content:space-between;align-items:center;margin-top:12px;font-size:12px;color:#8b949e;gap:16px}
 .legend{display:flex;align-items:center;gap:4px;white-space:nowrap}
 .legend i{width:10px;height:10px;border-radius:2px;display:inline-block}
 .section-h{font-size:16px;font-weight:400;margin:28px 0 12px;color:#c9d1d9}
-.overview-box{border:1px solid #30363d;border-radius:6px;padding:20px}
+.overview-box{border:1px solid #30363d;border-radius:6px;padding:20px;background:rgba(13,17,23,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
 .overview-inner{display:grid;grid-template-columns:minmax(0,1fr) 1px minmax(0,1fr);gap:24px}
 .v-divider{background:#21262d}
 .overview-label{color:#8b949e;font-size:13px;margin:0 0 10px}
@@ -65,12 +67,35 @@ a:hover{text-decoration:underline}
 .src-note .live{color:#3fb950}
 .src-note .err{color:#f85149}
 .skeleton{color:#6e7681;font-size:13px}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.year-nav{flex-direction:row;flex-wrap:wrap;position:static}.profile-head{flex-wrap:wrap}.page{padding:16px}}
+/* 顶部标签栏 */
+.tabs{display:flex;gap:20px;border-bottom:1px solid #30363d;margin-bottom:20px;overflow-x:auto}
+.tab{display:flex;align-items:center;gap:6px;padding:8px 2px 12px;color:#c9d1d9;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;text-decoration:none}
+.tab:hover{text-decoration:none;border-bottom-color:#d0d7de}
+.tab.active{border-bottom-color:#f78166;font-weight:600}
+.tab .cnt{background:rgba(110,118,129,.4);border-radius:20px;padding:0 6px;font-size:12px}
+/* 左侧资料统计 */
+.stats-line{display:flex;align-items:center;gap:5px;margin:10px 0 8px;color:#c9d1d9;font-size:13px}
+.stats-line a{font-weight:600}
+.meta-line{display:flex;align-items:center;gap:6px;color:#8b949e;font-size:12px;margin-top:5px}
+/* Pinned 仓库 */
+.pinned-title{font-size:16px;margin:0 0 12px;font-weight:400}
+.pin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.pin-card{border:1px solid #30363d;border-radius:6px;padding:14px;background:rgba(13,17,23,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);min-height:112px;display:flex;flex-direction:column}
+.pin-head{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pin-name{color:#58a6ff;font-weight:600;font-size:14px}
+.pin-badge{border:1px solid #30363d;border-radius:20px;padding:0 6px;font-size:11px;color:#8b949e}
+.pin-desc{color:#8b949e;font-size:12px;margin:8px 0 auto;line-height:1.4}
+.pin-foot{display:flex;align-items:center;gap:14px;font-size:12px;color:#8b949e;margin-top:10px}
+.pin-foot b{font-weight:400}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.year-nav{flex-direction:row;flex-wrap:wrap;position:static}.profile-head{flex-wrap:wrap}.page{padding:16px}.pin-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
 <symbol id="i-commit" viewBox="0 0 16 16"><path d="M11.93 8.5a4.002 4.002 0 0 1-7.86 0H.75a.75.75 0 0 1 0-1.5h3.32a4.002 4.002 0 0 1 7.86 0h3.32a.75.75 0 0 1 0 1.5zm-1.43-.75a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0z"/></symbol>
+<symbol id="i-people" viewBox="0 0 16 16"><path d="M5.5 3.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM2 7.5c0-1.1.9-2 2-2s2 .9 2 2v1.5H2V7.5zm7-4a2 2 0 1 1 4 0 2 2 0 0 1-4 0zM9 7.5c0-1.1.9-2 2-2s2 .9 2 2v1.5H9V7.5zM1 11h6v3H1v-3zm8 0h6v3H9v-3z"/></symbol>
+<symbol id="i-location" viewBox="0 0 16 16"><path d="M11.536 2.464a5 5 0 0 0-7.072 0L8 6l3.536-3.536zM8 14.5S2.5 9.5 2.5 6a5.5 5.5 0 1 1 11 0c0 3.5-5.5 8.5-5.5 8.5zM8 7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></symbol>
+<symbol id="i-repo" viewBox="0 0 16 16"><path d="M2 2.5C2 1.67 2.67 1 3.5 1h9c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-9c-.83 0-1.5-.67-1.5-1.5v-11zM3.5 2v11h9V2h-9zM5 4h6v1H5V4zm0 3h6v1H5V7zm0 3h6v1H5v-1z"/></symbol>
 </svg>
 
 <div class="lang-switch" role="group" aria-label="Language / 语言">
@@ -80,12 +105,22 @@ a:hover{text-decoration:underline}
 
 <div class="page">
 
+<nav class="tabs">
+<a class="tab active" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener"><span data-i18n="tabOverview">Overview</span></a>
+<a class="tab" href="https://github.com/KaomianbaoQQ?tab=repositories" target="_blank" rel="noopener"><span data-i18n="tabRepositories">Repositories</span> <span class="cnt" id="repo-count">–</span></a>
+<a class="tab" href="https://github.com/KaomianbaoQQ?tab=projects" target="_blank" rel="noopener"><span data-i18n="tabProjects">Projects</span></a>
+<a class="tab" href="https://github.com/KaomianbaoQQ?tab=packages" target="_blank" rel="noopener"><span data-i18n="tabPackages">Packages</span></a>
+</nav>
+
 <div class="profile-head">
 <img class="avatar" id="avatar" src="https://avatars.githubusercontent.com/u/275017180?v=4" alt="avatar" />
 <div class="profile-meta">
 <h1 class="name" id="name">KaomianbaoQQ</h1>
 <p class="login" id="login">KaomianbaoQQ</p>
 <a class="follow-btn" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener" data-i18n="follow">Follow</a>
+<div class="stats-line"><span id="followers">–</span> <span data-i18n="followers">followers</span> · <span id="following">–</span> <span data-i18n="following">following</span></div>
+<div class="meta-line"><svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-people"/></svg><span id="company"></span></div>
+<div class="meta-line"><svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-location"/></svg><span id="location">Japan, Hokkaido</span></div>
 </div>
 </div>
 
@@ -99,6 +134,9 @@ a:hover{text-decoration:underline}
 </aside>
 
 <main class="main">
+
+<h2 class="pinned-title" data-i18n="pinned">Pinned</h2>
+<div class="pin-grid" id="pin-grid"><span class="skeleton" data-i18n="loading">Loading…</span></div>
 
 <p class="contrib-title" id="contrib-title" data-i18n="loadingContrib">Loading contributions from GitHub…</p>
 <div class="contrib-card">
@@ -146,6 +184,8 @@ const LEVEL_COLORS=['#161b22','#0e4429','#006d32','#26a641','#39d353'];
 const I18N={
  en:{
   follow:'Follow', achievements:'Achievements', blockUser:'Block or report user',
+  followers:'followers', following:'following', pinned:'Pinned', public:'Public',
+  tabOverview:'Overview', tabRepositories:'Repositories', tabProjects:'Projects', tabPackages:'Packages',
   loadingContrib:'Loading contributions from GitHub…', loadingCalendar:'Loading contribution calendar…',
   learnCount:'Learn how we count contributions', less:'Less', more:'More', loading:'Loading…',
   activityOverview:'Activity overview', contributedTo:'Contributed to',
@@ -162,6 +202,7 @@ const I18N={
   createdCommits:(n,r)=>`Created ${n} commit${n>1?'s':''} in ${r} repositor${r>1?'ies':'y'}`,
   noActivity:'No public activity in this period',
   quadAria:(p)=>`Contribution types: ${p}% commits`,
+  quadTip:u=>`A graph representing ${u}'s contributions. The contributions are 100% commits, 0% issues, 0% code review, 0% pull requests.`,
   quadLabels:{top:'Code review',right:'Issues',bottom:'Pull requests',left:'Commits'},
   noteLiveTag:'● Live data',
   noteLive:' Contribution heatmap and activity list are fetched from GitHub on every visit and change with account activity',
@@ -172,6 +213,8 @@ const I18N={
  },
  zh:{
   follow:'关注', achievements:'成就', blockUser:'屏蔽或举报用户',
+  followers:'粉丝', following:'关注中', pinned:'置顶', public:'公开',
+  tabOverview:'概览', tabRepositories:'仓库', tabProjects:'项目', tabPackages:'包',
   loadingContrib:'正在从 GitHub 加载贡献记录…', loadingCalendar:'正在加载贡献日历…',
   learnCount:'了解贡献如何统计', less:'少', more:'多', loading:'加载中…',
   activityOverview:'活动概览', contributedTo:'贡献给',
@@ -188,6 +231,7 @@ const I18N={
   createdCommits:(n,r)=>`在 ${r} 个仓库创建了 ${n} 次提交`,
   noActivity:'该时间段暂无公开活动',
   quadAria:(p)=>`贡献类型：${p}% 为提交`,
+  quadTip:u=>`${u} 的贡献类型图：100% 为提交，0% 议题，0% 代码审查，0% 拉取请求。`,
   quadLabels:{top:'代码审查',right:'议题',bottom:'拉取请求',left:'提交'},
   noteLiveTag:'● 实时数据',
   noteLive:' 贡献热力图与活动列表每次打开都从 GitHub 拉取，数据会随账号活动变化',
@@ -208,7 +252,31 @@ function renderProfile(u){
   document.getElementById('avatar').src=u.avatar_url||FALLBACK.avatar_url;
   document.getElementById('name').textContent=u.name||u.login;
   document.getElementById('login').textContent=u.login;
+  document.getElementById('followers').textContent=u.followers!=null?u.followers:0;
+  document.getElementById('following').textContent=u.following!=null?u.following:0;
+  document.getElementById('company').textContent=u.company||'';
+  document.getElementById('location').textContent=u.location||'Japan, Hokkaido';
   document.title=u.login+' · GitHub';
+}
+
+function renderPinned(repos){
+  const box=document.getElementById('pin-grid');
+  if(!repos||!repos.length){box.innerHTML=`<span class="skeleton">${esc(t('noActivity'))}</span>`;return;}
+  const langColor={Python:'#3572A5',HLSL:'#a88060',HTML:'#e34c26','C++':'#f34b7d',Java:'#b07219',JavaScript:'#f1e05a'};
+  box.innerHTML=repos.slice(0,6).map(r=>{
+    const dot=r.language?`<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:${langColor[r.language]||'#8b949e'}"></span>`:'';
+    return `<div class="pin-card">
+      <div class="pin-head">
+        <svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-repo"/></svg>
+        <a class="pin-name" href="${esc(r.url||('https://github.com/'+USERNAME+'/'+r.name))}" target="_blank" rel="noopener">${esc(r.name)}</a>
+        <span class="pin-badge">${esc(t('public'))}</span>
+      </div>
+      <p class="pin-desc">${esc(r.description||'')}</p>
+      <div class="pin-foot">${dot}${r.language?`<b>${esc(r.language)}</b>`:''}
+        <span>★ ${r.stars||0}</span><span>⑂ ${r.forks||0}</span>
+      </div>
+    </div>`;
+  }).join('');
 }
 
 function renderHeatmap(c){
@@ -275,18 +343,18 @@ function renderOverview(c,repos){
     : `<span class="skeleton">${esc(t('noActivity'))}</span>`;
   const pct=100, cx=150, cy=80, arm=105;
   const lab=I18N[LANG].quadLabels;
-  const svg=`<svg class="quad-svg" viewBox="0 0 300 170" width="300" role="img" aria-label="${esc(t('quadAria',pct))}">
+  const tip=t('quadTip',USERNAME);
+  // GitHub 原版：仅 Commits 方向一个空心圆点，十字轴作参考，其余方向 0% 不画点
+  const svg=`<svg class="quad-svg" viewBox="0 0 320 175" width="320" role="img" aria-label="${esc(t('quadAria',pct))}">
+    <title>${esc(tip)}</title>
     <line class="axis" x1="${cx-arm}" y1="${cy}" x2="${cx+arm}" y2="${cy}"/>
-    <line class="axis" x1="${cx}" y1="${cy-arm+15}" x2="${cx}" y2="${cy+arm-15}"/>
-    <circle class="dot" cx="${cx-arm}" cy="${cy}" r="4"/>
-    <circle class="dot" cx="${cx+arm}" cy="${cy}" r="4"/>
-    <circle class="dot" cx="${cx}" cy="${cy-arm+15}" r="4"/>
-    <circle class="dot" cx="${cx}" cy="${cy+arm-15}" r="4"/>
-    <text class="quad-label" x="${cx-arm+8}" y="${cy-10}" text-anchor="start">${pct}%</text>
-    <text class="quad-label" x="${cx-arm+8}" y="${cy+18}" text-anchor="start">${esc(lab.left)}</text>
-    <text class="quad-label" x="${cx}" y="${cy-arm+2}" text-anchor="middle">${esc(lab.top)}</text>
-    <text class="quad-label" x="${cx+arm-4}" y="${cy-10}" text-anchor="end">${esc(lab.right)}</text>
-    <text class="quad-label" x="${cx}" y="${cy+arm-2}" text-anchor="middle">${esc(lab.bottom)}</text>
+    <line class="axis" x1="${cx}" y1="${cy-arm+10}" x2="${cx}" y2="${cy+arm-10}"/>
+    <circle cx="${cx-arm}" cy="${cy}" r="5" fill="#fff" stroke="#3fb950" stroke-width="2"/>
+    <text class="quad-label" x="${cx-arm-12}" y="${cy-8}" text-anchor="end">${pct}%</text>
+    <text class="quad-label" x="${cx-arm-12}" y="${cy+12}" text-anchor="end">${esc(lab.left)}</text>
+    <text class="quad-label" x="${cx}" y="${cy-arm-2}" text-anchor="middle">${esc(lab.top)}</text>
+    <text class="quad-label" x="${cx+arm+8}" y="${cy+4}" text-anchor="start">${esc(lab.right)}</text>
+    <text class="quad-label" x="${cx}" y="${cy+arm+4}" text-anchor="middle">${esc(lab.bottom)}</text>
   </svg>`;
   document.getElementById('quad-wrap').innerHTML=svg;
 }
@@ -311,13 +379,18 @@ function applyLang(){
   document.documentElement.lang=LANG==='zh'?'zh-CN':'en';
   document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
   document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
+  if(STATE.repos)renderPinned(STATE.repos);
   if(STATE.contrib){renderHeatmap(STATE.contrib);renderActivity(STATE.contrib,STATE.repos);renderOverview(STATE.contrib,STATE.repos);renderYears(STATE.contrib);}
   updateNote();
   if(STATE.user)document.title=STATE.user.login+' · GitHub';
 }
 document.querySelectorAll('.lang-switch button').forEach(b=>b.addEventListener('click',()=>{LANG=b.dataset.lang;localStorage.setItem('gh_profile_lang',LANG);applyLang();}));
 
-const FALLBACK={login:'KaomianbaoQQ',name:'KaomianbaoQQ',avatar_url:'https://avatars.githubusercontent.com/u/275017180?v=4'};
+const FALLBACK={login:'KaomianbaoQQ',name:'KaomianbaoQQ',avatar_url:'https://avatars.githubusercontent.com/u/275017180?v=4',followers:0,following:0,company:'',location:'Japan, Hokkaido'};
+const FALLBACK_REPOS=[
+  {name:'merchant-customer-platform',description:'Multi-role platform with platform admin, merchant management and customer shopping modules.',language:'Python',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/merchant-customer-platform'},
+  {name:'aerialsim-aircraft-f117',description:'aerialsim-aircraft-f117',language:'HLSL',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/aerialsim-aircraft-f117'}
+];
 const FALLBACK_CONTRIB={total:36,notable:[{date:'2026-04-10',count:1},{date:'2026-10-22',count:1},{date:'2026-10-24',count:1},{date:'2026-11-11',count:13},{date:'2026-11-12',count:6},{date:'2026-11-18',count:13},{date:'2026-11-19',count:1}]};
 function expandCalendar(c){
   const map={};c.notable.forEach(d=>map[d.date]={...d,level:d.count>=10?4:d.count>=5?3:d.count>=2?2:1});
@@ -330,8 +403,8 @@ async function main(){
   let live=0,fb=0;
   let user=FALLBACK;
   try{user=await getJSON(API_USER);live++;}catch(e){fb++;}
-  let repos=[];
-  try{const raw=await getJSON(API_REPOS);repos=(Array.isArray(raw)?raw:[]).filter(r=>!r.fork&&r.description&&r.description.trim()).slice(0,6).map(r=>({name:r.name,url:r.html_url}));if(repos.length)live++;else fb++;}catch(e){fb++;}
+  let repos=FALLBACK_REPOS;
+  try{const raw=await getJSON(API_REPOS);const list=(Array.isArray(raw)?raw:[]).filter(r=>!r.fork&&r.description&&r.description.trim()).slice(0,6).map(r=>({name:r.name,description:r.description,language:r.language,stars:r.stargazers_count,forks:r.forks_count,url:r.html_url}));if(list.length){repos=list;live++;}else fb++;}catch(e){fb++;}
   let contrib=expandCalendar(FALLBACK_CONTRIB);
   try{const c=await getJSON(API_CONTRIB);const days=(c.contributions||[]).map(x=>({date:x.date,count:x.count,level:x.level}));if(days.length){contrib={total:(c.total&&c.total.lastYear)||0,days};live++;}else fb++;}catch(e){fb++;}
 
