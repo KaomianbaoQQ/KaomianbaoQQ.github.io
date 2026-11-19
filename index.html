@@ -8,7 +8,7 @@
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;min-height:100%}
 body{color:#c9d1d9;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.5;-webkit-font-smoothing:antialiased;position:relative}
-/* 固定全屏背景：NASA Artemis II 月球飞越图 + 深色遮罩，滚动时保持不动 */
+/* 固定全屏背景：NASA Artemis II 月球飞越图 + 深色遮罩 */
 body::before{content:"";position:fixed;inset:0;z-index:-1;background:linear-gradient(rgba(13,17,23,.80),rgba(13,17,23,.88)),url('artemis-bg.jpg') center center/cover no-repeat;-webkit-background-attachment:fixed;background-attachment:fixed}
 a{color:#58a6ff;text-decoration:none}
 a:hover{text-decoration:underline}
@@ -17,6 +17,12 @@ a:hover{text-decoration:underline}
 .lang-switch button:hover{color:#c9d1d9}
 .lang-switch button.active{background:#21262d;color:#f0f6fc}
 .page{max-width:1180px;margin:0 auto;padding:24px 32px 80px}
+/* 顶部标签栏 */
+.tabs{display:flex;gap:20px;border-bottom:1px solid #30363d;margin-bottom:20px;overflow-x:auto}
+.tab{display:flex;align-items:center;gap:6px;padding:8px 2px 12px;color:#c9d1d9;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;background:none;border-top:0;border-left:0;border-right:0;cursor:pointer;font-family:inherit}
+.tab:hover{color:#f0f6fc}
+.tab.active{border-bottom-color:#f78166;font-weight:600}
+.tab .cnt{background:rgba(110,118,129,.4);border-radius:20px;padding:0 6px;font-size:12px}
 .profile-head{display:flex;gap:16px;align-items:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #21262d}
 .avatar{width:88px;height:88px;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22;flex:none}
 .profile-meta{min-width:0}
@@ -25,6 +31,7 @@ a:hover{text-decoration:underline}
 .follow-btn{display:inline-block;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:5px 14px;color:#c9d1d9;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none}
 .follow-btn:hover{background:#30363d;text-decoration:none}
 .layout{display:grid;grid-template-columns:210px minmax(0,1fr) 70px;gap:24px;align-items:start}
+.layout.no-year{grid-template-columns:210px minmax(0,1fr)}
 .sidebar{min-width:0}
 .card-title{font-size:14px;font-weight:600;color:#f0f6fc;margin:0 0 12px}
 .badges img{width:220px;max-width:100%;height:auto;display:block}
@@ -32,6 +39,10 @@ a:hover{text-decoration:underline}
 .block-link{color:#8b949e;font-size:13px;cursor:pointer}
 .block-link:hover{color:#58a6ff}
 .main{min-width:0}
+/* 视图切换 */
+.view{display:none}
+.view.active{display:block}
+/* Overview 视图 */
 .contrib-title{font-size:16px;margin:0 0 12px;font-weight:400}
 .contrib-card{border:1px solid #30363d;border-radius:6px;padding:16px;background:rgba(13,17,23,.72);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);overflow:hidden}
 .contrib-card svg{display:block;max-width:100%;height:auto}
@@ -47,12 +58,10 @@ a:hover{text-decoration:underline}
 .contrib-repos a{font-weight:500}
 .quad-wrap{position:relative;display:flex;align-items:center;justify-content:center;min-height:170px;cursor:help;outline:none}
 .quad-svg{max-width:100%;height:auto}
-/* 悬停即时显示的说明框（模仿 GitHub tooltip） */
 .quad-tip{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);width:270px;max-width:90%;background:#21262d;border:1px solid #444c56;border-radius:6px;padding:10px 12px;color:#c9d1d9;font-size:12px;line-height:1.5;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,.55);opacity:0;visibility:hidden;transition:opacity .12s;pointer-events:none;z-index:5}
 .quad-wrap:hover .quad-tip,.quad-wrap:focus .quad-tip{opacity:1;visibility:visible}
 .quad-label{fill:#8b949e;font-size:11px;font-family:inherit}
 .axis{stroke:#3fb950;stroke-width:2;stroke-linecap:round}
-.dot{fill:#fff;stroke:#3fb950;stroke-width:2}
 .activity-box{margin-top:8px}
 .month-line{display:flex;gap:14px;border-top:1px solid #21262d;padding:16px 0}
 .month-label{color:#c9d1d9;font-weight:600;font-size:14px;min-width:92px;white-space:nowrap}
@@ -66,21 +75,7 @@ a:hover{text-decoration:underline}
 .year-nav a{color:#8b949e;font-size:13px;padding:7px 12px;border-radius:6px;text-align:center;cursor:pointer}
 .year-nav a:hover{background:#21262d;text-decoration:none;color:#c9d1d9}
 .year-nav a.active{background:#1f6feb;color:#fff;font-weight:600}
-.src-note{margin-top:28px;font-size:12px;color:#6e7681;border-top:1px solid #21262d;padding-top:12px}
-.src-note .live{color:#3fb950}
-.src-note .err{color:#f85149}
-.skeleton{color:#6e7681;font-size:13px}
-/* 顶部标签栏 */
-.tabs{display:flex;gap:20px;border-bottom:1px solid #30363d;margin-bottom:20px;overflow-x:auto}
-.tab{display:flex;align-items:center;gap:6px;padding:8px 2px 12px;color:#c9d1d9;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;text-decoration:none}
-.tab:hover{text-decoration:none;border-bottom-color:#d0d7de}
-.tab.active{border-bottom-color:#f78166;font-weight:600}
-.tab .cnt{background:rgba(110,118,129,.4);border-radius:20px;padding:0 6px;font-size:12px}
-/* 左侧资料统计 */
-.stats-line{display:flex;align-items:center;gap:5px;margin:10px 0 8px;color:#c9d1d9;font-size:13px}
-.stats-line a{font-weight:600}
-.meta-line{display:flex;align-items:center;gap:6px;color:#8b949e;font-size:12px;margin-top:5px}
-/* Pinned 仓库 */
+/* Pinned */
 .pinned-title{font-size:16px;margin:0 0 12px;font-weight:400}
 .pin-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .pin-card{border:1px solid #30363d;border-radius:6px;padding:14px;background:rgba(13,17,23,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);min-height:112px;display:flex;flex-direction:column}
@@ -90,7 +85,34 @@ a:hover{text-decoration:underline}
 .pin-desc{color:#8b949e;font-size:12px;margin:8px 0 auto;line-height:1.4}
 .pin-foot{display:flex;align-items:center;gap:14px;font-size:12px;color:#8b949e;margin-top:10px}
 .pin-foot b{font-weight:400}
-@media(max-width:900px){.layout{grid-template-columns:1fr}.year-nav{flex-direction:row;flex-wrap:wrap;position:static}.profile-head{flex-wrap:wrap}.page{padding:16px}.pin-grid{grid-template-columns:1fr}}
+/* Repositories / Stars 列表视图 */
+.repo-tools{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px;align-items:center}
+.repo-search{flex:1;min-width:220px;background:rgba(13,17,23,.72);border:1px solid #30363d;border-radius:6px;padding:8px 12px;color:#c9d1d9;font-size:14px;font-family:inherit;outline:none}
+.repo-search:focus{border-color:#58a6ff}
+.repo-search::placeholder{color:#6e7681}
+.filter-btn{background:rgba(33,38,45,.9);border:1px solid #30363d;border-radius:6px;padding:7px 12px;color:#c9d1d9;font-size:13px;cursor:pointer;font-family:inherit}
+.filter-btn:hover{background:#30363d}
+.repo-list{border-top:1px solid #21262d}
+.repo-row{padding:18px 0;border-bottom:1px solid #21262d}
+.repo-row-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.repo-row-title{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.repo-row-title a{font-size:16px;font-weight:600;color:#58a6ff}
+.repo-row-desc{color:#8b949e;font-size:13px;margin:6px 0 10px}
+.repo-row-meta{display:flex;align-items:center;gap:16px;font-size:12px;color:#8b949e;flex-wrap:wrap}
+.repo-row-meta span{display:inline-flex;align-items:center;gap:5px}
+.star-btn{background:#21262d;border:1px solid #30363d;border-radius:6px 0 0 6px;padding:5px 11px;color:#c9d1d9;font-size:12px;cursor:pointer;font-family:inherit}
+.star-btn:hover{background:#30363d}
+.star-caret{background:#21262d;border:1px solid #30363d;border-left:0;border-radius:0 6px 6px 0;padding:5px 8px;color:#c9d1d9;font-size:12px;cursor:pointer}
+.star-group{display:flex}
+/* 空状态 */
+.empty-state{border:1px solid #30363d;border-radius:6px;padding:56px 20px;text-align:center;background:rgba(13,17,23,.55);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+.empty-state svg{fill:#8b949e;margin-bottom:14px}
+.empty-state p{color:#c9d1d9;font-size:15px;font-weight:600;margin:0}
+.src-note{margin-top:28px;font-size:12px;color:#6e7681;border-top:1px solid #21262d;padding-top:12px}
+.src-note .live{color:#3fb950}
+.src-note .err{color:#f85149}
+.skeleton{color:#6e7681;font-size:13px}
+@media(max-width:900px){.layout,.layout.no-year{grid-template-columns:1fr}.year-nav{flex-direction:row;flex-wrap:wrap;position:static}.profile-head{flex-wrap:wrap}.page{padding:16px}.pin-grid{grid-template-columns:1fr}.overview-inner{grid-template-columns:1fr}.v-divider{height:1px}}
 </style>
 </head>
 <body>
@@ -99,6 +121,10 @@ a:hover{text-decoration:underline}
 <symbol id="i-people" viewBox="0 0 16 16"><path d="M5.5 3.5a2 2 0 1 1-4 0 2 2 0 0 1 4 0zM2 7.5c0-1.1.9-2 2-2s2 .9 2 2v1.5H2V7.5zm7-4a2 2 0 1 1 4 0 2 2 0 0 1-4 0zM9 7.5c0-1.1.9-2 2-2s2 .9 2 2v1.5H9V7.5zM1 11h6v3H1v-3zm8 0h6v3H9v-3z"/></symbol>
 <symbol id="i-location" viewBox="0 0 16 16"><path d="M11.536 2.464a5 5 0 0 0-7.072 0L8 6l3.536-3.536zM8 14.5S2.5 9.5 2.5 6a5.5 5.5 0 1 1 11 0c0 3.5-5.5 8.5-5.5 8.5zM8 7.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></symbol>
 <symbol id="i-repo" viewBox="0 0 16 16"><path d="M2 2.5C2 1.67 2.67 1 3.5 1h9c.83 0 1.5.67 1.5 1.5v11c0 .83-.67 1.5-1.5 1.5h-9c-.83 0-1.5-.67-1.5-1.5v-11zM3.5 2v11h9V2h-9zM5 4h6v1H5V4zm0 3h6v1H5V7zm0 3h6v1H5v-1z"/></symbol>
+<symbol id="i-star" viewBox="0 0 16 16"><path d="M8 .25l2.4 4.86 5.36.78-3.88 3.78.92 5.34L8 12.03l-4.8 2.98.92-5.34L.24 5.89l5.36-.78L8 .25z"/></symbol>
+<symbol id="i-fork" viewBox="0 0 16 16"><path d="M5 3.25a1.75 1.75 0 1 1-2.5 1.58V6.5a1.75 1.75 0 0 0 1.75 1.75h4.5A1.75 1.75 0 0 1 10.5 10v.67a1.75 1.75 0 1 1-1.5 0V10a.25.25 0 0 0-.25-.25h-4.5A3.25 3.25 0 0 1 1.5 6.5V4.83A1.75 1.75 0 1 1 5 3.25zM11.5 2.5a1.75 1.75 0 1 1 0 3.5 1.75 1.75 0 0 1 0-3.5z"/></symbol>
+<symbol id="i-project" viewBox="0 0 16 16"><path d="M1.75 1.5h12.5c.14 0 .25.11.25.25v12.5c0 .14-.11.25-.25.25H1.75a.25.25 0 0 1-.25-.25V1.75c0-.14.11-.25.25-.25zM7 3.5v2H3v-2h4zm0 3.5v2H3V7h4zm0 3.5v2H3v-2h4zM9.5 3.5h3v7h-3v-7z"/></symbol>
+<symbol id="i-package" viewBox="0 0 16 16"><path d="M8.878.392a1.75 1.75 0 0 0-1.756 0l-5.25 3.045A1.75 1.75 0 0 0 1 4.951v6.098c0 .624.332 1.2.872 1.514l5.25 3.045a1.75 1.75 0 0 0 1.756 0l5.25-3.045c.54-.313.872-.89.872-1.514V4.951c0-.624-.332-1.2-.872-1.514L8.878.392zM7.875 1.69a.25.25 0 0 1 .25 0l4.63 2.684L8 6.98 3.245 4.374l4.63-2.684zM2.5 5.91 7 8.54v5.24l-4.5-2.61V5.91zM8.5 13.78V8.54l4.5-2.63v5.26l-4.5 2.61z"/></symbol>
 </svg>
 
 <div class="lang-switch" role="group" aria-label="Language / 语言">
@@ -108,11 +134,12 @@ a:hover{text-decoration:underline}
 
 <div class="page">
 
-<nav class="tabs">
-<a class="tab active" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener"><span data-i18n="tabOverview">Overview</span></a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=repositories" target="_blank" rel="noopener"><span data-i18n="tabRepositories">Repositories</span> <span class="cnt" id="repo-count">–</span></a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=projects" target="_blank" rel="noopener"><span data-i18n="tabProjects">Projects</span></a>
-<a class="tab" href="https://github.com/KaomianbaoQQ?tab=packages" target="_blank" rel="noopener"><span data-i18n="tabPackages">Packages</span></a>
+<nav class="tabs" id="tabs">
+<button class="tab active" type="button" data-view="overview"><span data-i18n="tabOverview">Overview</span></button>
+<button class="tab" type="button" data-view="repositories"><span data-i18n="tabRepositories">Repositories</span> <span class="cnt" id="repo-count">–</span></button>
+<button class="tab" type="button" data-view="projects"><span data-i18n="tabProjects">Projects</span></button>
+<button class="tab" type="button" data-view="packages"><span data-i18n="tabPackages">Packages</span></button>
+<button class="tab" type="button" data-view="stars"><span data-i18n="tabStars">Stars</span> <span class="cnt" id="star-count">–</span></button>
 </nav>
 
 <div class="profile-head">
@@ -127,7 +154,7 @@ a:hover{text-decoration:underline}
 </div>
 </div>
 
-<div class="layout">
+<div class="layout" id="layout">
 
 <aside class="sidebar">
 <h2 class="card-title" data-i18n="achievements">Achievements</h2>
@@ -138,6 +165,8 @@ a:hover{text-decoration:underline}
 
 <main class="main">
 
+<!-- OVERVIEW -->
+<section class="view active" id="view-overview">
 <h2 class="pinned-title" data-i18n="pinned">Pinned</h2>
 <div class="pin-grid" id="pin-grid"><span class="skeleton" data-i18n="loading">Loading…</span></div>
 
@@ -167,7 +196,45 @@ a:hover{text-decoration:underline}
 
 <h2 class="section-h" data-i18n="contributionActivity">Contribution activity</h2>
 <div class="activity-box" id="activity-box"><span class="skeleton" data-i18n="loading">Loading…</span></div>
-<button class="show-more" type="button" data-i18n="showMore">Show more activity</button>
+</section>
+
+<!-- REPOSITORIES -->
+<section class="view" id="view-repositories">
+<div class="repo-tools">
+<input class="repo-search" id="repo-search" type="text" data-i18n-ph="findRepo" placeholder="Find a repository…" />
+<button class="filter-btn" type="button" data-i18n="typeFilter">Type ▾</button>
+<button class="filter-btn" type="button" data-i18n="langFilter">Language ▾</button>
+<button class="filter-btn" type="button" data-i18n="sortFilter">Sort ▾</button>
+</div>
+<div class="repo-list" id="repo-list"><span class="skeleton" data-i18n="loading">Loading…</span></div>
+</section>
+
+<!-- PROJECTS -->
+<section class="view" id="view-projects">
+<div class="empty-state" id="projects-empty">
+<svg width="40" height="40" viewBox="0 0 16 16"><use href="#i-project"/></svg>
+<p data-i18n="noProjects">There aren't any projects yet</p>
+</div>
+</section>
+
+<!-- PACKAGES -->
+<section class="view" id="view-packages">
+<div class="empty-state" id="packages-empty">
+<svg width="40" height="40" viewBox="0 0 16 16"><use href="#i-package"/></svg>
+<p data-i18n="noPackages">There aren't any packages yet</p>
+</div>
+</section>
+
+<!-- STARS -->
+<section class="view" id="view-stars">
+<div class="repo-tools">
+<input class="repo-search" id="star-search" type="text" data-i18n-ph="searchStars" placeholder="Search stars…" />
+<button class="filter-btn" type="button" data-i18n="typeAll">Type: All ▾</button>
+<button class="filter-btn" type="button" data-i18n="langFilter">Language ▾</button>
+<button class="filter-btn" type="button" data-i18n="sortRecent">Sort by: Recently starred ▾</button>
+</div>
+<div class="repo-list" id="star-list"><span class="skeleton" data-i18n="loading">Loading…</span></div>
+</section>
 
 <p class="src-note" id="src-note" data-i18n="loadingNote">Loading data from GitHub…</p>
 </main>
@@ -182,21 +249,27 @@ const USERNAME='KaomianbaoQQ';
 const API_USER=`https://api.github.com/users/${USERNAME}`;
 const API_REPOS=`https://api.github.com/users/${USERNAME}/repos?per_page=100&sort=updated`;
 const API_EVENTS=`https://api.github.com/users/${USERNAME}/events/public?per_page=100`;
-// Official contributions data, generated server-side by GitHub Actions
-// from github.com/users/<user>/contributions (no CORS on that endpoint).
+const API_STARRED=`https://api.github.com/users/${USERNAME}/starred?per_page=100&sort=created`;
 const API_CONTRIB='contributions.json';
 const LEVEL_COLORS=['#161b22','#0e4429','#006d32','#26a641','#39d353'];
+const LANG_COLORS={Python:'#3572A5',HLSL:'#a88060',HTML:'#e34c26','C++':'#f34b7d',Java:'#b07219',JavaScript:'#f1e05a',TypeScript:'#3178c6',Go:'#00ADD8',Rust:'#dea584',Shell:'#89e051','C':'#555555'};
 
 const I18N={
  en:{
   follow:'Follow', achievements:'Achievements', blockUser:'Block or report user',
   followers:'followers', following:'following', pinned:'Pinned', public:'Public',
-  tabOverview:'Overview', tabRepositories:'Repositories', tabProjects:'Projects', tabPackages:'Packages',
+  tabOverview:'Overview', tabRepositories:'Repositories', tabProjects:'Projects', tabPackages:'Packages', tabStars:'Stars',
   loadingContrib:'Loading contributions from GitHub…', loadingCalendar:'Loading contribution calendar…',
   learnCount:'Learn how we count contributions', less:'Less', more:'More', loading:'Loading…',
   activityOverview:'Activity overview', contributedTo:'Contributed to',
   contributionActivity:'Contribution activity', showMore:'Show more activity',
   loadingNote:'Loading data from GitHub…',
+  findRepo:'Find a repository…', searchStars:'Search stars…',
+  typeFilter:'Type ▾', langFilter:'Language ▾', sortFilter:'Sort ▾',
+  typeAll:'Type: All ▾', sortRecent:'Sort by: Recently starred ▾',
+  noProjects:"There aren't any projects yet", noPackages:"There aren't any packages yet",
+  noRepos:'No repositories found', noStars:'No starred repositories yet',
+  updated:(d)=>`Updated ${d}`, license:(l)=>l,
   contribTitle:n=>`${n} contributions in the last year`,
   noContrib:'No contribution data',
   contribOn:(n,d)=>`${n} contribution${n>1?'s':''} on ${d}`,
@@ -211,7 +284,7 @@ const I18N={
   quadTip:(u,c,i,rv,pr)=>`A graph representing ${u}'s public activity. ${c}% commits, ${i}% issues, ${rv}% code review, ${pr}% pull requests. Based on recent public events from GitHub.`,
   quadLabels:{top:'Code review',right:'Issues',bottom:'Pull requests',left:'Commits'},
   noteLiveTag:'● All data from GitHub official API',
-  noteLive:' Profile / repos / Pinned and activity types come from api.github.com in real time; the contribution heatmap comes from the official github.com endpoint, refreshed by GitHub Actions every 6 hours.',
+  noteLive:' Profile / repos / stars and activity types come from api.github.com in real time; the contribution heatmap comes from the official github.com endpoint, refreshed by GitHub Actions every 6 hours.',
   noteOfflineTag:'● Offline snapshot',
   noteOffline:' GitHub is temporarily unavailable; showing the most recent real data snapshot',
   notePartialTag:'● Partially live',
@@ -220,12 +293,18 @@ const I18N={
  zh:{
   follow:'关注', achievements:'成就', blockUser:'屏蔽或举报用户',
   followers:'粉丝', following:'关注中', pinned:'置顶', public:'公开',
-  tabOverview:'概览', tabRepositories:'仓库', tabProjects:'项目', tabPackages:'包',
+  tabOverview:'概览', tabRepositories:'仓库', tabProjects:'项目', tabPackages:'包', tabStars:'星标',
   loadingContrib:'正在从 GitHub 加载贡献记录…', loadingCalendar:'正在加载贡献日历…',
   learnCount:'了解贡献如何统计', less:'少', more:'多', loading:'加载中…',
   activityOverview:'活动概览', contributedTo:'贡献给',
   contributionActivity:'贡献活动', showMore:'显示更多活动',
   loadingNote:'正在从 GitHub 获取数据…',
+  findRepo:'查找仓库…', searchStars:'搜索星标…',
+  typeFilter:'类型 ▾', langFilter:'语言 ▾', sortFilter:'排序 ▾',
+  typeAll:'类型：全部 ▾', sortRecent:'排序：最近星标 ▾',
+  noProjects:'暂无任何项目', noPackages:'暂无任何包',
+  noRepos:'未找到仓库', noStars:'暂无星标仓库',
+  updated:(d)=>`更新于 ${d}`, license:(l)=>l,
   contribTitle:n=>`过去一年 ${n} 次贡献`,
   noContrib:'暂无贡献数据',
   contribOn:(n,d)=>`${d} 有 ${n} 次贡献`,
@@ -240,7 +319,7 @@ const I18N={
   quadTip:(u,c,i,rv,pr)=>`${u} 的公开活动类型：${c}% 提交、${i}% 议题、${rv}% 代码审查、${pr}% 拉取请求。基于 GitHub 近期公开事件统计。`,
   quadLabels:{top:'代码审查',right:'议题',bottom:'拉取请求',left:'提交'},
   noteLiveTag:'● 全部来自 GitHub 官方 API',
-  noteLive:' 资料/仓库/Pinned 与活动类型实时取自 api.github.com；贡献热力图取自 github.com 官方端点，由 GitHub Actions 每 6 小时刷新。',
+  noteLive:' 资料/仓库/星标与活动类型实时取自 api.github.com；贡献热力图取自 github.com 官方端点，由 GitHub Actions 每 6 小时刷新。',
   noteOfflineTag:'● 离线快照',
   noteOffline:' GitHub 暂时不可用，正展示最近一次的真实数据快照',
   notePartialTag:'● 部分实时',
@@ -249,10 +328,13 @@ const I18N={
 };
 
 let LANG=(localStorage.getItem('gh_profile_lang')==='zh')?'zh':'en';
-const STATE={user:null, repos:[], contrib:null, liveCount:0, fallbackCount:0};
+let VIEW=(location.hash||'#overview').slice(1);
+if(!['overview','repositories','projects','packages','stars'].includes(VIEW))VIEW='overview';
+const STATE={user:null, repos:[], allRepos:[], starred:[], contrib:null, types:null, liveCount:0, fallbackCount:0};
 function t(k,...a){const v=I18N[LANG][k];return typeof v==='function'?v(...a):v;}
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 async function getJSON(url){const r=await fetch(url);if(!r.ok)throw new Error('HTTP '+r.status);return r.json();}
+function fmtDate(s){if(!s)return '';const d=new Date(s);return d.toISOString().slice(0,10);}
 
 function renderProfile(u){
   document.getElementById('avatar').src=u.avatar_url||FALLBACK.avatar_url;
@@ -268,18 +350,43 @@ function renderProfile(u){
 function renderPinned(repos){
   const box=document.getElementById('pin-grid');
   if(!repos||!repos.length){box.innerHTML=`<span class="skeleton">${esc(t('noActivity'))}</span>`;return;}
-  const langColor={Python:'#3572A5',HLSL:'#a88060',HTML:'#e34c26','C++':'#f34b7d',Java:'#b07219',JavaScript:'#f1e05a'};
   box.innerHTML=repos.slice(0,6).map(r=>{
-    const dot=r.language?`<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:${langColor[r.language]||'#8b949e'}"></span>`:'';
+    const dot=r.language?`<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:${LANG_COLORS[r.language]||'#8b949e'}"></span>`:'';
     return `<div class="pin-card">
       <div class="pin-head">
         <svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-repo"/></svg>
-        <a class="pin-name" href="${esc(r.url||('https://github.com/'+USERNAME+'/'+r.name))}" target="_blank" rel="noopener">${esc(r.name)}</a>
+        <a class="pin-name" href="${esc(r.url)}" target="_blank" rel="noopener">${esc(r.name)}</a>
         <span class="pin-badge">${esc(t('public'))}</span>
       </div>
       <p class="pin-desc">${esc(r.description||'')}</p>
       <div class="pin-foot">${dot}${r.language?`<b>${esc(r.language)}</b>`:''}
         <span>★ ${r.stars||0}</span><span>⑂ ${r.forks||0}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function renderRepoRows(list,boxId,emptyKey){
+  const box=document.getElementById(boxId);
+  if(!list||!list.length){box.innerHTML=`<span class="skeleton">${esc(t(emptyKey))}</span>`;return;}
+  box.innerHTML=list.map(r=>{
+    const dot=r.language?`<span style="width:10px;height:10px;border-radius:50%;display:inline-block;background:${LANG_COLORS[r.language]||'#8b949e'}"></span>`:'';
+    return `<div class="repo-row">
+      <div class="repo-row-head">
+        <div class="repo-row-title">
+          <svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-repo"/></svg>
+          <a href="${esc(r.html_url)}" target="_blank" rel="noopener">${esc(r.full_name||((USERNAME+'/')+r.name))}</a>
+          <span class="pin-badge">${esc(t('public'))}</span>
+        </div>
+        <div class="star-group"><button class="star-btn" type="button">☆ Star</button><button class="star-caret" type="button">▾</button></div>
+      </div>
+      <p class="repo-row-desc">${esc(r.description||'')}</p>
+      <div class="repo-row-meta">
+        ${dot}${r.language?`<span>${esc(r.language)}</span>`:''}
+        <span>★ ${r.stargazers_count}</span>
+        <span>⑂ ${r.forks_count}</span>
+        ${r.license?`<span>${esc(t('license',r.license.spdx_id))}</span>`:''}
+        <span>${esc(t('updated',fmtDate(r.pushed_at||r.updated_at)))}</span>
       </div>
     </div>`;
   }).join('');
@@ -325,9 +432,7 @@ function renderActivity(c,repos){
     const mi=parseInt(m,10)-1;
     const monthLabel=t('monthFull')[mi]+' '+y;
     let repoLine='';
-    if(repoNames.length){
-      repoLine=repoNames.map(n=>`<a href="${esc('https://github.com/'+USERNAME+'/'+n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join(', ');
-    }
+    if(repoNames.length)repoLine=repoNames.map(n=>`<a href="${esc('https://github.com/'+USERNAME+'/'+n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join(', ');
     return `<div class="month-line">
       <span class="month-label">${esc(monthLabel)}</span>
       <div class="month-content">
@@ -344,27 +449,18 @@ function renderActivity(c,repos){
 function renderOverview(c,repos){
   const box=document.getElementById('contrib-repos');
   const names=(repos||[]).slice(0,5).map(r=>r.name);
-  box.innerHTML=names.length
-    ? names.map(n=>`<a href="${esc('https://github.com/'+USERNAME+'/'+n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('<br>')
-    : `<span class="skeleton">${esc(t('noActivity'))}</span>`;
-  const cx=160, cy=80, arm=110;
+  box.innerHTML=names.length?names.map(n=>`<a href="${esc('https://github.com/'+USERNAME+'/'+n)}" target="_blank" rel="noopener">${esc(n)}</a>`).join('<br>'):`<span class="skeleton">${esc(t('noActivity'))}</span>`;
+  const cx=160,cy=80,arm=110;
   const lab=I18N[LANG].quadLabels;
-  // 真实占比：优先用官方 events 统计，无数据时回退到贡献全为 commit
   const ty=STATE.types;
-  const pct={
-    commit: ty?Math.round(ty.commit/ty.sum*100):100,
-    issue:  ty?Math.round(ty.issue/ty.sum*100):0,
-    pr:     ty?Math.round(ty.pr/ty.sum*100):0,
-    review: ty?Math.round(ty.review/ty.sum*100):0
-  };
+  const pct={commit:ty?Math.round(ty.commit/ty.sum*100):100,issue:ty?Math.round(ty.issue/ty.sum*100):0,pr:ty?Math.round(ty.pr/ty.sum*100):0,review:ty?Math.round(ty.review/ty.sum*100):0};
   const tip=t('quadTip',USERNAME,pct.commit,pct.issue,pct.review,pct.pr);
-  // GitHub 原版：四个方向按比例在轴上定位圆点（占比>0 才画），轴作参考
   const dot=(x,y)=>`<circle cx="${x}" cy="${y}" r="5" fill="#fff" stroke="#3fb950" stroke-width="2"/>`;
   let dots='';
-  if(pct.commit>0)dots+=dot(cx-arm*pct.commit/100,cy);           // 左 = commits
-  if(pct.issue>0)dots+=dot(cx+arm*pct.issue/100,cy);             // 右 = issues
-  if(pct.review>0)dots+=dot(cx,cy-arm*pct.review/100);            // 上 = code review
-  if(pct.pr>0)dots+=dot(cx,cy+arm*pct.pr/100);                   // 下 = pull requests
+  if(pct.commit>0)dots+=dot(cx-arm*pct.commit/100,cy);
+  if(pct.issue>0)dots+=dot(cx+arm*pct.issue/100,cy);
+  if(pct.review>0)dots+=dot(cx,cy-arm*pct.review/100);
+  if(pct.pr>0)dots+=dot(cx,cy+arm*pct.pr/100);
   const svg=`<svg class="quad-svg" viewBox="0 0 320 175" width="320" role="img" aria-label="${esc(t('quadAria',pct.commit))}">
     <line class="axis" x1="${cx-arm}" y1="${cy}" x2="${cx+arm}" y2="${cy}"/>
     <line class="axis" x1="${cx}" y1="${cy-arm+10}" x2="${cx}" y2="${cy+arm-10}"/>
@@ -394,11 +490,44 @@ function updateNote(){
   else note.innerHTML=`<span class="live">${esc(t('notePartialTag'))}</span> · ${esc(t('notePartial'))}`;
 }
 
+// 标签切换（页内视图，不改 URL 域名）
+function switchView(view){
+  if(!['overview','repositories','projects','packages','stars'].includes(view))view='overview';
+  VIEW=view;
+  document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));
+  document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
+  document.getElementById('layout').classList.toggle('no-year',view!=='overview');
+  history.replaceState(null,'','#'+view);
+  renderCurrentView();
+}
+function renderCurrentView(){
+  if(VIEW==='repositories')renderRepoRows(STATE.allRepos,'repo-list','noRepos');
+  if(VIEW==='stars')renderRepoRows(STATE.starred,'star-list','noStars');
+}
+document.getElementById('tabs').addEventListener('click',e=>{
+  const btn=e.target.closest('.tab');
+  if(btn)switchView(btn.dataset.view);
+});
+// 搜索框过滤
+function bindSearch(inputId,listId,stateKey){
+  const input=document.getElementById(inputId);
+  if(!input)return;
+  input.addEventListener('input',()=>{
+    const q=input.value.trim().toLowerCase();
+    const all=STATE[stateKey]||[];
+    const filtered=q?all.filter(r=>(r.full_name||r.name||'').toLowerCase().includes(q)||(r.description||'').toLowerCase().includes(q)):all;
+    renderRepoRows(filtered,listId,stateKey==='starred'?'noStars':'noRepos');
+  });
+}
+
 function applyLang(){
   document.documentElement.lang=LANG==='zh'?'zh-CN':'en';
   document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n);});
+  document.querySelectorAll('[data-i18n-ph]').forEach(el=>{el.placeholder=t(el.dataset.i18nPh);});
   document.querySelectorAll('.lang-switch button').forEach(b=>b.classList.toggle('active',b.dataset.lang===LANG));
   if(STATE.repos)renderPinned(STATE.repos);
+  if(STATE.allRepos&&VIEW==='repositories')renderRepoRows(STATE.allRepos,'repo-list','noRepos');
+  if(STATE.starred&&VIEW==='stars')renderRepoRows(STATE.starred,'star-list','noStars');
   if(STATE.contrib){renderHeatmap(STATE.contrib);renderActivity(STATE.contrib,STATE.repos);renderOverview(STATE.contrib,STATE.repos);renderYears(STATE.contrib);}
   updateNote();
   if(STATE.user)document.title=STATE.user.login+' · GitHub';
@@ -407,8 +536,8 @@ document.querySelectorAll('.lang-switch button').forEach(b=>b.addEventListener('
 
 const FALLBACK={login:'KaomianbaoQQ',name:'KaomianbaoQQ',avatar_url:'https://avatars.githubusercontent.com/u/275017180?v=4',followers:0,following:0,company:'',location:'Japan, Hokkaido'};
 const FALLBACK_REPOS=[
-  {name:'merchant-customer-platform',description:'Multi-role platform with platform admin, merchant management and customer shopping modules.',language:'Python',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/merchant-customer-platform'},
-  {name:'aerialsim-aircraft-f117',description:'aerialsim-aircraft-f117',language:'HLSL',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/aerialsim-aircraft-f117'}
+  {name:'merchant-customer-platform',description:'Multi-role platform with platform admin, merchant management and customer shopping modules.',language:'Python',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/merchant-customer-platform',html_url:'https://github.com/KaomianbaoQQ/merchant-customer-platform',full_name:'KaomianbaoQQ/merchant-customer-platform',stargazers_count:0,forks_count:0,updated_at:'2026-11-01T00:00:00Z'},
+  {name:'aerialsim-aircraft-f117',description:'aerialsim-aircraft-f117',language:'HLSL',stars:0,forks:0,url:'https://github.com/KaomianbaoQQ/aerialsim-aircraft-f117',html_url:'https://github.com/KaomianbaoQQ/aerialsim-aircraft-f117',full_name:'KaomianbaoQQ/aerialsim-aircraft-f117',stargazers_count:0,forks_count:0,updated_at:'2026-11-01T00:00:00Z'}
 ];
 const FALLBACK_CONTRIB={total:60,notable:[{date:'2026-04-10',count:1},{date:'2026-09-09',count:1},{date:'2026-09-10',count:12},{date:'2026-09-11',count:1},{date:'2026-09-13',count:3},{date:'2026-09-14',count:1},{date:'2026-09-15',count:1},{date:'2026-09-25',count:1},{date:'2026-09-30',count:1},{date:'2026-10-22',count:1},{date:'2026-10-24',count:1},{date:'2026-11-11',count:13},{date:'2026-11-12',count:6},{date:'2026-11-18',count:13},{date:'2026-11-19',count:4}]};
 function expandCalendar(c){
@@ -418,7 +547,6 @@ function expandCalendar(c){
   return {total:c.total,days};
 }
 
-// 用官方 REST events 统计真实贡献类型占比（commit / PR / issue / review）
 async function loadEventTypes(){
   try{
     const events=await getJSON(API_EVENTS);
@@ -440,23 +568,40 @@ async function main(){
   let live=0,fb=0;
   let user=FALLBACK;
   try{user=await getJSON(API_USER);live++;}catch(e){fb++;}
-  let repos=FALLBACK_REPOS;
-  try{const raw=await getJSON(API_REPOS);const list=(Array.isArray(raw)?raw:[]).filter(r=>!r.fork&&r.description&&r.description.trim()).slice(0,6).map(r=>({name:r.name,description:r.description,language:r.language,stars:r.stargazers_count,forks:r.forks_count,url:r.html_url}));if(list.length){repos=list;live++;}else fb++;}catch(e){fb++;}
-  // 贡献图：GitHub Actions 抓取的官方端点数据（同源 contributions.json）
+
+  let allRepos=FALLBACK_REPOS, repos=FALLBACK_REPOS;
+  try{
+    const raw=await getJSON(API_REPOS);
+    if(Array.isArray(raw)&&raw.length){
+      allRepos=raw;
+      repos=raw.filter(r=>!r.fork).slice(0,6).map(r=>({name:r.name,description:r.description,language:r.language,stars:r.stargazers_count,forks:r.forks_count,url:r.html_url}));
+      live++;
+      document.getElementById('repo-count').textContent=raw.length;
+    }else{fb++;}
+  }catch(e){fb++;}
+
+  // 贡献图
   let contrib=expandCalendar(FALLBACK_CONTRIB);
   try{
     const c=await getJSON(API_CONTRIB);
     const days=(c.days||[]).map(x=>({date:x.date,count:x.count,level:x.level}));
     if(days.length){contrib={total:c.total||0,days,fetchedAt:c.fetchedAt};live++;}else fb++;
   }catch(e){fb++;}
-  // 四象限：官方 events 实时统计贡献类型占比
-  const types=await loadEventTypes();
 
-  STATE.user=user;STATE.repos=repos;STATE.contrib=contrib;STATE.types=types;STATE.liveCount=live;STATE.fallbackCount=fb;
+  // 星标仓库
+  let starred=[];
+  try{starred=await getJSON(API_STARRED);if(Array.isArray(starred)){live++;document.getElementById('star-count').textContent=starred.length;}else starred=[];}catch(e){document.getElementById('star-count').textContent='0';}
+
+  const types=await loadEventTypes();
+  STATE.user=user;STATE.repos=repos;STATE.allRepos=allRepos;STATE.starred=starred;STATE.contrib=contrib;STATE.types=types;STATE.liveCount=live;STATE.fallbackCount=fb;
   renderProfile(user);
+  bindSearch('repo-search','repo-list','allRepos');
+  bindSearch('star-search','star-list','starred');
+  switchView(VIEW);
   applyLang();
 }
 applyLang();
+switchView(VIEW);
 main();
 </script>
 </body>
