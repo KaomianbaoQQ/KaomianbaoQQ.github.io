@@ -28,37 +28,44 @@ def fetch() -> str:
 
 def parse(html: str) -> dict:
     # Total contributions in the last year
-    m = re.search(r"([\d,]+)\s+contributions?\s+in the last year", html)
+    m = re.search(r"([\d,]+)\s+contributions?\s+(?:in the last year|in \d{4})", html)
     total = int(m.group(1).replace(",", "")) if m else 0
 
-    # GitHub renders each day as a self-closing <td id="contribution-day-component-R-C" ...>
-    # followed by an external <tool-tip for="contribution-day-component-R-C">N contributions...</tool-tip>.
-    # Map tooltip text by the `for` id, then join to each cell.
+    # Each day is a <td ... data-date="YYYY-MM-DD" id="contribution-day-component-R-C"
+    # data-level="N" ...> plus an external <tool-tip for="...">N contributions on ...</tool-tip>.
+    # IMPORTANT: GitHub emits the cells COLUMN by COLUMN (Sunday column first), not in date
+    # order. We must key by date and sort, otherwise the heatmap renders as sparse garbage.
     tip_count = {}
     for tid, text in re.findall(r'<tool-tip\b[^>]*\bfor="([^"]+)"[^>]*>(.*?)</tool-tip>', html, re.S):
-        cm = re.search(r"(\d+)\s+contributions?\s+on", text)
+        cm = re.search(r"(\d+)\s+contributions?\s+on\b", text)
         if cm:
             tip_count[tid] = int(cm.group(1))
 
-    cells = re.findall(
-        r'<td\b[^>]*\bid="(contribution-day-component-[^"]+)"[^>]*data-date="([\d-]+)"[^>]*data-level="(\d+)"[^>]*>',
-        html,
-    )
-    if not cells:
-        # tolerate different attribute order: capture whole td tag then parse inside
-        days = []
-        for tag in re.findall(r'<td\b[^>]*data-date="[\d-]+"[^>]*>', html):
-            dm = re.search(r'data-date="([\d-]+)"', tag)
-            lm = re.search(r'data-level="(\d+)"', tag)
-            im = re.search(r'id="([^"]+)"', tag)
-            if not (dm and lm):
-                continue
-            cnt = tip_count.get(im.group(1), 0) if im else 0
-            days.append({"date": dm.group(1), "count": cnt, "level": int(lm.group(1))})
-    else:
-        days = []
-        for cell_id, date, level in cells:
-            days.append({"date": date, "count": tip_count.get(cell_id, 0), "level": int(level)})
+    by_date = {}
+    for tag in re.findall(r'<td\b[^>]*>', html):
+        dm = re.search(r'data-date="([\d-]+)"', tag)
+        lm = re.search(r'data-level="(\d+)"', tag)
+        im = re.search(r'id="(contribution-day-component-[^"]+)"', tag)
+        if not (dm and lm):
+            continue
+        cnt = tip_count.get(im.group(1), 0) if im else 0
+        by_date[dm.group(1)] = {"date": dm.group(1), "count": cnt, "level": int(lm.group(1))}
+
+    days = [by_date[k] for k in sorted(by_date)]
+
+    # Fill any missing calendar days with empty cells so the grid stays continuous.
+    if days:
+        from datetime import timedelta
+        start = datetime.strptime(days[0]["date"], "%Y-%m-%d").date()
+        end = datetime.strptime(days[-1]["date"], "%Y-%m-%d").date()
+        have = {d["date"]: d for d in days}
+        filled = []
+        cur = start
+        while cur <= end:
+            k = cur.isoformat()
+            filled.append(have.get(k, {"date": k, "count": 0, "level": 0}))
+            cur += timedelta(days=1)
+        days = filled
 
     return {
         "total": total,

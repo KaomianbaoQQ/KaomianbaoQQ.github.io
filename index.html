@@ -16,29 +16,31 @@ a:hover{text-decoration:underline}
 .lang-switch button{background:transparent;border:0;color:#8b949e;padding:6px 11px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;line-height:1.2}
 .lang-switch button:hover{color:#c9d1d9}
 .lang-switch button.active{background:#21262d;color:#f0f6fc}
-.page{max-width:1180px;margin:0 auto;padding:24px 32px 80px}
+.page{max-width:1280px;margin:0 auto;padding:24px 32px 80px}
 /* 顶部标签栏 */
 .tabs{display:flex;gap:20px;border-bottom:1px solid #30363d;margin-bottom:20px;overflow-x:auto}
 .tab{display:flex;align-items:center;gap:6px;padding:8px 2px 12px;color:#c9d1d9;font-size:14px;white-space:nowrap;border-bottom:2px solid transparent;background:none;border-top:0;border-left:0;border-right:0;cursor:pointer;font-family:inherit}
 .tab:hover{color:#f0f6fc}
 .tab.active{border-bottom-color:#f78166;font-weight:600}
 .tab .cnt{background:rgba(110,118,129,.4);border-radius:20px;padding:0 6px;font-size:12px}
-.profile-head{display:flex;gap:16px;align-items:center;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid #21262d}
-.avatar{width:88px;height:88px;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22;flex:none}
-.profile-meta{min-width:0}
-.name{font-size:22px;font-weight:600;color:#f0f6fc;margin:0;line-height:1.25}
-.login{font-size:15px;color:#8b949e;margin:2px 0 10px}
-.follow-btn{display:inline-block;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:5px 14px;color:#c9d1d9;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none}
+/* 左侧栏：大头像在上，资料纵向排列（对齐 GitHub 官方 Profile 布局） */
+.avatar{width:260px;height:260px;border-radius:50%;border:1px solid #30363d;object-fit:cover;display:block;background:#161b22;margin-bottom:16px}
+.name{font-size:26px;font-weight:600;color:#f0f6fc;margin:0;line-height:1.25}
+.login{font-size:16px;color:#8b949e;margin:0 0 16px}
+.follow-btn{display:block;width:100%;text-align:center;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:7px 0;color:#c9d1d9;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;text-decoration:none;margin-bottom:16px}
 .follow-btn:hover{background:#30363d;text-decoration:none}
-.layout{display:grid;grid-template-columns:210px minmax(0,1fr) 70px;gap:24px;align-items:start}
-.layout.no-year{grid-template-columns:210px minmax(0,1fr)}
+.stats-line{display:flex;align-items:center;gap:6px;flex-wrap:wrap;color:#c9d1d9;font-size:14px;margin-bottom:12px}
+.meta-line{display:flex;align-items:center;gap:6px;color:#c9d1d9;font-size:14px;margin-bottom:8px}
+.layout{display:grid;grid-template-columns:296px minmax(0,1fr);gap:24px;align-items:start}
 .sidebar{min-width:0}
 .card-title{font-size:14px;font-weight:600;color:#f0f6fc;margin:0 0 12px}
-.badges img{width:220px;max-width:100%;height:auto;display:block}
+.badges img{width:260px;max-width:100%;height:auto;display:block}
 .side-sep{border:0;border-top:1px solid #21262d;margin:20px 0}
-.block-link{color:#8b949e;font-size:13px;cursor:pointer}
+.block-link{color:#8b949e;font-size:13px;cursor:pointer;margin-top:16px}
 .block-link:hover{color:#58a6ff}
 .main{min-width:0}
+/* 贡献区域：热力图 + 右侧年份导航 */
+.contrib-layout{display:grid;grid-template-columns:minmax(0,1fr) 70px;gap:16px;align-items:start}
 /* 视图切换 */
 .view{display:none}
 .view.active{display:block}
@@ -71,7 +73,7 @@ a:hover{text-decoration:underline}
 .repo-tag{display:inline-block;background:#21262d;border:1px solid #30363d;border-radius:20px;padding:1px 9px;font-size:12px;margin:6px 0 0 26px;color:#c9d1d9}
 .show-more{width:100%;background:#21262d;border:1px solid #30363d;border-radius:6px;padding:10px;color:#58a6ff;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;margin-top:8px}
 .show-more:hover{background:#30363d}
-.year-nav{position:sticky;top:20px;display:flex;flex-direction:column;gap:2px}
+.year-nav{display:flex;flex-direction:column;gap:2px}
 .year-nav a{color:#8b949e;font-size:13px;padding:7px 12px;border-radius:6px;text-align:center;cursor:pointer}
 .year-nav a:hover{background:#21262d;text-decoration:none;color:#c9d1d9}
 .year-nav a.active{background:#1f6feb;color:#fff;font-weight:600}
@@ -112,7 +114,7 @@ a:hover{text-decoration:underline}
 .src-note .live{color:#3fb950}
 .src-note .err{color:#f85149}
 .skeleton{color:#6e7681;font-size:13px}
-@media(max-width:900px){.layout,.layout.no-year{grid-template-columns:1fr}.year-nav{flex-direction:row;flex-wrap:wrap;position:static}.profile-head{flex-wrap:wrap}.page{padding:16px}.pin-grid{grid-template-columns:1fr}.overview-inner{grid-template-columns:1fr}.v-divider{height:1px}}
+@media(max-width:900px){.layout{grid-template-columns:1fr}.contrib-layout{grid-template-columns:1fr}.year-nav{flex-direction:row;flex-wrap:wrap}.avatar{width:200px;height:200px}.page{padding:16px}.pin-grid{grid-template-columns:1fr}.overview-inner{grid-template-columns:1fr}.v-divider{height:1px}}
 </style>
 </head>
 <body>
@@ -142,24 +144,19 @@ a:hover{text-decoration:underline}
 <button class="tab" type="button" data-view="stars"><span data-i18n="tabStars">Stars</span> <span class="cnt" id="star-count">–</span></button>
 </nav>
 
-<div class="profile-head">
-<img class="avatar" id="avatar" src="https://avatars.githubusercontent.com/u/275017180?v=4" alt="avatar" />
-<div class="profile-meta">
-<h1 class="name" id="name">KaomianbaoQQ</h1>
-<p class="login" id="login">KaomianbaoQQ</p>
-<a class="follow-btn" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener" data-i18n="follow">Follow</a>
-<div class="stats-line"><span id="followers">–</span> <span data-i18n="followers">followers</span> · <span id="following">–</span> <span data-i18n="following">following</span></div>
-<div class="meta-line"><svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-people"/></svg><span id="company"></span></div>
-<div class="meta-line"><svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-location"/></svg><span id="location">Japan, Hokkaido</span></div>
-</div>
-</div>
-
 <div class="layout" id="layout">
 
 <aside class="sidebar">
+<img class="avatar" id="avatar" src="https://avatars.githubusercontent.com/u/275017180?v=4" onerror="this.onerror=null;this.src='avatar-fallback.png'" alt="avatar" />
+<h1 class="name" id="name">KaomianbaoQQ</h1>
+<p class="login" id="login">KaomianbaoQQ</p>
+<a class="follow-btn" href="https://github.com/KaomianbaoQQ" target="_blank" rel="noopener" data-i18n="follow">Follow</a>
+<div class="stats-line"><svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-people"/></svg><span id="followers">–</span> <span data-i18n="followers">followers</span> · <span id="following">–</span> <span data-i18n="following">following</span></div>
+<div class="meta-line" id="company-row"><svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-people"/></svg><span id="company"></span></div>
+<div class="meta-line"><svg class="oct" style="width:16px;height:16px;fill:#8b949e;flex:none"><use href="#i-location"/></svg><span id="location">Japan, Hokkaido</span></div>
+<hr class="side-sep" />
 <h2 class="card-title" data-i18n="achievements">Achievements</h2>
 <div class="badges"><img id="trophy" src="achievements-v2.svg" alt="GitHub achievements" /></div>
-<hr class="side-sep" />
 <div class="block-link" data-i18n="blockUser">Block or report user</div>
 </aside>
 
@@ -170,6 +167,8 @@ a:hover{text-decoration:underline}
 <h2 class="pinned-title" data-i18n="pinned">Pinned</h2>
 <div class="pin-grid" id="pin-grid"><span class="skeleton" data-i18n="loading">Loading…</span></div>
 
+<div class="contrib-layout">
+<div class="contrib-main">
 <p class="contrib-title" id="contrib-title" data-i18n="loadingContrib">Loading contributions from GitHub…</p>
 <div class="contrib-card">
 <div id="contrib-graph"><span class="skeleton" data-i18n="loadingCalendar">Loading contribution calendar…</span></div>
@@ -180,6 +179,9 @@ a:hover{text-decoration:underline}
 <i style="background:#0e4429"></i><i style="background:#006d32"></i><i style="background:#26a641"></i><i style="background:#39d353"></i>
 <span data-i18n="more">More</span></span>
 </div>
+</div>
+</div>
+<aside class="year-nav" id="year-nav"></aside>
 </div>
 
 <h2 class="section-h" data-i18n="activityOverview">Activity overview</h2>
@@ -239,8 +241,6 @@ a:hover{text-decoration:underline}
 <p class="src-note" id="src-note" data-i18n="loadingNote">Loading data from GitHub…</p>
 </main>
 
-<aside class="year-nav" id="year-nav"></aside>
-
 </div>
 </div>
 
@@ -251,6 +251,7 @@ const API_REPOS=`https://api.github.com/users/${USERNAME}/repos?per_page=100&sor
 const API_EVENTS=`https://api.github.com/users/${USERNAME}/events/public?per_page=100`;
 const API_STARRED=`https://api.github.com/users/${USERNAME}/starred?per_page=100&sort=created`;
 const API_CONTRIB='contributions.json';
+const CURRENT_YEAR=new Date().getFullYear();
 const LEVEL_COLORS=['#161b22','#0e4429','#006d32','#26a641','#39d353'];
 const LANG_COLORS={Python:'#3572A5',HLSL:'#a88060',HTML:'#e34c26','C++':'#f34b7d',Java:'#b07219',JavaScript:'#f1e05a',TypeScript:'#3178c6',Go:'#00ADD8',Rust:'#dea584',Shell:'#89e051','C':'#555555'};
 
@@ -270,7 +271,7 @@ const I18N={
   noProjects:"There aren't any projects yet", noPackages:"There aren't any packages yet",
   noRepos:'No repositories found', noStars:'No starred repositories yet',
   updated:(d)=>`Updated ${d}`, license:(l)=>l,
-  contribTitle:n=>`${n} contributions in the last year`,
+  contribTitle:n=>`${n.toLocaleString()} contributions in ${CURRENT_YEAR}`,
   noContrib:'No contribution data',
   contribOn:(n,d)=>`${n} contribution${n>1?'s':''} on ${d}`,
   noContribOn:d=>`No contributions on ${d}`,
@@ -305,7 +306,7 @@ const I18N={
   noProjects:'暂无任何项目', noPackages:'暂无任何包',
   noRepos:'未找到仓库', noStars:'暂无星标仓库',
   updated:(d)=>`更新于 ${d}`, license:(l)=>l,
-  contribTitle:n=>`过去一年 ${n} 次贡献`,
+  contribTitle:n=>`${CURRENT_YEAR} 年 ${n.toLocaleString()} 次贡献`,
   noContrib:'暂无贡献数据',
   contribOn:(n,d)=>`${d} 有 ${n} 次贡献`,
   noContribOn:d=>`${d} 无贡献`,
@@ -337,7 +338,7 @@ async function getJSON(url){const r=await fetch(url);if(!r.ok)throw new Error('H
 function fmtDate(s){if(!s)return '';const d=new Date(s);return d.toISOString().slice(0,10);}
 
 function renderProfile(u){
-  document.getElementById('avatar').src=u.avatar_url||FALLBACK.avatar_url;
+  const av=document.getElementById('avatar');av.onerror=function(){this.onerror=null;this.src='avatar-fallback.png';};av.src=u.avatar_url||FALLBACK.avatar_url;
   document.getElementById('name').textContent=u.name||u.login;
   document.getElementById('login').textContent=u.login;
   document.getElementById('followers').textContent=u.followers!=null?u.followers:0;
@@ -394,7 +395,7 @@ function renderRepoRows(list,boxId,emptyKey){
 
 function renderHeatmap(c){
   document.getElementById('contrib-title').textContent=t('contribTitle',c.total);
-  const days=c.days||[];
+  const days=(c.days||[]).slice().sort((a,b)=>a.date.localeCompare(b.date));
   if(!days.length){document.getElementById('contrib-graph').textContent=t('noContrib');return;}
   const cell=11,pitch=14,ox=40,oy=26;
   const weeks=[];let cur=[];
@@ -496,7 +497,6 @@ function switchView(view){
   VIEW=view;
   document.querySelectorAll('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+view));
   document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.view===view));
-  document.getElementById('layout').classList.toggle('no-year',view!=='overview');
   history.replaceState(null,'','#'+view);
   renderCurrentView();
 }
@@ -584,7 +584,7 @@ async function main(){
   let contrib=expandCalendar(FALLBACK_CONTRIB);
   try{
     const c=await getJSON(API_CONTRIB);
-    const days=(c.days||[]).map(x=>({date:x.date,count:x.count,level:x.level}));
+    const days=(c.days||[]).map(x=>({date:x.date,count:x.count,level:x.level})).sort((a,b)=>a.date.localeCompare(b.date));
     if(days.length){contrib={total:c.total||0,days,fetchedAt:c.fetchedAt};live++;}else fb++;
   }catch(e){fb++;}
 
